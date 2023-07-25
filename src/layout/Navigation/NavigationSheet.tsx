@@ -8,7 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export default function Navigation(props: {
+export default function NavigationSheet(props: {
   side?: "top" | "bottom" | "left" | "right" | null | undefined;
 }) {
   return (
