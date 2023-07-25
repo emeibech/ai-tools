@@ -9,7 +9,7 @@ const HamburgerBtn = React.forwardRef(
         ref={forwardedRef}
         variant="ghost"
         type="button"
-        className="p-2 active:bg-muted"
+        className="p-2 active:bg-muted lg:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
