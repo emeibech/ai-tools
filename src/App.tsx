@@ -11,8 +11,8 @@ function App() {
     <>
       <div
         className={cn(
+          "bg-background text-foreground",
           "lg:grid lg:grid-cols-[240px_6fr_1fr] 2xl:grid-cols-[280px_6fr_1fr]",
-          "bg-background text-",
         )}
         data-darkmode="false"
       >
@@ -24,7 +24,7 @@ function App() {
         />
 
         <section className="lg:flex justify-between hidden col-start-1 mt-4">
-          <div className="flex-col flex-1">
+          <div className={cn("flex-col flex-1")}>
             <SiteTitle />
             <Nav />
           </div>

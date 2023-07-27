@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import botImg from "./imgs/bot.png";
+import InfoCluster from "./components/InfoCluster";
 
 interface Props {
   className?: string;
@@ -37,6 +38,42 @@ export default function Home(props: Props) {
           src={botImg}
           className={cn("max-w-[240px] max-h-[240px] mt-4", "lg:mt-0")}
         />
+      </section>
+
+      <section className="xl:flex xl: justify-center mt-20">
+        <InfoCluster>
+          <h2>It's Free</h2>
+          <p className="text-card-foreground text-sm">
+            The best feature of this app is that it's free. That is right. It is
+            free. But you can only use it like once a day maybe. I haven't
+            decided yet. So, yeah, limitations will apply, of course, you
+            dilweed.
+          </p>
+          <a
+            href={"#"}
+            target="_blank"
+            className={cn("text-emerald-500 underline")}
+          >
+            See Limitations
+          </a>
+        </InfoCluster>
+
+        <InfoCluster>
+          <h2>Open Source</h2>
+          <p className="text-card-foreground text-sm">
+            If you think this app looks like shit and feels like shit that's
+            because it is. On the off chance that you happen to like it and
+            would like to create something similar to it, you can clone the repo
+            or fork it or whatever.
+          </p>
+          <a
+            href={"#"}
+            target="_blank"
+            className={cn("text-emerald-500 underline")}
+          >
+            GitHub
+          </a>
+        </InfoCluster>
       </section>
     </main>
   );
