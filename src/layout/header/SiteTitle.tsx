@@ -9,6 +9,7 @@ export default function SiteTitle() {
         "focus-visible:outline-none ring-offset-background",
         "focus-visible:ring-ring focus-visible:ring-2",
         "focus-visible:ring-offset-2 transition-colors",
+        "lg:text-2xl",
       )}
     >
       emeibech<span className={cn("ml-1")}>ai</span>

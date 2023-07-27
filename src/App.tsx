@@ -23,7 +23,9 @@ function App() {
           )}
         />
 
-        <section className="lg:flex justify-between hidden col-start-1 mt-4">
+        <section
+          className={cn("justify-between hidden col-start-1 mt-4", "lg:flex ")}
+        >
           <div className={cn("flex-col flex-1")}>
             <SiteTitle />
             <Nav />
