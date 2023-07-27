@@ -1,5 +1,5 @@
-import HamburgerBtn from "../Header/HamburgerBtn";
-import SiteTitle from "../Header/SiteTitle";
+import HamburgerBtn from "../header/HamburgerBtn";
+import SiteTitle from "../header/SiteTitle";
 import Nav from "./Nav";
 import {
   Sheet,

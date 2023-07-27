@@ -1,9 +1,9 @@
 import "./App.css";
-import Header from "./layout/Header/Header";
-import Nav from "./layout/Navigation/Nav";
-import SiteTitle from "./layout/Header/SiteTitle";
+import Header from "./layout/header/Header";
+import Nav from "./layout/navigation/Nav";
+import SiteTitle from "./layout/header/SiteTitle";
 import { Separator } from "@/components/ui/separator";
-import Main from "./layout/Main/Main";
+import Home from "./layout/main/home/Home";
 import { cn } from "./lib/utils";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <>
       <div
         className={cn(
-          "lg:grid lg:grid-cols-[280px_6fr_1fr]",
+          "lg:grid lg:grid-cols-[240px_6fr_1fr] 2xl:grid-cols-[280px_6fr_1fr]",
           "bg-background text-",
         )}
         data-darkmode="false"
@@ -31,7 +31,7 @@ function App() {
           <Separator orientation="vertical" />
         </section>
 
-        <Main className={cn("p-4 mt-12")} />
+        <Home className={cn("p-4 mt-12", "min-[320px]:p-2 lg:p-8 xl:p-12 ")} />
       </div>
     </>
   );

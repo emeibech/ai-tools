@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import SiteTitle from "./SiteTitle";
-import NavigationSheet from "../Navigation/NavigationSheet";
+import NavigationSheet from "../navigation/NavigationSheet";
 import { SunIcon } from "@/components/custom/Icons";
 import { Button } from "@/components/ui/button";
 
