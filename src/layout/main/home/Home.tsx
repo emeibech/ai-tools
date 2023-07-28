@@ -17,7 +17,6 @@ export default function Home(props: Props) {
         )}
       >
         <section className="flex flex-col gap-8 max-w-[768px]">
-          <div></div>
           <h2
             className={cn(
               "text-4xl font-semibold max-w-[640px]",
@@ -48,7 +47,7 @@ export default function Home(props: Props) {
       <section
         className={cn(
           "justify-center mt-20",
-          "xl:grid xl:grid-cols-2 xl:mt-40 xl:",
+          "xl:grid xl:grid-cols-2 xl:mt-30 xl:",
         )}
       >
         <InfoCluster className="place-self-end">

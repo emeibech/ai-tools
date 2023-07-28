@@ -34,7 +34,7 @@ function App() {
           </div>
         </section>
 
-        <Home className={cn("mt-12", "min-[320px]:p-4 lg:p-8 xl:p-12 ")} />
+        <Home className={cn("mt-12 px-4", "min-[320px]:p-4 lg:p-8 xl:p-12 ")} />
       </div>
     </>
   );
