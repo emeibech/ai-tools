@@ -10,8 +10,10 @@ interface Props {
 
 export default function Header(props: Props) {
   return (
-    <header className={props.className}>
-      <section className="lg:hidden flex items-center gap-2 min-h-[40px]">
+    <header className={cn(props.className, "")}>
+      <section
+        className={cn("pt-4 flex items-center gap-2 min-h-[40px]", "lg:hidden")}
+      >
         <NavigationSheet
           side="left"
           className={cn(
@@ -22,7 +24,11 @@ export default function Header(props: Props) {
         />
         <SiteTitle />
       </section>
-      <Button variant="ghost" type="button" className="px-2">
+      <Button
+        variant="ghost"
+        type="button"
+        className={cn("px-2 mt-4", "lg:fixed lg:mx-6")}
+      >
         <SunIcon height="24px" />
       </Button>
     </header>

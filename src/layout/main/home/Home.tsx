@@ -61,7 +61,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-emerald-500 underline")}
+            className={cn("text-cyan-400 underline")}
           >
             See Limitations
           </a>
@@ -77,7 +77,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-emerald-500 underline")}
+            className={cn("text-cyan-400 underline")}
           >
             Tutorial
           </a>
@@ -93,7 +93,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-emerald-500 underline")}
+            className={cn("text-cyan-400 underline")}
           >
             Learn more
           </a>
@@ -110,7 +110,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-emerald-500 underline")}
+            className={cn("text-cyan-400 underline")}
           >
             GitHub
           </a>

@@ -6,10 +6,10 @@ export default function SiteTitle() {
       data-name="site-name"
       className={cn(
         "text-xl text-left cursor-pointer font-bold rounded-md px-2",
-        "focus-visible:outline-none ring-offset-background",
-        "focus-visible:ring-ring focus-visible:ring-2",
-        "focus-visible:ring-offset-2 transition-colors",
-        "lg:text-2xl",
+        // "focus-visible:outline-none ring-offset-background",
+        // "focus-visible:ring-ring focus-visible:ring-2",
+        // "focus-visible:ring-offset-2 transition-colors",
+        "lg:text-2xl lg:px-6",
       )}
     >
       emeibech<span className={cn("ml-1")}>ai</span>
