@@ -14,9 +14,8 @@ export default function InfoCluster(props: Props) {
     <div
       className={cn(
         `${className}`,
-        "p-4 flex flex-col justify-between mx-auto max-w-[640px] gap-2",
-        "2xl:max-w-[480px] 2xl:min-w-[480px] 2xl:min-h-[200px]",
-        "2xl:mx-0 2xl:gap-0",
+        "flex flex-col justify-between mx-auto max-w-[640px] gap-2",
+        "2xl:min-h-[180px]",
       )}
       aria-label={ariaLabel}
       role={role}
