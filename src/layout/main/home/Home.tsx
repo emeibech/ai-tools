@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
-import InfoCluster from "./components/InfoCluster";
 import botImg from "./imgs/bot.png";
 import llm from "./imgs/llm.jpg";
+import InfoCluster from "./components/InfoCluster";
+import FAQs from "./components/FAQs";
 
 interface Props {
   className?: string;
@@ -12,9 +13,9 @@ export default function Home(props: Props) {
     <main className={props.className}>
       <section
         className={cn(
-          "flex flex-col items-center justify-center max-w-[1280px] m-auto",
+          "flex flex-col items-center max-w-[920px]",
           "leading-relaxed gap-10",
-          "xl:flex-row",
+          "2xl:flex-row",
         )}
       >
         <section className="flex flex-col gap-8 max-w-[768px]">
@@ -48,8 +49,8 @@ export default function Home(props: Props) {
 
       <section
         className={cn(
-          "justify-center mt-20",
-          "xl:grid xl:grid-cols-2 xl:mt-30 xl:",
+          " flex flex-col gap-y-8 max-w-[920px]",
+          "2xl:grid 2xl:grid-cols-2  2xl:gap-x-8",
         )}
       >
         <InfoCluster className="place-self-end">
@@ -62,7 +63,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline")}
+            className={cn("text-cyan-500 underline max-w-fit py-1")}
           >
             See Limitations
           </a>
@@ -78,7 +79,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline")}
+            className={cn("text-cyan-500 underline max-w-fit py-1")}
           >
             Tutorial
           </a>
@@ -94,7 +95,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline")}
+            className={cn("text-cyan-500 underline max-w-fit py-1")}
           >
             Learn more
           </a>
@@ -111,18 +112,44 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline")}
+            className={cn("text-cyan-500 underline max-w-fit py-1")}
           >
             GitHub
           </a>
         </InfoCluster>
       </section>
 
-      <figure className={cn("grid place-items-center mt-20", "xl:mt-30")}>
+      <section className={cn("min-w-full flex flex-col items-center")}>
+        <div
+          className={cn(
+            "min-w-full",
+            "2xl:min-w-[920px]",
+            "min-[678px]:min-w-[640px]",
+          )}
+        >
+          <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
+          <FAQs
+            className={cn(
+              "mt-8",
+              "2xl:min-w-[920px]",
+              "min-[678px]:max-w-[640px]",
+              "min-w-full",
+            )}
+          />
+        </div>
+      </section>
+
+      <figure
+        className={cn(
+          "grid place-items-center max-w-[640px]",
+          "2xl:max-w-[920px]",
+          "min-[678px]:min-w-[640px]",
+        )}
+      >
         <img
           src={llm}
           alt="Large Language Model Basics Infographic"
-          className=""
+          className="min-w-[280px]"
         />
         <figcaption className="text-xs text-muted-foreground">
           Infographic from{" "}
