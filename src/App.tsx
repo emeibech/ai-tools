@@ -19,8 +19,9 @@ function App() {
       >
         <Header
           className={cn(
-            "flex justify-between col-start-3 row-start-1 row-span-3",
-            "fixed top-0 left-0 right-0 bg-muted",
+            "col-start-3 row-start-1 row-span-3",
+            "fixed top-0 left-0 right-0 bg-background",
+            "grid grid-cols-2 py-1",
             "lg:justify-end lg:static lg:bg-inherit",
           )}
         />

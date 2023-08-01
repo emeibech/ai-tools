@@ -3,6 +3,7 @@ import SiteTitle from "./SiteTitle";
 import NavigationSheet from "../navigation/NavigationSheet";
 import { SunIcon } from "@/components/custom/Icons";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 interface Props {
   className?: string;
@@ -11,9 +12,7 @@ interface Props {
 export default function Header(props: Props) {
   return (
     <header className={cn(props.className)}>
-      <section
-        className={cn("flex items-center gap-2 min-h-[40px]", "lg:hidden")}
-      >
+      <section className={cn("flex items-center gap-2", "lg:hidden")}>
         <NavigationSheet
           side="left"
           className={cn(
@@ -27,10 +26,12 @@ export default function Header(props: Props) {
       <Button
         variant="ghost"
         type="button"
-        className={cn("px-2", "lg:fixed lg:mx-6 lg:mt-4")}
+        className={cn("px-2 justify-self-end", "lg:fixed lg:mx-6 lg:mt-4")}
       >
         <SunIcon height="24px" />
       </Button>
+
+      <Separator className={cn("col-span-2", "lg:hidden")} />
     </header>
   );
 }
