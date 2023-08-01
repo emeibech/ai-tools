@@ -4,6 +4,8 @@ import Nav from "./layout/navigation/Nav";
 import SiteTitle from "./layout/header/SiteTitle";
 import Home from "./layout/main/home/Home";
 import { cn } from "./lib/utils";
+import { Separator } from "@/components/ui/separator";
+import Footer from "./layout/footer/Footer";
 
 function App() {
   return (
@@ -17,7 +19,7 @@ function App() {
       >
         <Header
           className={cn(
-            "flex justify-between col-start-3 row-start-1",
+            "flex justify-between col-start-3 row-start-1 row-span-3",
             "fixed top-0 left-0 right-0 bg-muted",
             "lg:justify-end lg:static lg:bg-inherit",
           )}
@@ -25,7 +27,7 @@ function App() {
 
         <section
           className={cn(
-            "justify-between hidden col-start-1 bg-muted relative",
+            "justify-between hidden col-start-1 bg-muted relative row-span-3",
             "lg:flex lg:pt-4",
           )}
         >
@@ -42,6 +44,10 @@ function App() {
             "2xl:p-12 2xl:gap-48",
           )}
         />
+
+        <Separator className="col-start-2 max-w-[920px] mx-auto mt-4" />
+
+        <Footer className="col-start-2 max-w-[920px] mx-auto p-2" />
       </div>
     </>
   );

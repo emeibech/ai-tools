@@ -151,7 +151,7 @@ export default function Home(props: Props) {
           alt="Large Language Model Basics Infographic"
           className="min-w-[280px]"
         />
-        <figcaption className="text-xs text-muted-foreground">
+        <figcaption className="text-xs text-muted-foreground font-light">
           Infographic from{" "}
           <a
             className="text-cyan-500"
