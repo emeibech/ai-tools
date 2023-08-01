@@ -56,10 +56,11 @@ export default function FAQs(props: Props) {
           The OpenAI API allows developers to tinker with various settings that
           are not available when just using ChatGPT. The ones I tinker with the
           most are temperature and system content. Temperature gives developers
-          control on how deterministic or creative the response is going to be,
-          while the system content allows us to give specific instructions on
-          exactlty how the AI should respond. Moreover, the free tier of ChatGPT
-          uses an older model that is more likely to provide erroneous response.
+          control over how deterministic or unpredictable the response is going
+          to be, while the system content allows us to give specific
+          instructions on exactlty how the AI should respond. Moreover, the free
+          tier of ChatGPT uses an older model that is more likely to provide
+          erroneous response.
         </AccordionContent>
       </AccordionItem>
 
