@@ -6,12 +6,17 @@ import Home from "./layout/main/home/Home";
 import { cn } from "./lib/utils";
 import { Separator } from "@/components/ui/separator";
 import Footer from "./layout/footer/Footer";
+import { useAppSelector } from "./app/hooks";
+import { darkModeStatus } from "./features/darkmode/darkmodeSlice";
 
 function App() {
+  const darkmode = useAppSelector(darkModeStatus);
+
   return (
     <>
       <div
         className={cn(
+          darkmode ? "dark" : "",
           "bg-background text-foreground",
           "lg:grid lg:grid-cols-[260px_1fr_80px]",
         )}
