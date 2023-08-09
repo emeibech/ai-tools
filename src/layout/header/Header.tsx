@@ -20,7 +20,7 @@ export default function Header(props: Props) {
   const darkmode = useAppSelector(darkModeStatus);
   const dispatch = useDispatch();
 
-  function handleClickDarkmode(mode: boolean) {
+  function handleClickTheme(mode: boolean) {
     if (mode) {
       dispatch(turnOffDarkmode());
     } else {
@@ -38,12 +38,12 @@ export default function Header(props: Props) {
             "w-[240px] min-[360px]:w-[280px]",
             "text-foreground bg-background",
           )}
-          data-darkmode={false}
+          data-darkmode={darkmode}
         />
         <SiteTitle />
       </section>
       <Button
-        onClick={() => handleClickDarkmode(darkmode)}
+        onClick={() => handleClickTheme(darkmode)}
         variant="ghost"
         type="button"
         className={cn("px-2 justify-self-end", "lg:fixed lg:mx-6 lg:mt-4")}

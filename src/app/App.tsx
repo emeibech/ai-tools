@@ -20,7 +20,7 @@ function App() {
           "bg-background text-foreground",
           "lg:grid lg:grid-cols-[260px_1fr_80px]",
         )}
-        data-darkmode="false"
+        data-darkmode={darkmode}
       >
         <Header
           className={cn(
