@@ -4,12 +4,12 @@ import NavigationSheet from "../navigation/NavigationSheet";
 import { MoonIcon, SunIcon } from "@/common/components/ui/Icons";
 import { Button } from "@/common/components/shadcn/button";
 import { Separator } from "@/common/components/shadcn/separator";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import {
   darkModeStatus,
   turnOffDarkmode,
   turnOnDarkmode,
-} from "../../features/darkmode/darkmodeSlice";
+} from "@/features/darkmode/darkmodeSlice";
 import { useDispatch } from "react-redux";
 
 interface Props {
