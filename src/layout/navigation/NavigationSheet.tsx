@@ -6,7 +6,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/common/components/shadcn/sheet";
 
 export default function NavigationSheet(props: {
   side?: "top" | "bottom" | "left" | "right" | null | undefined;

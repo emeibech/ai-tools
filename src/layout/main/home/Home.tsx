@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/common/lib/utils";
 import botImg from "./imgs/bot.png";
 import llm from "./imgs/llm.jpg";
 import InfoCluster from "./components/InfoCluster";

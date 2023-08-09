@@ -3,8 +3,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
+} from "@/common/components/shadcn/accordion";
+import { cn } from "@/common/lib/utils";
 
 interface Props {
   className?: string;

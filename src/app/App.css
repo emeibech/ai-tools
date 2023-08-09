@@ -4,13 +4,13 @@
 
 @font-face {
   font-family: tektur;
-  src: url("./assets/fonts/tektur.ttf");
+  src: url("../assets/fonts/tektur.ttf");
   font-display: swap;
 }
 
 @font-face {
   font-family: aquire;
-  src: url("./assets/fonts/aquire.otf");
+  src: url("../assets/fonts/aquire.otf");
   font-display: swap;
 }
 

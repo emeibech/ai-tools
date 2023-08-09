@@ -1,9 +1,9 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/common/lib/utils";
 import SiteTitle from "./SiteTitle";
 import NavigationSheet from "../navigation/NavigationSheet";
-import { MoonIcon, SunIcon } from "@/components/custom/Icons";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { MoonIcon, SunIcon } from "@/common/components/ui/Icons";
+import { Button } from "@/common/components/shadcn/button";
+import { Separator } from "@/common/components/shadcn/separator";
 import { useAppSelector } from "../../app/hooks";
 import {
   darkModeStatus,
