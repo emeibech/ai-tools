@@ -4,13 +4,15 @@ import llm from "./imgs/llm.jpg";
 import InfoCluster from "./components/InfoCluster";
 import FAQs from "./components/FAQs";
 
-interface Props {
-  className?: string;
-}
-
-export default function Home(props: Props) {
+export default function Home() {
   return (
-    <main className={props.className}>
+    <main
+      className={cn(
+        "mt-12 px-4 flex flex-col items-center gap-20",
+        "min-[320px]:p-4 lg:p-8",
+        "2xl:p-12 2xl:gap-48",
+      )}
+    >
       <section
         className={cn(
           "flex flex-col items-center max-w-[920px]",
@@ -58,12 +60,13 @@ export default function Home(props: Props) {
           <p className={cn("text-card-foreground")}>
             The best feature of this app is that it's free. That is right. Free.
             But you can only use it like once a day maybe. I haven't decided
-            yet. So, yeah, limitations will apply, you dilweed.
+            yet. So, yeah, limitations will apply, and if you don't like it then
+            gtfo.
           </p>
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline max-w-fit py-1")}
+            className={cn("text-accent underline max-w-fit py-1")}
           >
             See Limitations
           </a>
@@ -79,7 +82,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline max-w-fit py-1")}
+            className={cn("text-accent underline max-w-fit py-1")}
           >
             Tutorial
           </a>
@@ -95,7 +98,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline max-w-fit py-1")}
+            className={cn("text-accent underline max-w-fit py-1")}
           >
             Learn more
           </a>
@@ -112,7 +115,7 @@ export default function Home(props: Props) {
           <a
             href={"#"}
             target="_blank"
-            className={cn("text-cyan-500 underline max-w-fit py-1")}
+            className={cn("text-accent underline max-w-fit py-1")}
           >
             GitHub
           </a>
@@ -154,7 +157,7 @@ export default function Home(props: Props) {
         <figcaption className="text-xs text-muted-foreground font-light">
           Infographic from{" "}
           <a
-            className="text-cyan-500"
+            className="text-accent"
             target="_blank"
             href={import.meta.env.VITE_KEYPOINT_INTELLIGENCE_URL}
           >
