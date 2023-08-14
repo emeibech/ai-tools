@@ -2,12 +2,12 @@ import "./App.css";
 import Header from "../layout/header/Header";
 import Nav from "../layout/navigation/Nav";
 import SiteTitle from "../layout/header/SiteTitle";
-import Home from "../layout/main/home/Home";
 import { cn } from "../common/lib/utils";
 import { Separator } from "@/common/components/shadcn/separator";
 import Footer from "../layout/footer/Footer";
 import { useAppSelector } from "../app/hooks";
 import { darkModeStatus } from "../features/darkmode/darkmodeSlice";
+import { Outlet } from "react-router-dom";
 
 function App() {
   const darkmode = useAppSelector(darkModeStatus);
@@ -43,13 +43,7 @@ function App() {
           </div>
         </section>
 
-        <Home
-          className={cn(
-            "mt-12 px-4 flex flex-col items-center gap-20",
-            "min-[320px]:p-4 lg:p-8",
-            "2xl:p-12 2xl:gap-48",
-          )}
-        />
+        <Outlet />
 
         <Separator className="col-start-2 max-w-[920px] mx-auto mt-4" />
 
