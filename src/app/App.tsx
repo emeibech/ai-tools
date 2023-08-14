@@ -8,8 +8,9 @@ import Footer from "../layout/footer/Footer";
 import { useAppSelector } from "../app/hooks";
 import { darkModeStatus } from "../features/darkmode/darkmodeSlice";
 import { Outlet } from "react-router-dom";
+import { ReactNode } from "react";
 
-function App() {
+function App({ children }: { children?: ReactNode }) {
   const darkmode = useAppSelector(darkModeStatus);
 
   return (
@@ -44,6 +45,7 @@ function App() {
         </section>
 
         <Outlet />
+        {children}
 
         <Separator className="col-start-2 max-w-[920px] mx-auto mt-4" />
 
