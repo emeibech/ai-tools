@@ -1,4 +1,5 @@
 import { cn } from "@/common/lib/utils";
+import { Link } from "react-router-dom";
 
 export default function SiteTitle() {
   return (
@@ -9,7 +10,9 @@ export default function SiteTitle() {
         "lg:text-2xl lg:px-6 lg:py-1",
       )}
     >
-      emeibech<span className={cn("ml-1")}>ai</span>
+      <Link to={"/"}>
+        emeibech<span className={cn("ml-1")}>ai</span>
+      </Link>
     </h1>
   );
 }
