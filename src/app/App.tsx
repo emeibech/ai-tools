@@ -10,7 +10,7 @@ import { darkModeStatus } from "../features/darkmode/darkmodeSlice";
 import { Outlet } from "react-router-dom";
 import { ReactNode } from "react";
 
-function App({ children }: { children?: ReactNode }) {
+export default function App({ children }: { children?: ReactNode }) {
   const darkmode = useAppSelector(darkModeStatus);
 
   return (
@@ -34,7 +34,8 @@ function App({ children }: { children?: ReactNode }) {
 
         <section
           className={cn(
-            "justify-between hidden col-start-1 bg-muted relative row-span-3",
+            "hidden justify-between col-start-1 row-span-3",
+            "bg-muted relative min-h-screen",
             "lg:flex lg:pt-4",
           )}
         >
@@ -47,12 +48,14 @@ function App({ children }: { children?: ReactNode }) {
         <Outlet />
         {children}
 
-        <Separator className="col-start-2 max-w-[920px] mx-auto mt-4" />
+        <Separator
+          className={cn("col-start-2 max-w-[920px]", "row-start-3 mx-auto")}
+        />
 
-        <Footer className="col-start-2 max-w-[920px] mx-auto p-2" />
+        <Footer
+          className={cn("col-start-2 max-w-[920px] p-2", "row-start-3 mx-auto")}
+        />
       </div>
     </>
   );
 }
-
-export default App;

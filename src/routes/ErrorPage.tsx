@@ -20,19 +20,15 @@ export default function ErrorPage() {
 
   return (
     <App>
-      <div
-        className={cn(
-          "mt-40 flex flex-col gap-y-2 max-w-max mx-auto p-4 min-h-screen",
-        )}
-      >
-        <h1 className="text-3xl">OwO, what's this?</h1>
+      <div className={cn("mt-40 flex flex-col gap-y-2 max-w-max mx-auto p-4")}>
+        <h2 className="text-3xl font-medium">OwO, what's this?</h2>
         <p className="text-xl text-card-foreground">
           Oopsie Woopsie!! Uwu we made a fucky wucky!
         </p>
-        <p className="text-7xl mt-8">{errorMessage(error)}</p>
-        <p className="text-xl text-card-foreground">
+        <strong className="text-7xl mt-8">{errorMessage(error)}</strong>
+        <em className="text-xl text-card-foreground">
           This page does not exist or it has been removed.
-        </p>
+        </em>
       </div>
     </App>
   );
