@@ -3,7 +3,7 @@ import Header from "../layout/header/Header";
 import Nav from "../layout/navigation/Nav";
 import SiteTitle from "../layout/header/SiteTitle";
 import { cn } from "../common/lib/utils";
-import { Separator } from "@/common/components/shadcn/separator";
+import { Separator } from "@/common/components/ui/separator";
 import Footer from "../layout/footer/Footer";
 import { useAppSelector } from "../app/hooks";
 import { darkModeStatus } from "../features/darkmode/darkmodeSlice";
