@@ -4,31 +4,44 @@ import { Button } from "@/common/components/ui/button";
 import { SendIcon } from "@/common/components/ui/Icons";
 import { cn } from "@/common/lib/utils";
 
-export default function CodeAnalyzerForm() {
+interface TextareaFormProps {
+  minInputLength: number;
+  placeholder?: string;
+  rows?: number;
+  cols?: number;
+}
+
+export default function TextareaForm({
+  minInputLength,
+  placeholder,
+  rows,
+  cols,
+}: TextareaFormProps) {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const codeRef = useRef<HTMLTextAreaElement>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    console.log(codeRef.current?.value);
-    codeRef.current!.value = "";
+    console.log(ref.current?.value);
+    ref.current!.value = "";
     setIsButtonDisabled(true);
   }
 
   function handleInputChange() {
-    const inputLength = codeRef.current?.value.length ?? 0;
-    setIsButtonDisabled(inputLength <= 4);
+    const inputLength = ref.current?.value.length ?? 0;
+    setIsButtonDisabled(inputLength <= minInputLength - 1);
   }
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-2 relative">
       <Textarea
         onChange={handleInputChange}
-        ref={codeRef}
-        placeholder="Put your code here"
-        rows={12}
-        cols={100}
+        ref={ref}
+        placeholder={placeholder}
+        rows={rows}
+        cols={cols}
         className="resize-none"
+        wrap="hard"
       />
       <Button
         disabled={isButtonDisabled}
