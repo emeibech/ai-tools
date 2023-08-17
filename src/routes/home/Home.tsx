@@ -20,7 +20,7 @@ export default function Home() {
           "2xl:flex-row",
         )}
       >
-        <section className="flex flex-col gap-8 max-w-[768px]">
+        <section className="flex flex-col gap-4 max-w-[768px]">
           <h2
             className={cn(
               "text-4xl font-semibold max-w-[640px]",
