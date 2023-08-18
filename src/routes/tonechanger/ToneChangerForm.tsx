@@ -49,7 +49,7 @@ export default function ToneChangerForm() {
               <FormControl>
                 <Input type="text" {...field} className="max-w-[460px]" />
               </FormControl>
-              <FormDescription>Min: 2 | Max: 100</FormDescription>
+              <FormDescription>Character limit: 2 - 100</FormDescription>
             </FormItem>
           )}
         />
@@ -67,7 +67,7 @@ export default function ToneChangerForm() {
                   rows={10}
                 />
               </FormControl>
-              <FormDescription>Min: 5 | Max: 5000</FormDescription>
+              <FormDescription>Character limit: 5 - 5000</FormDescription>
             </FormItem>
           )}
         />

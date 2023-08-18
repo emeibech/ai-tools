@@ -47,7 +47,7 @@ export default function TextareaForm({
         className="resize-none"
         wrap="hard"
       />
-      <p className="text-sm text-muted-foreground">Min: 5 | Max: 5000</p>
+      <p className="text-sm text-muted-foreground">Character limit: 5 - 5000</p>
       <Button
         disabled={isButtonDisabled}
         variant={"ghost"}
