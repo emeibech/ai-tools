@@ -58,10 +58,7 @@ export default function CodingAssistant() {
               </FormItem>
               <FormItem>
                 <FormControl>
-                  <Textarea
-                    placeholder="Put your code here"
-                    {...field}
-                  ></Textarea>
+                  <Textarea placeholder="Put your code here" {...field} />
                 </FormControl>
               </FormItem>
             </>
