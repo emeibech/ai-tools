@@ -1,5 +1,5 @@
 import { cn } from "@/common/lib/utils";
-import TextareaForm from "@/features/textareaForm/TextareaForm";
+import CodeAnalyzerForm from "./CodeAnalyzerForm";
 
 export default function CodeAnalyzer() {
   return (
@@ -25,7 +25,8 @@ export default function CodeAnalyzer() {
         code in the box, submit, and you will get a response giving you a brief
         summary and a structured break down of the code.
       </p>
-      <TextareaForm minInput={5} maxInput={5000} rows={10} cols={100} />
+
+      <CodeAnalyzerForm />
     </main>
   );
 }
