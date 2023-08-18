@@ -50,9 +50,11 @@ export default function TextareaForm({
       <p className="text-sm text-muted-foreground">Character limit: 5 - 5000</p>
       <Button
         disabled={isButtonDisabled}
-        variant={"ghost"}
+        size={"custom"}
+        variant={"custom"}
         className={cn(
-          "justify-self-end max-w-max px-2.5 rounded-full",
+          "bg-cyan-500 p-2",
+          "justify-self-end max-w-max",
           "absolute bottom-9 right-2",
           "transition-color transition-opacity duration-300",
         )}

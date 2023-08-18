@@ -73,9 +73,11 @@ export default function ToneChangerForm() {
         />
         <Button
           disabled={!form.formState.isValid}
-          variant={"ghost"}
+          variant={"custom"}
+          size={"custom"}
           className={cn(
-            "justify-self-end max-w-max px-2.5 rounded-full",
+            "bg-cyan-500 p-2",
+            "justify-self-end max-w-max",
             "absolute bottom-9 right-2",
             "transition-color transition-opacity duration-300",
           )}
