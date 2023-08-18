@@ -5,14 +5,16 @@ import { SendIcon } from "@/common/components/ui/Icons";
 import { cn } from "@/common/lib/utils";
 
 interface TextareaFormProps {
-  minInputLength: number;
+  minInput: number;
+  maxInput: number;
   placeholder?: string;
   rows?: number;
   cols?: number;
 }
 
 export default function TextareaForm({
-  minInputLength,
+  minInput,
+  maxInput,
   placeholder,
   rows,
   cols,
@@ -29,7 +31,9 @@ export default function TextareaForm({
 
   function handleInputChange() {
     const inputLength = ref.current?.value.length ?? 0;
-    setIsButtonDisabled(inputLength <= minInputLength - 1);
+    setIsButtonDisabled(
+      inputLength <= minInput - 1 || inputLength >= maxInput + 1,
+    );
   }
 
   return (
@@ -43,16 +47,17 @@ export default function TextareaForm({
         className="resize-none"
         wrap="hard"
       />
+      <p className="text-sm text-muted-foreground">Min: 5 | Max: 5000</p>
       <Button
         disabled={isButtonDisabled}
         variant={"ghost"}
         className={cn(
           "justify-self-end max-w-max px-2.5 rounded-full",
-          "absolute bottom-3 right-3",
+          "absolute bottom-9 right-2",
           "transition-color transition-opacity duration-300",
         )}
       >
-        <SendIcon height="20px" />
+        <SendIcon height="18px" />
       </Button>
     </form>
   );

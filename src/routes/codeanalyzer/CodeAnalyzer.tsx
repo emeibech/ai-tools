@@ -25,12 +25,7 @@ export default function CodeAnalyzer() {
         code in the box, submit, and you will get a response giving you a brief
         summary and a structured break down of the code.
       </p>
-      <TextareaForm
-        minInputLength={4}
-        placeholder="Paste your code here"
-        rows={12}
-        cols={100}
-      />
+      <TextareaForm minInput={5} maxInput={5000} rows={10} cols={100} />
     </main>
   );
 }
