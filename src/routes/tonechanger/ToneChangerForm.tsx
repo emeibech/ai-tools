@@ -6,13 +6,14 @@ import { Textarea } from "@/common/components/ui/textarea";
 import { Button } from "@/common/components/ui/button";
 import { Input } from "@/common/components/ui/input";
 import { SendIcon } from "@/common/components/ui/Icons";
+import useLabelAnimation from "@/common/hooks/useLabelAnimation";
+import { Label } from "@/common/components/ui/label";
 import {
   Form,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
 } from "@/common/components/ui/form";
 
 const FormSchema = z.object({
@@ -29,10 +30,15 @@ export default function ToneChangerForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
+  const toneLabel = useLabelAnimation(form.getFieldState("tone").isDirty);
+  const messageLabel = useLabelAnimation(form.getFieldState("message").isDirty);
+
+  function onSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
     form.reset();
-  };
+    toneLabel.resetState();
+    messageLabel.resetState();
+  }
 
   return (
     <Form {...form}>
@@ -44,10 +50,30 @@ export default function ToneChangerForm() {
           name="tone"
           control={form.control}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tone</FormLabel>
-              <FormControl>
-                <Input type="text" {...field} className="max-w-[460px]" />
+            <FormItem className="relative">
+              <Label
+                className={cn(
+                  toneLabel.getStyle(),
+                  "transition-all ease-out",
+                  "absolute left-3 px-1",
+                  "font-normal",
+                  "bg-background",
+                )}
+              >
+                Tone
+              </Label>
+              <FormControl
+                onFocus={() => toneLabel.floatUp()}
+                onBlur={() => toneLabel.floatDown()}
+                onChange={() => {
+                  if (form.getFieldState("tone").isDirty) toneLabel.remainUp();
+                }}
+              >
+                <Input
+                  {...field}
+                  type="text"
+                  className="max-w-[460px] transition"
+                />
               </FormControl>
               <FormDescription>Character limit: 2 - 100</FormDescription>
             </FormItem>
@@ -57,12 +83,29 @@ export default function ToneChangerForm() {
           name="message"
           control={form.control}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Message</FormLabel>
-              <FormControl>
+            <FormItem className="relative">
+              <Label
+                className={cn(
+                  messageLabel.getStyle(),
+                  "transition-all ease-out",
+                  "absolute left-3 px-1",
+                  "font-normal",
+                  "bg-background",
+                )}
+              >
+                Message
+              </Label>
+              <FormControl
+                onFocus={() => messageLabel.floatUp()}
+                onBlur={() => messageLabel.floatDown()}
+                onChange={() => {
+                  if (form.getFieldState("message").isDirty)
+                    messageLabel.remainUp();
+                }}
+              >
                 <Textarea
                   {...field}
-                  className="resize-none"
+                  className="resize-none transition"
                   cols={100}
                   rows={10}
                 />
