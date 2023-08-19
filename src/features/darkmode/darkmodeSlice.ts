@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/app/store";
 
-export interface CounterState {
+export interface DarkmodeState {
   value: boolean;
 }
 
-const initialState: CounterState = {
+const initialState: DarkmodeState = {
   value: false,
 };
 
