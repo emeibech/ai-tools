@@ -32,14 +32,11 @@ export default function useLabelAnimation(isDirty: boolean) {
   }
 
   function getStyle(): string {
-    switch (fieldState) {
-      case "blurred":
-        return "translate-y-5 -translate-x-[3px] text-muted-foreground";
-      case "focused":
-        return "translate-y-0 -translate-x-0";
-      default:
-        return "translate-y-0 -translate-x-0";
+    if (fieldState === "blurred") {
+      return "translate-y-5 -translate-x-[3px] text-muted-foreground";
     }
+
+    return "translate-y-0 -translate-x-0";
   }
 
   return {
