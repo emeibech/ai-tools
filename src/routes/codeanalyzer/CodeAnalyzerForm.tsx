@@ -39,7 +39,7 @@ export default function CodeAnalyzerForm() {
           "bg-cyan-500 p-2",
           "justify-self-end max-w-max",
           "absolute bottom-9 right-2",
-          "transition-color transition-opacity duration-300",
+          "transition-all duration-300",
         )}
       >
         <SendIcon height="18px" />
