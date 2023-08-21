@@ -54,7 +54,7 @@ export default function ToneChangerForm() {
               <Label
                 className={cn(
                   toneLabel.getStyle(),
-                  "transition-all ease-out",
+                  "transition-transform ease-out",
                   "absolute left-3 px-1",
                   "font-normal",
                   "bg-background",
@@ -69,11 +69,7 @@ export default function ToneChangerForm() {
                   if (form.getFieldState("tone").isDirty) toneLabel.remainUp();
                 }}
               >
-                <Input
-                  {...field}
-                  type="text"
-                  className="max-w-[460px] transition"
-                />
+                <Input {...field} type="text" className="max-w-[460px]" />
               </FormControl>
               <FormDescription>Character limit: 2 - 100</FormDescription>
             </FormItem>
@@ -87,7 +83,7 @@ export default function ToneChangerForm() {
               <Label
                 className={cn(
                   messageLabel.getStyle(),
-                  "transition-all ease-out",
+                  "transition-transform ease-out",
                   "absolute left-3 px-1",
                   "font-normal",
                   "bg-background",
@@ -105,7 +101,7 @@ export default function ToneChangerForm() {
               >
                 <Textarea
                   {...field}
-                  className="resize-none transition"
+                  className="resize-none"
                   cols={100}
                   rows={10}
                 />

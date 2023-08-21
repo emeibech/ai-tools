@@ -33,7 +33,7 @@ export default function CodeAnalyzerForm() {
       <Label
         className={cn(
           codeLabel.getStyle(),
-          "transition-all ease-out",
+          "transition-transform ease-out",
           "absolute left-3 -top-2 px-1",
           "font-normal",
           "bg-background",
@@ -48,10 +48,10 @@ export default function CodeAnalyzerForm() {
         ref={codeRef}
         rows={10}
         cols={100}
-        className="resize-none transition"
+        className="resize-none"
         wrap="hard"
       />
-      <p className="text-sm text-muted-foreground">Character limit: 5 - 5000</p>
+      <p className="text-xs text-muted-foreground">Character limit: 5 - 5000</p>
       <Button
         disabled={isButtonDisabled}
         size={"custom"}
@@ -60,7 +60,7 @@ export default function CodeAnalyzerForm() {
           "bg-cyan-500 p-2",
           "justify-self-end max-w-max",
           "absolute bottom-9 right-2",
-          "transition-all duration-300",
+          "transition duration-300",
         )}
       >
         <SendIcon height="18px" />
