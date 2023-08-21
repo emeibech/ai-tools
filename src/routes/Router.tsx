@@ -4,6 +4,7 @@ import ErrorPage from "./ErrorPage";
 import Home from "./home/Home";
 import CodeAnalyzer from "./codeanalyzer/CodeAnalyzer";
 import ToneChanger from "./tonechanger/ToneChanger";
+import StoryGenerator from "./storygenerator/StoryGenerator";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ export default function Router() {
         {
           path: "tonechanger",
           element: <ToneChanger />,
+        },
+        {
+          path: "storygenerator",
+          element: <StoryGenerator />,
         },
       ],
     },

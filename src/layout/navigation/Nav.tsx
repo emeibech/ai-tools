@@ -15,7 +15,7 @@ export default function Nav() {
     "Code Analyzer",
     "Coding Assistant",
     "Eli5",
-    "Lore Generator",
+    "Story Generator",
     "Tone Changer",
     "General Assistant",
   ];
