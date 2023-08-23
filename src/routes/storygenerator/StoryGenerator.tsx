@@ -20,12 +20,12 @@ export default function StoryGenerator() {
       </h2>
 
       <p>
-        Tone Changer rewrites your message in whatever tone you want. Aside from
-        regular tones (e.g., friendly, sad, professional), you can also put a
-        certain type of person (e.g., lawyer, medieval knight) in the Tone input
-        to make your message sound like it has been written by that type of
-        person. The result varies in quality, but most of them are good
-        jumping-off points.
+        Need less-than-mediocre stories in a pinch? Say no more. Story Generator
+        coughs up basic but coherent stories that sounds good enough as you're
+        reading them until you realize that the content is actually trash.
+        Nevertheless, they can still serve as a template or a source of ideas to
+        jumpstart the creation of a good story. If you just want trash, though,
+        you can also just use them as is.
       </p>
 
       <StoryGeneratorForm />
