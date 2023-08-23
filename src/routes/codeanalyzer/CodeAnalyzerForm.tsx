@@ -1,70 +1,78 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import * as z from "zod";
 import { Textarea } from "@/common/components/ui/textarea";
 import { Button } from "@/common/components/ui/button";
-import { SendIcon } from "@/common/components/ui/Icons";
 import { cn } from "@/common/lib/utils";
-import { Label } from "@/common/components/ui/label";
 import useLabelAnimation from "@/common/hooks/useLabelAnimation";
+import { Form, FormField } from "@/common/components/ui/form";
+import FormUnit from "@/features/formUnit/FormUnit";
+import useFormLogic from "@/common/hooks/useFormLogic";
+
+const schema = { code: z.string().min(5).max(5000) };
+const defaultValues = { code: "" };
 
 export default function CodeAnalyzerForm() {
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [isDirty, setIsDirty] = useState(false);
   const codeRef = useRef<HTMLTextAreaElement>(null);
-  const codeLabel = useLabelAnimation(isDirty);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
-    e.preventDefault();
-    console.log(codeRef.current?.value);
-    codeRef.current!.value = "";
-    setIsButtonDisabled(true);
+  const { form, FormSchema, getFieldState, getValidationStyles } = useFormLogic(
+    {
+      schema,
+      defaultValues,
+      mode: "onSubmit",
+      resetLabelState,
+      refs: [codeRef],
+    },
+  );
+
+  const codeLabel = useLabelAnimation({
+    isDirty: getFieldState("code").isDirty,
+    isInvalid: getFieldState("code").invalid,
+  });
+
+  function resetLabelState() {
     codeLabel.resetState();
-    setIsDirty(false);
   }
 
-  function handleInputChange() {
-    const inputLength = codeRef.current?.value.length ?? 0;
-    setIsButtonDisabled(inputLength <= 4 || inputLength >= 5001);
-    setIsDirty(inputLength > 0);
-    if (isDirty) codeLabel.remainUp();
+  function handleSubmit(values: z.infer<typeof FormSchema>) {
+    console.log(values);
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-y-2 relative">
-      <Label
-        className={cn(
-          codeLabel.getStyle(),
-          "transition-transform ease-out",
-          "absolute left-3 -top-2 px-1",
-          "font-normal",
-          "bg-background",
-        )}
+    <Form {...form}>
+      <form
+        className="flex flex-col gap-4 relative"
+        onSubmit={form.handleSubmit(handleSubmit)}
       >
-        Code
-      </Label>
-      <Textarea
-        onFocus={() => codeLabel.floatUp()}
-        onBlur={() => codeLabel.floatDown()}
-        onChange={handleInputChange}
-        ref={codeRef}
-        rows={10}
-        cols={100}
-        className="resize-none"
-        wrap="hard"
-      />
-      <p className="text-xs text-muted-foreground">Character limit: 5 - 5000</p>
-      <Button
-        disabled={isButtonDisabled}
-        size={"custom"}
-        variant={"custom"}
-        className={cn(
-          "bg-cyan-500 p-2",
-          "justify-self-end max-w-max",
-          "absolute bottom-9 right-2",
-          "transition duration-300",
-        )}
-      >
-        <SendIcon height="18px" />
-      </Button>
-    </form>
+        <FormField
+          name="code"
+          control={form.control}
+          render={({ field }) => (
+            <FormUnit label="Code" labelAnimator={codeLabel}>
+              <Textarea
+                {...field}
+                className={cn(
+                  getValidationStyles(getFieldState("code").invalid),
+                  "resize-none",
+                )}
+                cols={100}
+                rows={10}
+                ref={codeRef}
+              />
+            </FormUnit>
+          )}
+        />
+        <Button
+          type="submit"
+          size={"custom"}
+          className={cn(
+            "p-2 px-8 mx-auto",
+            "justify-self-end max-w-max",
+            "transition duration-300",
+          )}
+        >
+          Analyze Code
+        </Button>
+      </form>
+    </Form>
   );
 }

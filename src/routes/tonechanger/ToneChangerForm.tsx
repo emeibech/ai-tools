@@ -1,128 +1,107 @@
 import { cn } from "@/common/lib/utils";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Textarea } from "@/common/components/ui/textarea";
 import { Button } from "@/common/components/ui/button";
 import { Input } from "@/common/components/ui/input";
-import { SendIcon } from "@/common/components/ui/Icons";
 import useLabelAnimation from "@/common/hooks/useLabelAnimation";
-import { Label } from "@/common/components/ui/label";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-} from "@/common/components/ui/form";
+import { Form, FormField } from "@/common/components/ui/form";
+import FormUnit from "@/features/formUnit/FormUnit";
+import { useRef } from "react";
+import useFormLogic from "@/common/hooks/useFormLogic";
 
-const FormSchema = z.object({
+const schema = {
   tone: z.string().min(2).max(100),
   message: z.string().min(5).max(5000),
-});
+};
+
+const defaultValues = {
+  tone: "",
+  message: "",
+};
 
 export default function ToneChangerForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      tone: "",
-      message: "",
+  const toneRef = useRef(null);
+  const messageRef = useRef(null);
+  const { form, FormSchema, getFieldState, getValidationStyles } = useFormLogic(
+    {
+      schema,
+      defaultValues,
+      mode: "onTouched",
+      resetLabelState,
+      refs: [toneRef, messageRef],
     },
+  );
+
+  const toneLabel = useLabelAnimation({
+    isDirty: getFieldState("tone").isDirty,
+    isInvalid: getFieldState("tone").invalid,
   });
 
-  const toneLabel = useLabelAnimation(form.getFieldState("tone").isDirty);
-  const messageLabel = useLabelAnimation(form.getFieldState("message").isDirty);
+  const messageLabel = useLabelAnimation({
+    isDirty: getFieldState("message").isDirty,
+    isInvalid: getFieldState("message").invalid,
+  });
+
+  function resetLabelState() {
+    toneLabel.resetState();
+    messageLabel.resetState();
+  }
 
   function onSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
-    form.reset();
-    toneLabel.resetState();
-    messageLabel.resetState();
   }
 
   return (
     <Form {...form}>
       <form
-        className="flex flex-col gap-4 relative"
+        className="flex flex-col gap-8 relative"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           name="tone"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="relative">
-              <Label
+            <FormUnit label="Tone" labelAnimator={toneLabel}>
+              <Input
+                {...field}
+                type="text"
                 className={cn(
-                  toneLabel.getStyle(),
-                  "transition-transform ease-out",
-                  "absolute left-3 px-1",
-                  "font-normal",
-                  "bg-background",
+                  getValidationStyles(getFieldState("tone").invalid),
+                  "max-w-[460px]",
                 )}
-              >
-                Tone
-              </Label>
-              <FormControl
-                onFocus={() => toneLabel.floatUp()}
-                onBlur={() => toneLabel.floatDown()}
-                onChange={() => {
-                  if (form.getFieldState("tone").isDirty) toneLabel.remainUp();
-                }}
-              >
-                <Input {...field} type="text" className="max-w-[460px]" />
-              </FormControl>
-              <FormDescription>Character limit: 2 - 100</FormDescription>
-            </FormItem>
+                ref={toneRef}
+              />
+            </FormUnit>
           )}
         />
         <FormField
           name="message"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="relative">
-              <Label
+            <FormUnit label="Message" labelAnimator={messageLabel}>
+              <Textarea
+                {...field}
                 className={cn(
-                  messageLabel.getStyle(),
-                  "transition-transform ease-out",
-                  "absolute left-3 px-1",
-                  "font-normal",
-                  "bg-background",
+                  getValidationStyles(getFieldState("message").invalid),
+                  "resize-none",
                 )}
-              >
-                Message
-              </Label>
-              <FormControl
-                onFocus={() => messageLabel.floatUp()}
-                onBlur={() => messageLabel.floatDown()}
-                onChange={() => {
-                  if (form.getFieldState("message").isDirty)
-                    messageLabel.remainUp();
-                }}
-              >
-                <Textarea
-                  {...field}
-                  className="resize-none"
-                  cols={100}
-                  rows={10}
-                />
-              </FormControl>
-              <FormDescription>Character limit: 5 - 5000</FormDescription>
-            </FormItem>
+                cols={100}
+                rows={10}
+                ref={messageRef}
+              />
+            </FormUnit>
           )}
         />
         <Button
-          disabled={!form.formState.isValid}
-          variant={"custom"}
+          type="submit"
           size={"custom"}
           className={cn(
-            "bg-cyan-500 p-2",
+            "p-2 px-8 mx-auto",
             "justify-self-end max-w-max",
-            "absolute bottom-9 right-2",
-            "transition-all duration-300",
+            "transition duration-300",
           )}
-          type="submit"
         >
-          <SendIcon height="18px" />
+          Change Tone
         </Button>
       </form>
     </Form>
