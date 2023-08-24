@@ -49,11 +49,21 @@ export default function App({ children }: { children?: ReactNode }) {
         {children}
 
         <Separator
-          className={cn("col-start-2 max-w-[920px]", "row-start-3 mx-auto")}
+          className={cn(
+            "col-start-2 max-w-[920px] px-8",
+            "row-start-3 mx-auto",
+            "absolute inset-x-0 bottom-8",
+            "lg:static",
+          )}
         />
 
         <Footer
-          className={cn("col-start-2 max-w-[920px] p-2", "row-start-3 mx-auto")}
+          className={cn(
+            "col-start-2 max-w-[920px] p-2",
+            "row-start-3 mx-auto",
+            "absolute inset-x-0 bottom-0",
+            "lg:static",
+          )}
         />
       </div>
     </>

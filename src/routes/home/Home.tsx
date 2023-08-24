@@ -9,7 +9,7 @@ export default function Home() {
     <main
       className={cn(
         "mt-12 px-4 flex flex-col items-center gap-20",
-        "min-[320px]:p-4 lg:p-8",
+        "min-[320px]:p-4 lg:p-8 lg:mt-0",
         "2xl:p-12 2xl:gap-48",
       )}
     >

@@ -6,7 +6,7 @@ export default function CodeAnalyzer() {
     <main
       className={cn(
         "mt-12 px-4 flex flex-col items-start gap-8 max-w-[920px] mx-auto",
-        "min-[320px]:p-4 lg:p-8",
+        "min-[320px]:p-4 lg:p-8 lg:mt-2",
         "2xl:p-12",
       )}
     >
