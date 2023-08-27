@@ -5,6 +5,7 @@ import Home from "./home/Home";
 import CodeAnalyzer from "./codeanalyzer/CodeAnalyzer";
 import ToneChanger from "./tonechanger/ToneChanger";
 import StoryGenerator from "./storygenerator/StoryGenerator";
+import CodingAssistant from "./codingassistant/CodingAssistant";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -20,6 +21,10 @@ export default function Router() {
         {
           path: "codeanalyzer",
           element: <CodeAnalyzer />,
+        },
+        {
+          path: "codingassistant",
+          element: <CodingAssistant />,
         },
         {
           path: "tonechanger",
