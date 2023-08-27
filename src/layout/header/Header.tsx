@@ -46,7 +46,11 @@ export default function Header(props: Props) {
         onClick={() => handleClickTheme(darkmode)}
         variant="ghost"
         type="button"
-        className={cn("px-2 justify-self-end", "lg:fixed lg:mx-6 lg:mt-4")}
+        className={cn(
+          "px-2 justify-self-end",
+          "lg:fixed lg:mx-6 lg:mt-4",
+          "focus-visible:ring-offset-0",
+        )}
       >
         {darkmode ? <SunIcon height="24px" /> : <MoonIcon height="24px" />}
       </Button>

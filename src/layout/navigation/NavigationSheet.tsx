@@ -1,3 +1,5 @@
+import { cn } from "@/common/lib/utils";
+import Footer from "../footer/Footer";
 import HamburgerBtn from "../header/HamburgerBtn";
 import SiteTitle from "../header/SiteTitle";
 import Nav from "./Nav";
@@ -20,13 +22,17 @@ export default function NavigationSheet(props: {
       </SheetTrigger>
       <SheetContent
         side={props.side}
-        className={props.className}
+        className={cn(
+          props.className,
+          "grid grid-flow-row grid-rows-[1fr_6fr_1fr] py-4",
+        )}
         data-darkmode={props["data-darkmode"]}
       >
         <SheetHeader>
           <SiteTitle />
         </SheetHeader>
         <Nav />
+        <Footer />
       </SheetContent>
     </Sheet>
   );
