@@ -36,7 +36,7 @@ export default function Nav() {
   ));
 
   return (
-    <nav className={cn("min-h-screen mt-12", "lg:px-6 lg:mt-20")}>
+    <nav className={cn("lg:px-6")}>
       <ul>{listItems}</ul>
     </nav>
   );
