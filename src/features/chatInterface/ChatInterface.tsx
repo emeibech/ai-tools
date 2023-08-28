@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { SendIcon } from "@/common/components/ui/Icons";
 import { Button } from "@/common/components/ui/button";
 import { Textarea } from "@/common/components/ui/textarea";
@@ -8,6 +9,28 @@ interface ChatInterfaceProps {
 }
 
 export default function ChatInterface({ name }: ChatInterfaceProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  function adjustTextareaHeight() {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+
+      const maxHeight = 224;
+
+      if (textareaRef.current.scrollHeight > maxHeight) {
+        textareaRef.current.style.overflowY = "auto";
+        textareaRef.current.style.height = `${maxHeight}px`;
+      } else {
+        textareaRef.current.style.overflowY = "hidden";
+      }
+    }
+  }
+
+  function handleChange() {
+    adjustTextareaHeight();
+  }
+
   return (
     <section className="relative w-[100%]">
       <div className="sticky top-10 lg:top-0 py-1 bg-background">
@@ -29,16 +52,26 @@ export default function ChatInterface({ name }: ChatInterfaceProps) {
           "sticky bottom-0 inset-x-40",
         )}
       >
-        <Textarea
+        <div
           className={cn(
-            "text-base border-none bg-field resize-none focus-visible:ring-0",
             "col-start-1 col-end-3 row-start-1",
-            "min-h-[2rem] py-3 pl-4 pr-12 rounded-xl",
-            "md:min-h-[3.5rem] md:py-4",
+            "bg-field rounded-xl py-2",
           )}
-          cols={75}
-          rows={1}
-        />
+        >
+          <Textarea
+            className={cn(
+              "text-base bg-field border-none focus-visible:ring-0",
+              "min-h-[2rem] h-[auto] py-1 pl-4 pr-12 rounded-xl",
+              "md:min-h-[2.5rem] md:py-2",
+              "overflow-y-auto text resize-none",
+            )}
+            cols={75}
+            rows={1}
+            ref={textareaRef}
+            onChange={handleChange}
+            data-name="textarea"
+          />
+        </div>
 
         <div
           className={cn(
