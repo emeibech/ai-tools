@@ -14,10 +14,16 @@
   font-display: swap;
 }
 
-[data-name="site-name"] {
+@font-face {
+  font-family: neue;
+  src: url("../assets/fonts/helvetica-neue-extended.ttf");
+  font-display: swap;
+}
+
+[data-name="site-name"] > a {
   font-family: tektur;
 }
 
-[data-name="site-name"] > span {
+[data-name="site-name"] > a > span {
   font-family: aquire;
 }
