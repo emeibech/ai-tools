@@ -29,7 +29,7 @@ function SunIcon(props: IconProps) {
 function MoonIcon(props: IconProps) {
   return (
     <svg
-      height={props.height}
+      height={props.height || "24px"}
       width={props.width}
       role={props.role && "img"}
       aria-hidden={props.ariaHidden || true}
@@ -50,7 +50,7 @@ function MoonIcon(props: IconProps) {
 function SendIcon(props: IconProps) {
   return (
     <svg
-      height={props.height}
+      height={props.height || "24px"}
       width={props.width}
       role={props.role && "img"}
       aria-hidden={props.ariaHidden || true}
