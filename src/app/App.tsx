@@ -25,7 +25,7 @@ export default function App({ children }: { children?: ReactNode }) {
         <Header
           className={cn(
             "col-start-3 row-start-1 row-span-3 bg-background",
-            "fixed top-0 z-10 min-w-full",
+            "fixed top-0 z-20 min-w-full",
             "grid grid-cols-2",
             "lg:justify-end lg:static",
           )}
