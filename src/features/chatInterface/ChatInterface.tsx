@@ -1,17 +1,22 @@
-import { useRef } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { SendIcon } from "@/common/components/ui/Icons";
 import { Button } from "@/common/components/ui/button";
 import { Textarea } from "@/common/components/ui/textarea";
 import { cn } from "@/common/lib/utils";
 import useGetScrollDir from "@/common/hooks/useGetScrollDir";
 import ChatMessage from "./ChatMessage";
+import { useAppSelector } from "@/app/hooks";
+import { darkModeStatus } from "@/features/darkmode/darkmodeSlice";
 
 interface ChatInterfaceProps {
   name: string;
 }
 
 export default function ChatInterface({ name }: ChatInterfaceProps) {
+  const darkmode = useAppSelector(darkModeStatus);
+  const [value, setValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const scrollDirection = useGetScrollDir();
 
   function adjustTextareaHeight() {
     if (textareaRef.current) {
@@ -29,18 +34,17 @@ export default function ChatInterface({ name }: ChatInterfaceProps) {
     }
   }
 
-  function handleChange() {
+  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setValue(event.target.value);
     adjustTextareaHeight();
   }
-
-  const scrollDirection = useGetScrollDir();
 
   return (
     <section className="relative max-w-[1024px]">
       <div
         className={cn(
           scrollDirection === "down" ? "-translate-y-full" : "-translate-y-0",
-          "sticky top-10 lg:top-0 py-1 bg-background z-10 border-b",
+          "sticky top-12 lg:top-0 py-1 bg-background z-10 border-b",
           "transition-transform duration-300",
         )}
       >
@@ -97,13 +101,16 @@ export default function ChatInterface({ name }: ChatInterfaceProps) {
       </section>
       <div
         className={cn(
-          "grid grid-cols-2 mt-4 bg-background",
-          "pb-6 px-4 md:px-20",
+          "grid grid-cols-2 mt-2 bg-background",
+          "pb-12 px-4 md:px-20",
           "sticky bottom-0 inset-x-40",
         )}
       >
         <div
           className={cn(
+            darkmode
+              ? "drop-shadow-[0_-1rem_1rem_rgba(0,0,0,0.9)]"
+              : "drop-shadow-[0_-1rem_1rem_rgba(255,255,255,0.9)]",
             "col-start-1 col-end-3 row-start-1",
             "bg-field rounded-xl py-2",
           )}
@@ -111,12 +118,12 @@ export default function ChatInterface({ name }: ChatInterfaceProps) {
           <Textarea
             className={cn(
               "text-base bg-field border-none focus-visible:ring-0",
-              "min-h-[2rem] h-[auto] py-1 pl-4 pr-12 rounded-xl",
-              "md:min-h-[2.5rem] md:py-2",
-              "overflow-y-auto text resize-none",
+              "min-h-[2rem] py-1 pl-4 pr-12 rounded-xl",
+              "overflow-y-auto h-[auto] resize-none",
             )}
-            cols={75}
+            cols={65}
             rows={1}
+            value={value}
             ref={textareaRef}
             onChange={handleChange}
             data-name="textarea"
@@ -127,10 +134,10 @@ export default function ChatInterface({ name }: ChatInterfaceProps) {
           className={cn(
             "col-start-2 row-start-1",
             "justify-self-end self-end mr-2 mb-2 z-0",
-            "md:mr-2 md:mb-3",
           )}
         >
           <Button
+            disabled={value.length === 0}
             variant={"custom"}
             size={"custom"}
             className={cn("bg-cyan-500 p-1.5")}
