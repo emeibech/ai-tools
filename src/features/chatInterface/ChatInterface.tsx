@@ -44,7 +44,7 @@ export default function ChatInterface({ name }: ChatInterfaceProps) {
       <div
         className={cn(
           scrollDirection === "down" ? "-translate-y-full" : "-translate-y-0",
-          "sticky top-12 lg:top-0 py-1 bg-background z-10 border-b",
+          "sticky top-10 lg:top-0 py-1 bg-background z-10 border-b",
           "transition-transform duration-300",
         )}
       >
