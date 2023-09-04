@@ -1,43 +1,33 @@
-import { ChangeEvent, useRef, useState } from "react";
-import { SendIcon } from "@/common/components/ui/Icons";
-import { Button } from "@/common/components/ui/button";
-import { Textarea } from "@/common/components/ui/textarea";
-import { cn } from "@/common/lib/utils";
+import { useState } from "react";
+import { cn, generateKeys } from "@/common/lib/utils";
 import useGetScrollDir from "@/common/hooks/useGetScrollDir";
 import ChatMessage from "./ChatMessage";
-import { useAppSelector } from "@/app/hooks";
-import { darkModeStatus } from "@/features/darkmode/darkmodeSlice";
+import ChatInterfaceForm from "./ChatInterfaceForm";
 
 interface ChatInterfaceProps {
   name: string;
+  initialMessage: string;
+}
+
+export interface Messages {
+  id: string;
+  role: "assistant" | "user";
+  content: string;
 }
 
 export default function ChatInterface({ name }: ChatInterfaceProps) {
-  const darkmode = useAppSelector(darkModeStatus);
-  const [value, setValue] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollDirection = useGetScrollDir();
+  const [messages, setMessages] = useState<Messages[]>([]);
+  const messagesKeys = generateKeys(messages);
 
-  function adjustTextareaHeight() {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-
-      const maxHeight = 224;
-
-      if (textareaRef.current.scrollHeight > maxHeight) {
-        textareaRef.current.style.overflowY = "auto";
-        textareaRef.current.style.height = `${maxHeight}px`;
-      } else {
-        textareaRef.current.style.overflowY = "hidden";
-      }
-    }
-  }
-
-  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
-    setValue(event.target.value);
-    adjustTextareaHeight();
-  }
+  const listMessages = messages.map((message, index) => (
+    <ChatMessage key={messagesKeys[index]} data-id={messagesKeys[index]}>
+      ID: {message.id}
+      <br />
+      <br />
+      Message: {message.content}
+    </ChatMessage>
+  ));
 
   return (
     <section className="relative max-w-[1024px]">
@@ -98,54 +88,10 @@ export default function ChatInterface({ name }: ChatInterfaceProps) {
           the ax. This story exemplified Lincoln's belief in honesty and taking
           responsibility for one's actions.
         </ChatMessage>
+        {listMessages}
       </section>
-      <div
-        className={cn(
-          "grid grid-cols-2 mt-2 bg-background",
-          "pb-12 px-4 md:px-20",
-          "sticky bottom-0 inset-x-40",
-        )}
-      >
-        <div
-          className={cn(
-            darkmode
-              ? "drop-shadow-[0_-1rem_1rem_rgba(0,0,0,0.9)]"
-              : "drop-shadow-[0_-1rem_1rem_rgba(255,255,255,0.9)]",
-            "col-start-1 col-end-3 row-start-1",
-            "bg-field rounded-xl py-2",
-          )}
-        >
-          <Textarea
-            className={cn(
-              "text-base bg-field border-none focus-visible:ring-0",
-              "min-h-[2rem] py-1 pl-4 pr-12 rounded-xl",
-              "overflow-y-auto h-[auto] resize-none",
-            )}
-            cols={65}
-            rows={1}
-            value={value}
-            ref={textareaRef}
-            onChange={handleChange}
-            data-name="textarea"
-          />
-        </div>
 
-        <div
-          className={cn(
-            "col-start-2 row-start-1",
-            "justify-self-end self-end mr-2 mb-2 z-0",
-          )}
-        >
-          <Button
-            disabled={value.length === 0}
-            variant={"custom"}
-            size={"custom"}
-            className={cn("bg-cyan-500 p-1.5")}
-          >
-            <SendIcon height="20px" />
-          </Button>
-        </div>
-      </div>
+      <ChatInterfaceForm messages={messages} setMessages={setMessages} />
     </section>
   );
 }
