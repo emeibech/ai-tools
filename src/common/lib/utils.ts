@@ -6,6 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function generateKeys(list: string[]) {
+export function generateKeys(list: unknown[]) {
   return list.map(() => nanoid());
 }
