@@ -33,7 +33,7 @@ export default function ChatMessage({ children }: ChatMessageProps) {
 
         <div
           className={cn(
-            " col-span-2 row-span-1 justify-self-end self-center",
+            " col-span-2 row-span-1 justify-self-end self-center max-h-[1rem]",
             "min-[375px]:col-span-1 min-[375px]:self-start",
           )}
         >
