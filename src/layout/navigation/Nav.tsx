@@ -1,10 +1,5 @@
-import { cn } from "@/common/lib/utils";
-import { nanoid } from "@reduxjs/toolkit";
+import { cn, generateKeys } from "@/common/lib/utils";
 import { Link } from "react-router-dom";
-
-function generateKeys(list: string[]) {
-  return list.map(() => nanoid());
-}
 
 function formatPath(path: string) {
   return path.toLowerCase().replace(/\s/g, "");
@@ -19,6 +14,7 @@ export default function Nav() {
     "Tone Changer",
     "General Assistant",
   ];
+
   const keys = generateKeys(list);
 
   const listItems = list.map((item, index) => (
