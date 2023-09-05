@@ -8,6 +8,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { cn } from "@/common/lib/utils";
 import { Messages } from "./ChatInterface";
 import useTextareaAutoresize from "@/common/hooks/useTextareaAutoresize";
+import useResizeListener from "@/common/hooks/useResizeListener";
 
 interface ChatInterfaceFormProps {
   messages: Messages[];
@@ -22,6 +23,8 @@ export default function ChatInterfaceForm({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>("");
   const textarea = useTextareaAutoresize(textareaRef);
+
+  useResizeListener(textarea.adjustTextareaHeight);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);

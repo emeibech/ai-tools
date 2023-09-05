@@ -26,7 +26,10 @@ export default function ChatMessage({ children }: ChatMessageProps) {
         </Avatar>
 
         <p
-          className={cn(" px-2 py-4 text-sm", "min-[375px]:text-base sm:px-6")}
+          className={cn(
+            " px-2 py-4 text-sm overflow-auto",
+            "min-[375px]:text-base sm:px-6",
+          )}
         >
           {children}
         </p>
