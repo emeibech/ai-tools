@@ -7,6 +7,7 @@ import { darkModeStatus } from "@/features/darkmode/darkmodeSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import { cn } from "@/common/lib/utils";
 import { Messages } from "./ChatInterface";
+import useTextareaAutoresize from "@/common/hooks/useTextareaAutoresize";
 
 interface ChatInterfaceFormProps {
   messages: Messages[];
@@ -20,44 +21,28 @@ export default function ChatInterfaceForm({
   const darkmode = useAppSelector(darkModeStatus);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>("");
+  const textarea = useTextareaAutoresize(textareaRef);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
-    adjustTextareaHeight();
+    textarea.adjustTextareaHeight();
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setValue("");
+    textarea.resetTextareaHeight();
     console.log("submitted");
-    if (textareaRef.current) {
-      const id = nanoid();
-      setMessages([
-        ...messages,
-        {
-          id,
-          role: "user",
-          content: value,
-        },
-      ]);
 
-      setValue("");
-    }
-  }
-
-  function adjustTextareaHeight() {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-
-      const maxHeight = 224;
-
-      if (textareaRef.current.scrollHeight > maxHeight) {
-        textareaRef.current.style.overflowY = "auto";
-        textareaRef.current.style.height = `${maxHeight}px`;
-      } else {
-        textareaRef.current.style.overflowY = "hidden";
-      }
-    }
+    const id = `user-${nanoid()}`;
+    setMessages([
+      ...messages,
+      {
+        id,
+        role: "user",
+        content: value,
+      },
+    ]);
   }
 
   return (
@@ -80,9 +65,9 @@ export default function ChatInterfaceForm({
       >
         <Textarea
           className={cn(
+            textarea.getTaiwindClasses(),
             "text-base bg-field border-none focus-visible:ring-0",
-            "min-h-[2rem] py-1 pl-4 pr-12 rounded-xl",
-            "overflow-y-auto h-[auto] resize-none",
+            "min-h-[2rem] py-1 pl-4 pr-12 rounded-xl resize-none",
           )}
           cols={65}
           rows={1}
