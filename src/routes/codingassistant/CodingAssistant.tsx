@@ -1,5 +1,6 @@
 import { cn } from "@/common/lib/utils";
 import ChatInterface from "@/features/chatInterface/ChatInterface";
+import ChatMessage from "@/features/chatInterface/ChatMessage";
 
 export default function CodingAssistant() {
   return (
@@ -10,7 +11,9 @@ export default function CodingAssistant() {
         "2xl:p-12 2xl:py-0",
       )}
     >
-      <ChatInterface name="Coding Assistant" />
+      <ChatInterface name="Coding Assistant">
+        <ChatMessage>What up?</ChatMessage>
+      </ChatInterface>
     </main>
   );
 }
