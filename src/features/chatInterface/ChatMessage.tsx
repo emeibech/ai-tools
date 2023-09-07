@@ -29,7 +29,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
 
           <p
             className={cn(
-              " px-2 py-4 text-sm overflow-auto",
+              " px-2 py-4 text-sm overflow-auto whitespace-pre-wrap",
               "min-[375px]:text-base sm:px-6",
             )}
           >
