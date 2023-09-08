@@ -1,26 +1,26 @@
-import { RefObject, useRef } from "react";
+import { RefObject, useRef } from 'react';
 
 export default function useTextareaAutoresize(
-  ref: RefObject<HTMLTextAreaElement>,
+  ref: RefObject<HTMLTextAreaElement>
 ) {
   const maxHeight = useRef(200);
 
   function adjustTextareaHeight() {
     if (ref.current) {
-      ref.current.style.height = "auto";
+      ref.current.style.height = 'auto';
       ref.current.style.height = `${ref.current.scrollHeight}px`;
 
       if (ref.current.scrollHeight > maxHeight.current) {
-        ref.current.style.overflowY = "auto";
-        ref.current.style.height = `${maxHeight}px`;
+        ref.current.style.overflowY = 'auto';
+        ref.current.style.height = `${maxHeight.current}px`;
       } else {
-        ref.current.style.overflowY = "hidden";
+        ref.current.style.overflowY = 'hidden';
       }
     }
   }
 
   function resetTextareaHeight() {
-    if (ref.current) ref.current.style.height = "auto";
+    if (ref.current) ref.current.style.height = 'auto';
   }
 
   function setMaxHeight(height: number) {
@@ -32,7 +32,7 @@ export default function useTextareaAutoresize(
   }
 
   function getTaiwindClasses() {
-    return "overflow-y-auto h-[auto]";
+    return 'overflow-y-auto h-[auto]';
   }
 
   return {
