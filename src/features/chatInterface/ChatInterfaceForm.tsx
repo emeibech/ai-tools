@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, FormEvent, useRef, useState } from 'react';
 import { SendIcon } from '@/common/components/ui/Icons';
 import { Button } from '@/common/components/ui/button';
 import { Textarea } from '@/common/components/ui/textarea';
@@ -31,26 +31,36 @@ export default function ChatInterfaceForm({
     textarea.adjustTextareaHeight();
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setValue('');
-    textarea.resetTextareaHeight();
-    console.log('submitted');
+  function handleSubmit(event?: FormEvent<HTMLFormElement>) {
+    event?.preventDefault();
 
-    const id = `user-${nanoid()}`;
-    setMessages([
-      ...messages,
-      {
-        id,
-        role: 'user',
-        content: value,
-      },
-    ]);
+    if (value.length > 0) {
+      setValue('');
+      textarea.resetTextareaHeight();
+      console.log('submitted');
+
+      const id = `user-${nanoid()}`;
+      setMessages([
+        ...messages,
+        {
+          id,
+          role: 'user',
+          content: value,
+        },
+      ]);
+    }
+  }
+
+  function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit();
+    }
   }
 
   return (
     <form
-      onSubmit={(event) => handleSubmit(event)}
+      onSubmit={handleSubmit}
       className={cn(
         'grid grid-cols-2 mt-2 bg-background',
         'pb-12 px-4 md:px-20',
@@ -78,6 +88,7 @@ export default function ChatInterfaceForm({
           ref={textareaRef}
           data-name="textarea"
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
         />
       </div>
 
