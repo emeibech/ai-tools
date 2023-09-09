@@ -1,19 +1,19 @@
-import { cn } from "@/common/lib/utils";
-import CodeAnalyzerForm from "./CodeAnalyzerForm";
+import { cn } from '@/common/lib/utils';
+import CodeAnalyzerForm from './CodeAnalyzerForm';
 
 export default function CodeAnalyzer() {
   return (
     <main
       className={cn(
-        "mt-10 px-4 flex flex-col items-start gap-8 max-w-[920px] mx-auto",
-        "min-[320px]:p-4 lg:p-8 lg:mt-2",
-        "2xl:p-12",
+        'mt-10 px-4 flex flex-col items-start gap-8 max-w-[920px] mx-auto',
+        'min-[320px]:p-4 lg:p-8 lg:mt-2',
+        '2xl:p-12'
       )}
     >
       <h2
         className={cn(
-          "self-start text-4xl font-semibold max-w-[640px]",
-          "sm:text-5xl",
+          'self-start text-4xl font-semibold max-w-[640px]',
+          'sm:text-5xl'
         )}
       >
         Code Analyzer

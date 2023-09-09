@@ -1,13 +1,13 @@
-import { cn } from "@/common/lib/utils";
-import * as z from "zod";
-import { Textarea } from "@/common/components/ui/textarea";
-import { Button } from "@/common/components/ui/button";
-import { Input } from "@/common/components/ui/input";
-import useLabelAnimation from "@/common/hooks/useLabelAnimation";
-import { Form, FormField } from "@/common/components/ui/form";
-import FormUnit from "@/features/formUnit/FormUnit";
-import useFormLogic from "@/common/hooks/useFormLogic";
-import { useRef } from "react";
+import { cn } from '@/common/lib/utils';
+import * as z from 'zod';
+import { Textarea } from '@/common/components/ui/textarea';
+import { Button } from '@/common/components/ui/button';
+import { Input } from '@/common/components/ui/input';
+import useLabelAnimation from '@/common/hooks/useLabelAnimation';
+import { Form, FormField } from '@/common/components/ui/form';
+import FormUnit from '@/features/formUnit/FormUnit';
+import useFormLogic from '@/common/hooks/useFormLogic';
+import { useRef } from 'react';
 
 const schema = {
   subject: z.string().min(2).max(100),
@@ -16,9 +16,9 @@ const schema = {
 };
 
 const defaultValues = {
-  subject: "",
-  style: "",
-  context: "",
+  subject: '',
+  style: '',
+  context: '',
 };
 
 export default function StoryGeneratorForm() {
@@ -30,25 +30,25 @@ export default function StoryGeneratorForm() {
     {
       schema,
       defaultValues,
-      mode: "onTouched",
+      mode: 'onTouched',
       resetLabelState,
       refs: [subjectRef, styleRef, contextRef],
-    },
+    }
   );
 
   const subjectLabel = useLabelAnimation({
-    isDirty: getFieldState("subject").isDirty,
-    isInvalid: getFieldState("subject").invalid,
+    isDirty: getFieldState('subject').isDirty,
+    isInvalid: getFieldState('subject').invalid,
   });
 
   const styleLabel = useLabelAnimation({
-    isDirty: getFieldState("style").isDirty,
-    isInvalid: getFieldState("style").invalid,
+    isDirty: getFieldState('style').isDirty,
+    isInvalid: getFieldState('style').invalid,
   });
 
   const contextLabel = useLabelAnimation({
-    isDirty: getFieldState("context").isDirty,
-    isInvalid: getFieldState("context").invalid,
+    isDirty: getFieldState('context').isDirty,
+    isInvalid: getFieldState('context').invalid,
   });
 
   function resetLabelState() {
@@ -80,8 +80,8 @@ export default function StoryGeneratorForm() {
                 {...field}
                 type="text"
                 className={cn(
-                  getValidationStyles(getFieldState("subject").invalid),
-                  "max-w-[420px]",
+                  getValidationStyles(getFieldState('subject').invalid),
+                  'max-w-[420px]'
                 )}
                 ref={subjectRef}
               />
@@ -102,8 +102,8 @@ export default function StoryGeneratorForm() {
                 {...field}
                 type="text"
                 className={cn(
-                  getValidationStyles(getFieldState("style").invalid),
-                  "max-w-[420px]",
+                  getValidationStyles(getFieldState('style').invalid),
+                  'max-w-[420px]'
                 )}
                 ref={styleRef}
               />
@@ -123,8 +123,8 @@ export default function StoryGeneratorForm() {
               <Textarea
                 {...field}
                 className={cn(
-                  getValidationStyles(getFieldState("context").invalid),
-                  "resize-none",
+                  getValidationStyles(getFieldState('context').invalid),
+                  'resize-none'
                 )}
                 cols={100}
                 rows={5}
@@ -135,11 +135,11 @@ export default function StoryGeneratorForm() {
         />
         <Button
           type="submit"
-          size={"custom"}
+          size={'custom'}
           className={cn(
-            "p-2 px-8 mx-auto",
-            "justify-self-end max-w-max",
-            "transition duration-300",
+            'p-2 px-8 mx-auto',
+            'justify-self-end max-w-max',
+            'transition duration-300'
           )}
         >
           Generate Story

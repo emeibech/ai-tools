@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { RootState } from "@/app/store";
+import { createSlice } from '@reduxjs/toolkit';
+import type { RootState } from '@/app/store';
 
 export interface DarkmodeState {
   value: boolean;
@@ -10,7 +10,7 @@ const initialState: DarkmodeState = {
 };
 
 export const darkmodeSlice = createSlice({
-  name: "darkmodeToggler",
+  name: 'darkmodeToggler',
   initialState,
   reducers: {
     turnOnDarkmode: (state) => {

@@ -8,9 +8,9 @@ interface IconProps {
 function SunIcon(props: IconProps) {
   return (
     <svg
-      height={props.height || "24px"}
+      height={props.height || '24px'}
       width={props.width}
-      role={props.role && "img"}
+      role={props.role && 'img'}
       aria-hidden={props.ariaHidden || true}
       viewBox="0 0 15 15"
       fill="none"
@@ -29,9 +29,9 @@ function SunIcon(props: IconProps) {
 function MoonIcon(props: IconProps) {
   return (
     <svg
-      height={props.height || "24px"}
+      height={props.height || '24px'}
       width={props.width}
-      role={props.role && "img"}
+      role={props.role && 'img'}
       aria-hidden={props.ariaHidden || true}
       viewBox="0 0 15 15"
       fill="none"
@@ -50,9 +50,9 @@ function MoonIcon(props: IconProps) {
 function SendIcon(props: IconProps) {
   return (
     <svg
-      height={props.height || "24px"}
+      height={props.height || '24px'}
       width={props.width}
-      role={props.role && "img"}
+      role={props.role && 'img'}
       aria-hidden={props.ariaHidden || true}
       focusable="false"
       viewBox="0 0 24 24"

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export type FieldState =
-  | "default"
-  | "focusedValid"
-  | "focusedInvalid"
-  | "blurredValid"
-  | "blurredInvalid";
+  | 'default'
+  | 'focusedValid'
+  | 'focusedInvalid'
+  | 'blurredValid'
+  | 'blurredInvalid';
 
 interface useLabelAnimationProps {
   isDirty: boolean;
@@ -21,32 +21,32 @@ export default function useLabelAnimation({
   isDirty,
   isInvalid,
 }: useLabelAnimationProps) {
-  const [fieldState, setFieldState] = useState<FieldState>("default");
+  const [fieldState, setFieldState] = useState<FieldState>('default');
 
   const onFocus = () => {
-    setFieldState(isInvalid ? "focusedInvalid" : "focusedValid");
+    setFieldState(isInvalid ? 'focusedInvalid' : 'focusedValid');
   };
 
   const onBlur = () => {
     if (isInvalid) {
-      setFieldState("blurredInvalid");
+      setFieldState('blurredInvalid');
     } else if (isDirty) {
-      setFieldState("blurredValid");
+      setFieldState('blurredValid');
     } else {
-      setFieldState("default");
+      setFieldState('default');
     }
   };
 
   useEffect(() => {
     if (isDirty) {
-      setFieldState(isInvalid ? "focusedInvalid" : "focusedValid");
+      setFieldState(isInvalid ? 'focusedInvalid' : 'focusedValid');
     } else if (isInvalid) {
-      setFieldState("blurredInvalid");
+      setFieldState('blurredInvalid');
     }
   }, [isDirty, isInvalid]);
 
   const resetState = () => {
-    setFieldState("default");
+    setFieldState('default');
   };
 
   const getFieldState = (): FieldState => {
@@ -55,16 +55,16 @@ export default function useLabelAnimation({
 
   const getAnimationStyles = (): string => {
     switch (fieldState) {
-      case "focusedInvalid":
-        return "translate-y-0 -translate-x-1 scale-90 text-destructive";
-      case "focusedValid":
-        return "translate-y-0 -translate-x-1 scale-90 text-foreground transition-transform";
-      case "blurredInvalid":
-        return "translate-y-0 -translate-x-1 scale-90 text-destructive transition-transform";
-      case "blurredValid":
-        return "translate-y-0 -translate-x-1 scale-90 text-muted-foreground transition-transform";
+      case 'focusedInvalid':
+        return 'translate-y-0 -translate-x-1 scale-90 text-destructive';
+      case 'focusedValid':
+        return 'translate-y-0 -translate-x-1 scale-90 text-foreground transition-transform';
+      case 'blurredInvalid':
+        return 'translate-y-0 -translate-x-1 scale-90 text-destructive transition-transform';
+      case 'blurredValid':
+        return 'translate-y-0 -translate-x-1 scale-90 text-muted-foreground transition-transform';
       default:
-        return "translate-y-5 text-muted-foreground transition-transform";
+        return 'translate-y-5 text-muted-foreground transition-transform';
     }
   };
 

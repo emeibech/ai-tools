@@ -1,6 +1,6 @@
-import App from "@/app/App";
-import { cn } from "@/common/lib/utils";
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import App from '@/app/App';
+import { cn } from '@/common/lib/utils';
+import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
 
 export default function ErrorPage() {
   const error = useRouteError();
@@ -10,17 +10,17 @@ export default function ErrorPage() {
       return `${error.status} ${error.statusText}`;
     } else if (error instanceof Error) {
       return error.message;
-    } else if (typeof error === "string") {
+    } else if (typeof error === 'string') {
       return error;
     } else {
       console.error(error);
-      return "Unknown error";
+      return 'Unknown error';
     }
   }
 
   return (
     <App>
-      <div className={cn("flex flex-col gap-y-2 max-w-max", "mx-auto p-4")}>
+      <div className={cn('flex flex-col gap-y-2 max-w-max', 'mx-auto p-4')}>
         <h2 className="text-2xl sm:text-3xl font-medium mt-40">
           OwO, what's this?
         </h2>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function useGetScrollDir() {
-  const [scrollDirection, setScrollDirection] = useState("");
+  const [scrollDirection, setScrollDirection] = useState('');
 
   useEffect(() => {
     let prevScrollPos = window.scrollY;
@@ -9,17 +9,17 @@ export default function useGetScrollDir() {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       if (prevScrollPos > currentScrollPos) {
-        setScrollDirection("up");
+        setScrollDirection('up');
       } else {
-        setScrollDirection("down");
+        setScrollDirection('down');
       }
       prevScrollPos = currentScrollPos;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

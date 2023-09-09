@@ -1,5 +1,5 @@
-import { cn } from "@/common/lib/utils";
-import { ReactNode } from "react";
+import { cn } from '@/common/lib/utils';
+import { ReactNode } from 'react';
 
 interface Props {
   className?: string;
@@ -14,8 +14,8 @@ export default function InfoCluster(props: Props) {
     <div
       className={cn(
         `${className}`,
-        "flex flex-col mx-auto max-w-[640px] gap-2",
-        "2xl:min-h-[180px]",
+        'flex flex-col mx-auto max-w-[640px] gap-2',
+        '2xl:min-h-[180px]'
       )}
       aria-label={ariaLabel}
       role={role}

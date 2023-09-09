@@ -1,15 +1,15 @@
-import { useRef } from "react";
-import * as z from "zod";
-import { Textarea } from "@/common/components/ui/textarea";
-import { Button } from "@/common/components/ui/button";
-import { cn } from "@/common/lib/utils";
-import useLabelAnimation from "@/common/hooks/useLabelAnimation";
-import { Form, FormField } from "@/common/components/ui/form";
-import FormUnit from "@/features/formUnit/FormUnit";
-import useFormLogic from "@/common/hooks/useFormLogic";
+import { useRef } from 'react';
+import * as z from 'zod';
+import { Textarea } from '@/common/components/ui/textarea';
+import { Button } from '@/common/components/ui/button';
+import { cn } from '@/common/lib/utils';
+import useLabelAnimation from '@/common/hooks/useLabelAnimation';
+import { Form, FormField } from '@/common/components/ui/form';
+import FormUnit from '@/features/formUnit/FormUnit';
+import useFormLogic from '@/common/hooks/useFormLogic';
 
 const schema = { code: z.string().min(5).max(5000) };
-const defaultValues = { code: "" };
+const defaultValues = { code: '' };
 
 export default function CodeAnalyzerForm() {
   const codeRef = useRef<HTMLTextAreaElement>(null);
@@ -18,15 +18,15 @@ export default function CodeAnalyzerForm() {
     {
       schema,
       defaultValues,
-      mode: "onSubmit",
+      mode: 'onSubmit',
       resetLabelState,
       refs: [codeRef],
-    },
+    }
   );
 
   const codeLabel = useLabelAnimation({
-    isDirty: getFieldState("code").isDirty,
-    isInvalid: getFieldState("code").invalid,
+    isDirty: getFieldState('code').isDirty,
+    isInvalid: getFieldState('code').invalid,
   });
 
   function resetLabelState() {
@@ -51,8 +51,8 @@ export default function CodeAnalyzerForm() {
               <Textarea
                 {...field}
                 className={cn(
-                  getValidationStyles(getFieldState("code").invalid),
-                  "resize-none",
+                  getValidationStyles(getFieldState('code').invalid),
+                  'resize-none'
                 )}
                 cols={100}
                 rows={10}
@@ -63,11 +63,11 @@ export default function CodeAnalyzerForm() {
         />
         <Button
           type="submit"
-          size={"custom"}
+          size={'custom'}
           className={cn(
-            "p-2 px-8 mx-auto",
-            "justify-self-end max-w-max",
-            "transition duration-300",
+            'p-2 px-8 mx-auto',
+            'justify-self-end max-w-max',
+            'transition duration-300'
           )}
         >
           Analyze Code

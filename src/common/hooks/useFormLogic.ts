@@ -1,7 +1,7 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { RefObject, useEffect } from "react";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { RefObject, useEffect } from 'react';
 
 interface UseFormLogicArgs {
   schema: {
@@ -10,7 +10,7 @@ interface UseFormLogicArgs {
   defaultValues: {
     [key: string]: string;
   };
-  mode: "all" | "onBlur" | "onTouched" | "onSubmit" | "onChange";
+  mode: 'all' | 'onBlur' | 'onTouched' | 'onSubmit' | 'onChange';
   refs: RefObject<HTMLElement>[];
   resetLabelState: () => void;
 }
@@ -33,7 +33,7 @@ export default function useFormLogic({
 
   function getValidationStyles(invalid: boolean) {
     if (!invalid) return;
-    return "focus-visible:ring-destructive focus-visible:border-none border-destructive";
+    return 'focus-visible:ring-destructive focus-visible:border-none border-destructive';
   }
 
   useEffect(() => {

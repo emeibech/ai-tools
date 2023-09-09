@@ -3,8 +3,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/common/components/ui/accordion";
-import { cn } from "@/common/lib/utils";
+} from '@/common/components/ui/accordion';
+import { cn } from '@/common/lib/utils';
 
 interface Props {
   className?: string;
@@ -12,7 +12,7 @@ interface Props {
 
 export default function FAQs(props: Props) {
   return (
-    <Accordion type="multiple" className={cn(props.className, "w-full")}>
+    <Accordion type="multiple" className={cn(props.className, 'w-full')}>
       <AccordionItem value="faq-1">
         <AccordionTrigger className="text-left text-lg">
           Who exactly are asking these "Frequently Asked Questions?"

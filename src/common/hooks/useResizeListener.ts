@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export default function useResizeListener(callback: () => void | unknown) {
   const callbackRef = useRef(callback);
@@ -9,15 +9,15 @@ export default function useResizeListener(callback: () => void | unknown) {
 
   useEffect(() => {
     function handleResize() {
-      console.log("resized");
+      console.log('resized');
       callbackRef.current();
     }
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      console.log("useResizeListener cleanup");
-      window.removeEventListener("resize", handleResize);
+      console.log('useResizeListener cleanup');
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 }

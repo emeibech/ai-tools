@@ -1,13 +1,13 @@
-import { cn } from "@/common/lib/utils";
-import * as z from "zod";
-import { Textarea } from "@/common/components/ui/textarea";
-import { Button } from "@/common/components/ui/button";
-import { Input } from "@/common/components/ui/input";
-import useLabelAnimation from "@/common/hooks/useLabelAnimation";
-import { Form, FormField } from "@/common/components/ui/form";
-import FormUnit from "@/features/formUnit/FormUnit";
-import { useRef } from "react";
-import useFormLogic from "@/common/hooks/useFormLogic";
+import { cn } from '@/common/lib/utils';
+import * as z from 'zod';
+import { Textarea } from '@/common/components/ui/textarea';
+import { Button } from '@/common/components/ui/button';
+import { Input } from '@/common/components/ui/input';
+import useLabelAnimation from '@/common/hooks/useLabelAnimation';
+import { Form, FormField } from '@/common/components/ui/form';
+import FormUnit from '@/features/formUnit/FormUnit';
+import { useRef } from 'react';
+import useFormLogic from '@/common/hooks/useFormLogic';
 
 const schema = {
   tone: z.string().min(2).max(100),
@@ -15,8 +15,8 @@ const schema = {
 };
 
 const defaultValues = {
-  tone: "",
-  message: "",
+  tone: '',
+  message: '',
 };
 
 export default function ToneChangerForm() {
@@ -26,20 +26,20 @@ export default function ToneChangerForm() {
     {
       schema,
       defaultValues,
-      mode: "onTouched",
+      mode: 'onTouched',
       resetLabelState,
       refs: [toneRef, messageRef],
-    },
+    }
   );
 
   const toneLabel = useLabelAnimation({
-    isDirty: getFieldState("tone").isDirty,
-    isInvalid: getFieldState("tone").invalid,
+    isDirty: getFieldState('tone').isDirty,
+    isInvalid: getFieldState('tone').invalid,
   });
 
   const messageLabel = useLabelAnimation({
-    isDirty: getFieldState("message").isDirty,
-    isInvalid: getFieldState("message").invalid,
+    isDirty: getFieldState('message').isDirty,
+    isInvalid: getFieldState('message').invalid,
   });
 
   function resetLabelState() {
@@ -66,8 +66,8 @@ export default function ToneChangerForm() {
                 {...field}
                 type="text"
                 className={cn(
-                  getValidationStyles(getFieldState("tone").invalid),
-                  "max-w-[460px]",
+                  getValidationStyles(getFieldState('tone').invalid),
+                  'max-w-[460px]'
                 )}
                 ref={toneRef}
               />
@@ -82,8 +82,8 @@ export default function ToneChangerForm() {
               <Textarea
                 {...field}
                 className={cn(
-                  getValidationStyles(getFieldState("message").invalid),
-                  "resize-none",
+                  getValidationStyles(getFieldState('message').invalid),
+                  'resize-none'
                 )}
                 cols={100}
                 rows={10}
@@ -94,11 +94,11 @@ export default function ToneChangerForm() {
         />
         <Button
           type="submit"
-          size={"custom"}
+          size={'custom'}
           className={cn(
-            "p-2 px-8 mx-auto",
-            "justify-self-end max-w-max",
-            "transition duration-300",
+            'p-2 px-8 mx-auto',
+            'justify-self-end max-w-max',
+            'transition duration-300'
           )}
         >
           Change Tone
