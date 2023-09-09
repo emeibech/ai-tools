@@ -29,10 +29,9 @@ export default function Code({ code }: CodeProps) {
           <Button
             size="custom"
             variant="custom"
-            type="button"
             className="font-sans font-normal px-4"
           >
-            {copied ? <Check height="1rem" /> : <ClipboardCopy height="1rem" />}
+            {copied ? <Check height="16px" /> : <ClipboardCopy height="16px" />}
             {copied ? 'Copied' : 'Copy code'}
           </Button>
         </CopyToClipboard>
@@ -44,7 +43,10 @@ export default function Code({ code }: CodeProps) {
         code={code}
       >
         {({ style, tokens, getLineProps, getTokenProps }) => (
-          <pre style={style} className="p-4 overflow-auto text-xs sm:text-sm">
+          <pre
+            style={style}
+            className="p-4 overflow-auto text-xs sm:text-sm rounded"
+          >
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line })}>
                 {line.map((token, key) => (

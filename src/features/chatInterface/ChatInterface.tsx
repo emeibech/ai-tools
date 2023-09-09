@@ -42,7 +42,7 @@ export default function ChatInterface({ name, children }: ChatInterfaceProps) {
   });
 
   return (
-    <section className="relative max-w-[1024px]">
+    <section className="relative max-w-[1280px]">
       <div
         className={cn(
           scrollDirection === 'down' ? '-translate-y-full' : '-translate-y-0',
@@ -55,7 +55,7 @@ export default function ChatInterface({ name, children }: ChatInterfaceProps) {
         </h2>
       </div>
 
-      <section className={cn('min-h-[85vh] max-w-[768px] mx-auto')}>
+      <section className={cn('min-h-[85vh] max-w-[90ch] mx-auto')}>
         {children}
         {listMessages}
       </section>
