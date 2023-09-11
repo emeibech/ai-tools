@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import darkmodeReducer from '../features/darkmode/darkmodeSlice';
+import messagesReducer from '../features/messages/messagesSlice';
 
 export const store = configureStore({
   reducer: {
     darkmodeToggler: darkmodeReducer,
+    messages: messagesReducer,
   },
 });
 
