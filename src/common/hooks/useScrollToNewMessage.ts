@@ -1,7 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { Messages } from '@/features/chatInterface/ChatInterface';
+import { useRef } from 'react';
 
-export default function useScrollToNewMessage(messages: Messages[]) {
+export default function useScrollToNewMessage() {
   const messagesRef = useRef<Map<string, HTMLElement>>(new Map());
 
   function getMap() {
@@ -11,15 +10,11 @@ export default function useScrollToNewMessage(messages: Messages[]) {
     return messagesRef.current;
   }
 
-  useEffect(() => {
-    function scrollToId(itemId: string) {
-      const map = getMap();
-      const node = map.get(itemId);
-      node?.scrollIntoView({ behavior: 'smooth' });
-    }
+  function scrollToId(itemId: string) {
+    const map = getMap();
+    const node = map.get(itemId);
+    node?.scrollIntoView({ behavior: 'smooth' });
+  }
 
-    if (messages) scrollToId(messages[messages.length - 1]?.id);
-  }, [messages]);
-
-  return getMap;
+  return { messagesRef, getMap, scrollToId };
 }

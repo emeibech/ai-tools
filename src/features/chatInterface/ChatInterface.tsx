@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { cn, generateKeys } from '@/common/lib/utils';
+import { cn } from '@/common/lib/utils';
 import useGetScrollDir from '@/common/hooks/useGetScrollDir';
 import ChatMessage from './ChatMessage';
 import ChatInterfaceForm from './ChatInterfaceForm';
@@ -21,14 +21,13 @@ export interface Messages {
 export default function ChatInterface({ name, children }: ChatInterfaceProps) {
   const scrollDirection = useGetScrollDir();
   const messages = useAppSelector(msgs);
-  const messagesKeys = generateKeys(messages);
-  const getMap = useScrollToNewMessage(messages);
+  const { getMap, scrollToId } = useScrollToNewMessage();
 
-  const listMessages: JSX.Element[] = messages.map((message, index) => {
+  const listMessages: JSX.Element[] = messages.map((message) => {
     return (
       <ChatMessage
-        key={messagesKeys[index]}
-        data-id={messagesKeys[index]}
+        key={message.id}
+        id={message.id}
         ref={(node: HTMLElement | null) => {
           const map = getMap();
           if (node) {
@@ -62,7 +61,7 @@ export default function ChatInterface({ name, children }: ChatInterfaceProps) {
         {listMessages}
       </section>
 
-      <ChatInterfaceForm />
+      <ChatInterfaceForm scrollToId={scrollToId} />
     </section>
   );
 }

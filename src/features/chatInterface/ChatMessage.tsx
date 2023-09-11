@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { Button } from '@/common/components/ui/button';
 import { cn } from '@/common/lib/utils';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
@@ -6,9 +7,13 @@ import { ReactNode, forwardRef } from 'react';
 import chatBot from './imgs/chatbot.png';
 import { Separator } from '@/common/components/ui/separator';
 import Code from './Code';
+import { AvatarFallback } from '@/common/components/ui/avatar';
+import { useDispatch } from 'react-redux';
+import { messageRemoved } from '../messages/messagesSlice';
 
 interface ChatMessageProps {
   children: ReactNode;
+  id: string;
 }
 
 function formatMessage(message: ReactNode): JSX.Element {
@@ -27,10 +32,18 @@ function formatMessage(message: ReactNode): JSX.Element {
 }
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
-  ({ children }, ref) => {
+  ({ children, id }, ref) => {
+    const dispatch = useDispatch();
+
+    function handleClick(event: MouseEvent<HTMLButtonElement>) {
+      const id = event.currentTarget.id;
+      dispatch(messageRemoved({ id }));
+    }
+
     return (
       <>
         <article
+          id={id}
           ref={ref}
           className={cn(
             'min-h-[120px] min-w-full py-6',
@@ -38,8 +51,9 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
             'min-[375px]:grid-cols-[40px_1fr_16px]',
           )}
         >
-          <Avatar className=" justify-self-center py-4">
+          <Avatar className=" justify-self-center py-4 text-center">
             <AvatarImage src={chatBot} className="bg-accent rounded-full" />
+            <AvatarFallback>AI</AvatarFallback>
           </Avatar>
 
           <div
@@ -58,6 +72,8 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
             )}
           >
             <Button
+              onClick={handleClick}
+              id={id}
               variant={'custom'}
               size={'custom'}
               className={cn(

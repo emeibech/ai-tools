@@ -10,8 +10,15 @@ import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
 import { useDispatch } from 'react-redux';
 import { messageAdded } from '../messages/messagesSlice';
+import { flushSync } from 'react-dom';
 
-export default function ChatInterfaceForm() {
+interface ChatInterfaceFormProps {
+  scrollToId: (id: string) => void;
+}
+
+export default function ChatInterfaceForm({
+  scrollToId,
+}: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>('');
@@ -34,13 +41,18 @@ export default function ChatInterfaceForm() {
       console.log('submitted');
 
       const id = `user-${nanoid()}`;
-      dispatch(
-        messageAdded({
-          id,
-          role: 'user',
-          content: value,
-        }),
-      );
+
+      flushSync(() => {
+        dispatch(
+          messageAdded({
+            id,
+            role: 'user',
+            content: value,
+          }),
+        );
+      });
+
+      scrollToId(id);
     }
   }
 
@@ -75,7 +87,7 @@ export default function ChatInterfaceForm() {
             'text-base bg-field border-none focus-visible:ring-0',
             'min-h-[2rem] py-1 pl-4 pr-12 rounded-xl resize-none',
           )}
-          cols={65}
+          cols={70}
           rows={1}
           value={value}
           ref={textareaRef}
