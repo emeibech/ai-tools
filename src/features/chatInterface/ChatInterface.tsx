@@ -1,11 +1,10 @@
 import { ReactNode } from 'react';
 import { cn } from '@/common/lib/utils';
-import useGetScrollDir from '@/common/hooks/useGetScrollDir';
+import useGetScrollDir from '../scrollDirection/useGetScrollDir';
 import ChatMessage from './ChatMessage';
 import ChatInterfaceForm from './ChatInterfaceForm';
-import useScrollToNewMessage from '@/common/hooks/useScrollToNewMessage';
 import { useAppSelector } from '@/app/hooks';
-import { messages as msgs } from '../messages/messagesSlice';
+import { messages as msgs } from './messagesSlice';
 
 interface ChatInterfaceProps {
   name: string;
@@ -21,22 +20,10 @@ export interface Messages {
 export default function ChatInterface({ name, children }: ChatInterfaceProps) {
   const scrollDirection = useGetScrollDir();
   const messages = useAppSelector(msgs);
-  const { getMap, scrollToId } = useScrollToNewMessage();
 
   const listMessages: JSX.Element[] = messages.map((message) => {
     return (
-      <ChatMessage
-        key={message.id}
-        id={message.id}
-        ref={(node: HTMLElement | null) => {
-          const map = getMap();
-          if (node) {
-            map.set(message.id, node);
-          } else {
-            map.delete(message.id);
-          }
-        }}
-      >
+      <ChatMessage key={message.id} id={message.id}>
         {message.content}
       </ChatMessage>
     );
@@ -61,7 +48,7 @@ export default function ChatInterface({ name, children }: ChatInterfaceProps) {
         {listMessages}
       </section>
 
-      <ChatInterfaceForm scrollToId={scrollToId} />
+      <ChatInterfaceForm />
     </section>
   );
 }

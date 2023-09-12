@@ -9,7 +9,7 @@ import { Separator } from '@/common/components/ui/separator';
 import Code from './Code';
 import { AvatarFallback } from '@/common/components/ui/avatar';
 import { useDispatch } from 'react-redux';
-import { messageRemoved } from '../messages/messagesSlice';
+import { messageRemoved } from './messagesSlice';
 
 interface ChatMessageProps {
   children: ReactNode;

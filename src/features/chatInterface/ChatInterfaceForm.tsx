@@ -5,27 +5,32 @@ import { Textarea } from '@/common/components/ui/textarea';
 import { useAppSelector } from '@/app/hooks';
 import { darkModeStatus } from '@/features/darkmode/darkmodeSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { cn } from '@/common/lib/utils';
+import { cn, scrollToBottom } from '@/common/lib/utils';
 import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
 import { useDispatch } from 'react-redux';
-import { messageAdded } from '../messages/messagesSlice';
+import { messageAdded } from './messagesSlice';
 import { flushSync } from 'react-dom';
+import useMockApi from '@/common/hooks/useMockApi';
 
-interface ChatInterfaceFormProps {
-  scrollToId: (id: string) => void;
+export interface SubmitData {
+  submitCount: number;
+  id: string;
 }
 
-export default function ChatInterfaceForm({
-  scrollToId,
-}: ChatInterfaceFormProps) {
+export default function ChatInterfaceForm() {
   const darkmode = useAppSelector(darkModeStatus);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>('');
   const textarea = useTextareaAutoresize(textareaRef);
   const dispatch = useDispatch();
+  const [submitData, setSubmitData] = useState<SubmitData>({
+    submitCount: 0,
+    id: '',
+  });
 
   useResizeListener(textarea.adjustTextareaHeight);
+  useMockApi(submitData);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
@@ -40,19 +45,33 @@ export default function ChatInterfaceForm({
       textarea.resetTextareaHeight();
       console.log('submitted');
 
-      const id = `user-${nanoid()}`;
+      const userId = `user-${nanoid()}`;
+      const assistantId = `assistant-${nanoid()}`;
 
       flushSync(() => {
         dispatch(
           messageAdded({
-            id,
+            id: userId,
             role: 'user',
             content: value,
           }),
         );
+
+        dispatch(
+          messageAdded({
+            id: assistantId,
+            role: 'assistant',
+            content: '',
+          }),
+        );
       });
 
-      scrollToId(id);
+      scrollToBottom();
+
+      setSubmitData({
+        submitCount: submitData.submitCount + 1,
+        id: assistantId,
+      });
     }
   }
 
