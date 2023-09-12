@@ -1,17 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  direction,
+  setScrollDirDown,
+  setScrollDirUp,
+} from './scrollDirectionSlice';
 
 export default function useGetScrollDir() {
-  const [scrollDirection, setScrollDirection] = useState('');
+  const scrollDirection = useSelector(direction);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('useGetScrollDirection Effect');
     let prevScrollPos = window.scrollY;
 
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       if (prevScrollPos > currentScrollPos) {
-        setScrollDirection('up');
+        dispatch(setScrollDirUp());
       } else {
-        setScrollDirection('down');
+        dispatch(setScrollDirDown());
       }
       prevScrollPos = currentScrollPos;
     };
@@ -21,7 +29,7 @@ export default function useGetScrollDir() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [dispatch]);
 
   return scrollDirection;
 }
