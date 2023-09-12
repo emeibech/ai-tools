@@ -23,9 +23,17 @@ export const messagesSlice = createSlice({
         state.splice(index, 1);
       }
     },
+    messageAppended: (state, action) => {
+      const { id, content } = action.payload;
+      const index = state.findIndex((message) => message.id === id);
+      if (index !== -1) {
+        state[index].content += content;
+      }
+    },
   },
 });
 
-export const { messageAdded, messageRemoved } = messagesSlice.actions;
+export const { messageAdded, messageRemoved, messageAppended } =
+  messagesSlice.actions;
 export const messages = (state: RootState) => state.messages;
 export default messagesSlice.reducer;
