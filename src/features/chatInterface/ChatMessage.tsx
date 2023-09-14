@@ -5,6 +5,7 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { MinusCircle } from 'lucide-react';
 import { ReactNode, forwardRef } from 'react';
 import chatBot from './imgs/chatbot.png';
+import friend from './imgs/friend.png';
 import { Separator } from '@/common/components/ui/separator';
 import Code from './Code';
 import { AvatarFallback } from '@/common/components/ui/avatar';
@@ -31,6 +32,27 @@ function formatMessage(message: ReactNode): JSX.Element {
   return <>{formattedMessage}</>;
 }
 
+function displayAvatar(id: string) {
+  if (!id) return;
+
+  const idSlice = id.slice(0, 4);
+
+  if (idSlice === 'user')
+    return (
+      <Avatar className=" justify-self-center py-4 text-center">
+        <AvatarImage src={friend} className="bg-accent rounded-full" />
+        <AvatarFallback>User</AvatarFallback>
+      </Avatar>
+    );
+
+  return (
+    <Avatar className=" justify-self-center py-4 text-center">
+      <AvatarImage src={chatBot} className="bg-accent rounded-full" />
+      <AvatarFallback>AI</AvatarFallback>
+    </Avatar>
+  );
+}
+
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
   ({ children, id }, ref) => {
     const dispatch = useDispatch();
@@ -51,10 +73,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
             'min-[375px]:grid-cols-[40px_1fr_16px]',
           )}
         >
-          <Avatar className=" justify-self-center py-4 text-center">
-            <AvatarImage src={chatBot} className="bg-accent rounded-full" />
-            <AvatarFallback>AI</AvatarFallback>
-          </Avatar>
+          {displayAvatar(id)}
 
           <div
             className={cn(
