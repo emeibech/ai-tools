@@ -9,12 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
 
 const mockData = [
-  '\n',
   'The ',
   'quick ',
   'brown ',
   'fox ',
-  '\n',
   'jumps ',
   'over ',
   'the ',
@@ -23,7 +21,7 @@ const mockData = [
 ];
 
 export default function useMockApi(submitData: SubmitData) {
-  const [isDone, setIsDone] = useState(false);
+  const [isDone, setIsDone] = useState(true);
   const scrollDirection = useSelector(direction);
   const messages = useSelector(msgs);
   const dispatch = useDispatch();
