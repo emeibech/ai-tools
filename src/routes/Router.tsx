@@ -6,6 +6,8 @@ import CodeAnalyzer from './codeanalyzer/CodeAnalyzer';
 import ToneChanger from './tonechanger/ToneChanger';
 import StoryGenerator from './storygenerator/StoryGenerator';
 import CodingAssistant from './codingassistant/CodingAssistant';
+import Eli5 from './eli5/Eli5';
+import GeneralAssistant from './generalassistant/GeneralAssistant';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -27,12 +29,20 @@ export default function Router() {
           element: <CodingAssistant />,
         },
         {
+          path: 'eli5',
+          element: <Eli5 />,
+        },
+        {
           path: 'tonechanger',
           element: <ToneChanger />,
         },
         {
           path: 'storygenerator',
           element: <StoryGenerator />,
+        },
+        {
+          path: 'generalassistant',
+          element: <GeneralAssistant />,
         },
       ],
     },
