@@ -1,14 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import darkmodeReducer from '../features/darkmode/darkmodeSlice';
-import messagesReducer from '../features/chatInterface/messagesSlice';
-import scrollDirectionReducer from '../features/scrollDirection/scrollDirectionSlice';
+import rootReducer from './reducers';
 
 export const store = configureStore({
-  reducer: {
-    darkmodeToggler: darkmodeReducer,
-    messages: messagesReducer,
-    scrollDirection: scrollDirectionReducer,
-  },
+  reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;
