@@ -9,6 +9,7 @@ import { messages as msgs } from './messagesSlice';
 interface ChatInterfaceProps {
   name: string;
   children: ReactNode;
+  renderCodeBlocks?: boolean;
 }
 
 export interface Messages {
@@ -17,13 +18,21 @@ export interface Messages {
   content: string;
 }
 
-export default function ChatInterface({ name, children }: ChatInterfaceProps) {
+export default function ChatInterface({
+  name,
+  children,
+  renderCodeBlocks = false,
+}: ChatInterfaceProps) {
   const scrollDirection = useGetScrollDir();
   const messages = useAppSelector(msgs);
 
   const listMessages: JSX.Element[] = messages.map((message) => {
     return (
-      <ChatMessage key={message.id} id={message.id}>
+      <ChatMessage
+        key={message.id}
+        id={message.id}
+        renderCodeBlocks={renderCodeBlocks}
+      >
         {message.content}
       </ChatMessage>
     );

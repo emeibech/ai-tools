@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { messageRemoved } from './messagesSlice';
 
 interface ChatMessageProps {
+  renderCodeBlocks?: boolean;
   children: ReactNode;
   id: string;
 }
@@ -54,7 +55,7 @@ function displayAvatar(id: string) {
 }
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
-  ({ children, id }, ref) => {
+  ({ children, id, renderCodeBlocks = false }, ref) => {
     const dispatch = useDispatch();
 
     function handleClick(event: MouseEvent<HTMLButtonElement>) {
@@ -81,7 +82,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
               'min-[375px]:text-base sm:px-6',
             )}
           >
-            {formatMessage(children)}
+            {renderCodeBlocks ? formatMessage(children) : children}
           </div>
 
           <div

@@ -14,7 +14,7 @@ export default function CodingAssistant() {
         '2xl:p-12 2xl:py-0',
       )}
     >
-      <ChatInterface name="Coding Assistant">
+      <ChatInterface name="Coding Assistant" renderCodeBlocks>
         <ChatMessage id={`assistant-${id}`}>What up?</ChatMessage>
       </ChatInterface>
     </main>
