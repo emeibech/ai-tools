@@ -4,10 +4,15 @@ import useGetScrollDir from '../scrollDirection/useGetScrollDir';
 import ChatMessage from './ChatMessage';
 import ChatInterfaceForm from './ChatInterfaceForm';
 import { useAppSelector } from '@/app/hooks';
-import { messages as msgs } from './messagesSlice';
+import { getMessagesState } from './messagesSliceutils';
+
+export type Name =
+  | 'Coding Assistant'
+  | "Explain Like I'm 5"
+  | 'General Assistant';
 
 interface ChatInterfaceProps {
-  name: string;
+  name: Name;
   children: ReactNode;
   renderCodeBlocks?: boolean;
 }
@@ -24,11 +29,13 @@ export default function ChatInterface({
   renderCodeBlocks = false,
 }: ChatInterfaceProps) {
   const scrollDirection = useGetScrollDir();
+  const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
 
   const listMessages: JSX.Element[] = messages.map((message) => {
     return (
       <ChatMessage
+        name={name}
         key={message.id}
         id={message.id}
         renderCodeBlocks={renderCodeBlocks}
@@ -57,7 +64,7 @@ export default function ChatInterface({
         {listMessages}
       </section>
 
-      <ChatInterfaceForm />
+      <ChatInterfaceForm name={name} />
     </section>
   );
 }

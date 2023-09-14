@@ -9,22 +9,30 @@ import { cn, scrollToBottom } from '@/common/lib/utils';
 import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
 import { useDispatch } from 'react-redux';
-import { messageAdded } from './messagesSlice';
 import { flushSync } from 'react-dom';
 import useMockApi from '@/common/hooks/useMockApi';
+import { Name } from './ChatInterface';
+import { getMessagesActions } from './messagesSliceutils';
 
 export interface SubmitData {
+  name: Name;
   submitCount: number;
   id: string;
 }
 
-export default function ChatInterfaceForm() {
+export interface ChatInterfaceFormProps {
+  name: Name;
+}
+
+export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>('');
   const textarea = useTextareaAutoresize(textareaRef);
   const dispatch = useDispatch();
+  const { messageAdded } = getMessagesActions(name);
   const [submitData, setSubmitData] = useState<SubmitData>({
+    name,
     submitCount: 0,
     id: '',
   });
@@ -69,6 +77,7 @@ export default function ChatInterfaceForm() {
       scrollToBottom();
 
       setSubmitData({
+        name,
         submitCount: submitData.submitCount + 1,
         id: assistantId,
       });

@@ -10,9 +10,11 @@ import { Separator } from '@/common/components/ui/separator';
 import Code from './Code';
 import { AvatarFallback } from '@/common/components/ui/avatar';
 import { useDispatch } from 'react-redux';
-import { messageRemoved } from './messagesSlice';
+import { Name } from './ChatInterface';
+import { getMessagesActions } from './messagesSliceutils';
 
 interface ChatMessageProps {
+  name: Name;
   renderCodeBlocks?: boolean;
   children: ReactNode;
   id: string;
@@ -55,8 +57,9 @@ function displayAvatar(id: string) {
 }
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
-  ({ children, id, renderCodeBlocks = false }, ref) => {
+  ({ children, name, id, renderCodeBlocks = false }, ref) => {
     const dispatch = useDispatch();
+    const { messageRemoved } = getMessagesActions(name);
 
     function handleClick(event: MouseEvent<HTMLButtonElement>) {
       const id = event.currentTarget.id;
