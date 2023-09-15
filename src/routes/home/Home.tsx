@@ -3,28 +3,30 @@ import botImg from './imgs/bot.png';
 import llm from './imgs/llm.jpg';
 import InfoCluster from './components/InfoCluster';
 import FAQs from './components/FAQs';
+import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
 
 export default function Home() {
+  useSetScrollPosition('home');
   return (
     <main
       className={cn(
         'mt-10 px-4 flex flex-col items-center gap-20',
         'min-[320px]:p-4 lg:p-8 lg:mt-0',
-        '2xl:p-12 2xl:gap-48'
+        '2xl:p-12 2xl:gap-48',
       )}
     >
       <section
         className={cn(
           'flex flex-col items-center max-w-[920px]',
           'leading-relaxed gap-10',
-          '2xl:flex-row'
+          '2xl:flex-row',
         )}
       >
         <section className="flex flex-col gap-4 max-w-[768px]">
           <h2
             className={cn(
               'text-4xl font-semibold max-w-[640px]',
-              'sm:text-5xl'
+              'sm:text-5xl',
             )}
           >
             Make Your Life Easier with emeibech AI.
@@ -44,7 +46,7 @@ export default function Home() {
           alt="AI Chatbot"
           className={cn(
             'max-w-[240px] max-h-[240px] mt-4 leading-loose',
-            'lg:mt-0'
+            'lg:mt-0',
           )}
         />
       </section>
@@ -52,7 +54,7 @@ export default function Home() {
       <section
         className={cn(
           ' flex flex-col gap-y-8 max-w-[920px]',
-          '2xl:grid 2xl:grid-cols-2  2xl:gap-x-8'
+          '2xl:grid 2xl:grid-cols-2  2xl:gap-x-8',
         )}
       >
         <InfoCluster className="place-self-end">
@@ -127,7 +129,7 @@ export default function Home() {
           className={cn(
             'min-w-full',
             '2xl:min-w-[920px]',
-            'min-[678px]:min-w-[640px]'
+            'min-[678px]:min-w-[640px]',
           )}
         >
           <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
@@ -136,7 +138,7 @@ export default function Home() {
               'mt-8',
               '2xl:min-w-[920px]',
               'min-[678px]:max-w-[640px]',
-              'min-w-full'
+              'min-w-full',
             )}
           />
         </div>
@@ -146,7 +148,7 @@ export default function Home() {
         className={cn(
           'grid place-items-center max-w-[640px]',
           '2xl:max-w-[920px]',
-          'min-[678px]:min-w-[640px]'
+          'min-[678px]:min-w-[640px]',
         )}
       >
         <img
