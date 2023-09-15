@@ -16,11 +16,33 @@ export function convertEntitiesToCharacters(html: string): string | null {
   return doc.documentElement.textContent;
 }
 
-export function scrollToBottom(): void {
+export type Behavior = 'auto' | 'smooth' | 'instant';
+
+export function scrollToBottom(behavior: Behavior = 'smooth'): void {
   window.scrollTo({
     left: 0,
     top: document.body.scrollHeight,
-    behavior: 'smooth',
+    behavior: behavior,
+  });
+}
+
+export interface ScrollWindowToOptions {
+  left?: number;
+  top: number;
+  behavior?: Behavior;
+}
+
+export function scrollWindowTo({
+  top,
+  left = 0,
+  behavior = 'instant',
+}: ScrollWindowToOptions): void {
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      left,
+      top,
+      behavior,
+    });
   });
 }
 
