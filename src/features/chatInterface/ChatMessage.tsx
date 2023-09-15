@@ -14,7 +14,7 @@ import { Name } from './ChatInterface';
 import { getMessagesActions } from './messagesSliceutils';
 
 interface ChatMessageProps {
-  name: Name;
+  name?: Name;
   renderCodeBlocks?: boolean;
   children: ReactNode;
   id: string;
@@ -94,18 +94,20 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
               'min-[375px]:col-span-1 min-[375px]:self-start',
             )}
           >
-            <Button
-              onClick={handleClick}
-              id={id}
-              variant={'custom'}
-              size={'custom'}
-              className={cn(
-                'text-muted-foreground opacity-75',
-                'hover:text-destructive active:text-destructive',
-              )}
-            >
-              <MinusCircle width="16px" height="16px" />
-            </Button>
+            {name ? (
+              <Button
+                onClick={handleClick}
+                id={id}
+                variant={'custom'}
+                size={'custom'}
+                className={cn(
+                  'text-muted-foreground opacity-75',
+                  'hover:text-destructive active:text-destructive',
+                )}
+              >
+                <MinusCircle width="16px" height="16px" />
+              </Button>
+            ) : null}
           </div>
         </article>
 

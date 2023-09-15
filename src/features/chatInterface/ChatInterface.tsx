@@ -9,7 +9,8 @@ import { getMessagesState } from './messagesSliceutils';
 export type Name =
   | 'Coding Assistant'
   | "Explain Like I'm 5"
-  | 'General Assistant';
+  | 'General Assistant'
+  | undefined;
 
 interface ChatInterfaceProps {
   name: Name;
