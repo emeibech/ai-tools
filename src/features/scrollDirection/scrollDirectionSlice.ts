@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
 
-export interface scrollDirectionState {
+export interface ScrollDirection {
   value: 'up' | 'down';
 }
 
-const initialState: scrollDirectionState = {
+const initialState: ScrollDirection = {
   value: 'up',
 };
 
