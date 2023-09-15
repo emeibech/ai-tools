@@ -2,13 +2,12 @@ import { ChangeEvent, KeyboardEvent, FormEvent, useRef, useState } from 'react';
 import { SendIcon } from '@/common/components/ui/Icons';
 import { Button } from '@/common/components/ui/button';
 import { Textarea } from '@/common/components/ui/textarea';
-import { useAppSelector } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { darkModeStatus } from '@/features/darkmode/darkmodeSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { cn, scrollToBottom } from '@/common/lib/utils';
 import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
-import { useDispatch } from 'react-redux';
 import { flushSync } from 'react-dom';
 import useMockApi from '@/common/hooks/useMockApi';
 import { Name } from './ChatInterface';
@@ -29,7 +28,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>('');
   const textarea = useTextareaAutoresize(textareaRef);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { messageAdded } = getMessagesActions(name);
   const [submitData, setSubmitData] = useState<SubmitData>({
     name,

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { mockStreamingApi, scrollToBottom } from '../lib/utils';
 import { SubmitData } from '@/features/chatInterface/ChatInterfaceForm';
-import { useDispatch, useSelector } from 'react-redux';
 import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
 import {
   getMessagesActions,
   getMessagesState,
 } from '@/features/chatInterface/messagesSliceutils';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 
 const mockData = [
   'The ',
@@ -22,10 +22,10 @@ const mockData = [
 
 export default function useMockApi(submitData: SubmitData) {
   const [isDone, setIsDone] = useState(true);
-  const scrollDirection = useSelector(direction);
+  const scrollDirection = useAppSelector(direction);
   const msgs = getMessagesState(submitData.name);
-  const messages = useSelector(msgs);
-  const dispatch = useDispatch();
+  const messages = useAppSelector(msgs);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     console.log('useMockApi Effect');
