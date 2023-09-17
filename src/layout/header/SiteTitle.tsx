@@ -7,11 +7,18 @@ function handleClick(top: number) {
   scrollWindowTo({ top });
 }
 
-export default function SiteTitle() {
+interface SiteTitleProps {
+  setIsOpen?: (param: boolean) => void;
+}
+
+export default function SiteTitle({ setIsOpen }: SiteTitleProps) {
   const { home } = useAppSelector(positions);
   return (
     <h1
-      onClick={() => handleClick(home)}
+      onClick={() => {
+        handleClick(home);
+        if (setIsOpen) setIsOpen(false);
+      }}
       data-name="site-name"
       className={cn(
         'text-xl text-left font-bold rounded-md px-2',

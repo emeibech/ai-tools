@@ -15,16 +15,23 @@ interface GenerateListJsx {
   nav: string[];
   keys: string[];
   scrollPositions: ScrollPositions;
+  setIsOpen?: (param: boolean) => void;
 }
 
-function generateListJsx({ nav, keys, scrollPositions }: GenerateListJsx) {
+function generateListJsx({
+  nav,
+  keys,
+  setIsOpen,
+  scrollPositions,
+}: GenerateListJsx) {
   return nav.map((item, index) => (
     <li
       key={keys[index]}
       className={cn('flex flex-col gap-1 cursor-pointer', 'lg:gap-2')}
-      onClick={() =>
-        handleClick({ item: formatPath(item) as Route, scrollPositions })
-      }
+      onClick={() => {
+        handleClick({ item: formatPath(item) as Route, scrollPositions });
+        if (setIsOpen) setIsOpen(false);
+      }}
     >
       <Link
         className={cn('px-4 py-2 rounded text-sm', 'hover:bg-secondary')}
@@ -51,17 +58,23 @@ function handleClick({ item, scrollPositions }: HandleClickParams) {
   scrollWindowTo({ top });
 }
 
-export default function Nav() {
+export interface NavProps {
+  setIsOpen?: (param: boolean) => void;
+}
+
+export default function Nav({ setIsOpen }: NavProps) {
   const scrollPositions = useAppSelector(positions);
 
   const tools = generateListJsx({
     scrollPositions,
+    setIsOpen,
     nav: toolsNav,
     keys: toolsKeys,
   });
 
   const chats = generateListJsx({
     scrollPositions,
+    setIsOpen,
     nav: chatsNav,
     keys: chatsKeys,
   });

@@ -1,22 +1,25 @@
-import { cn } from "@/common/lib/utils";
-import Footer from "../footer/Footer";
-import HamburgerBtn from "../header/HamburgerBtn";
-import SiteTitle from "../header/SiteTitle";
-import Nav from "./Nav";
+import { cn } from '@/common/lib/utils';
+import Footer from '../footer/Footer';
+import HamburgerBtn from '../header/HamburgerBtn';
+import SiteTitle from '../header/SiteTitle';
+import Nav from './Nav';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTrigger,
-} from "@/common/components/ui/sheet";
+} from '@/common/components/ui/sheet';
+import { useState } from 'react';
 
 export default function NavigationSheet(props: {
-  side?: "top" | "bottom" | "left" | "right" | null | undefined;
+  side?: 'top' | 'bottom' | 'left' | 'right' | null | undefined;
   className?: string;
-  "data-darkmode": boolean;
+  'data-darkmode': boolean;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
       <SheetTrigger asChild>
         <HamburgerBtn />
       </SheetTrigger>
@@ -24,14 +27,14 @@ export default function NavigationSheet(props: {
         side={props.side}
         className={cn(
           props.className,
-          "grid grid-flow-row grid-rows-[1fr_6fr_1fr] py-4",
+          'grid grid-flow-row grid-rows-[1fr_6fr_1fr] py-4',
         )}
-        data-darkmode={props["data-darkmode"]}
+        data-darkmode={props['data-darkmode']}
       >
         <SheetHeader>
-          <SiteTitle />
+          <SiteTitle setIsOpen={setIsOpen} />
         </SheetHeader>
-        <Nav />
+        <Nav setIsOpen={setIsOpen} />
         <Footer />
       </SheetContent>
     </Sheet>
