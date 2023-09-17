@@ -2,21 +2,15 @@ import './App.css';
 import Header from '../layout/header/Header';
 import Nav from '../layout/navigation/Nav';
 import SiteTitle from '../layout/header/SiteTitle';
-import { cn, scrollWindowTo } from '../common/lib/utils';
+import { cn } from '../common/lib/utils';
 import { useAppSelector } from '../app/hooks';
 import { darkModeStatus } from '../features/darkmode/darkmodeSlice';
 import { Outlet } from 'react-router-dom';
 import { ReactNode } from 'react';
 import Footer from '@/layout/footer/Footer';
-import { positions } from '@/features/scrollPosition/scrollPositionSlice';
-
-function handleClick(top: number) {
-  scrollWindowTo({ top });
-}
 
 export default function App({ children }: { children?: ReactNode }) {
   const darkmode = useAppSelector(darkModeStatus);
-  const { home } = useAppSelector(positions);
 
   return (
     <>
@@ -49,7 +43,7 @@ export default function App({ children }: { children?: ReactNode }) {
               'grid grid-flow-row grid-rows-[1fr_6fr_1fr] py-4',
             )}
           >
-            <SiteTitle onClick={() => handleClick(home)} />
+            <SiteTitle />
             <Nav />
             <Footer />
           </div>

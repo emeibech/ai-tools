@@ -1,10 +1,17 @@
-import { cn } from '@/common/lib/utils';
+import { useAppSelector } from '@/app/hooks';
+import { cn, scrollWindowTo } from '@/common/lib/utils';
+import { positions } from '@/features/scrollPosition/scrollPositionSlice';
 import { Link } from 'react-router-dom';
 
-export default function SiteTitle({ onClick }: { onClick: () => void }) {
+function handleClick(top: number) {
+  scrollWindowTo({ top });
+}
+
+export default function SiteTitle() {
+  const { home } = useAppSelector(positions);
   return (
     <h1
-      onClick={onClick}
+      onClick={() => handleClick(home)}
       data-name="site-name"
       className={cn(
         'text-xl text-left font-bold rounded-md px-2',
