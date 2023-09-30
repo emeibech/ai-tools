@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { mockStreamingApi, scrollToBottom } from '../lib/utils';
+import { scrollToBottom } from '../lib/utils';
 import { SubmitData } from '@/features/chatInterface/ChatInterfaceForm';
 import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
 import {
@@ -19,6 +19,26 @@ const mockData = [
   'lazy ',
   'dog. ',
 ];
+
+function mockStreamingApi(mockData: unknown[], maxDelay: number = 100) {
+  return new ReadableStream({
+    start(controller) {
+      let index = 0;
+
+      const pushData = () => {
+        if (index < mockData.length) {
+          controller.enqueue(mockData[index]);
+          index++;
+          setTimeout(pushData, Math.floor(Math.random() * maxDelay));
+        } else {
+          controller.close();
+        }
+      };
+
+      pushData();
+    },
+  });
+}
 
 export default function useMockApi(submitData: SubmitData) {
   const [isDone, setIsDone] = useState(true);

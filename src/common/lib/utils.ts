@@ -45,26 +45,3 @@ export function scrollWindowTo({
     });
   });
 }
-
-export const mockStreamingApi = (
-  mockData: unknown[],
-  maxDelay: number = 100,
-) => {
-  return new ReadableStream({
-    start(controller) {
-      let index = 0;
-
-      const pushData = () => {
-        if (index < mockData.length) {
-          controller.enqueue(mockData[index]);
-          index++;
-          setTimeout(pushData, Math.floor(Math.random() * maxDelay));
-        } else {
-          controller.close();
-        }
-      };
-
-      pushData();
-    },
-  });
-};
