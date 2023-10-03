@@ -45,3 +45,13 @@ export function scrollWindowTo({
     });
   });
 }
+
+export function handleCatchError(error: unknown) {
+  if (error instanceof Error) {
+    throw error.message;
+  } else if (error && typeof error === 'object' && 'message' in error) {
+    throw error.message;
+  } else {
+    throw error;
+  }
+}
