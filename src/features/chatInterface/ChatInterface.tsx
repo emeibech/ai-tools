@@ -6,6 +6,13 @@ import ChatInterfaceForm from './ChatInterfaceForm';
 import { useAppSelector } from '@/app/hooks';
 import { getMessagesState } from './messagesSliceutils';
 
+export interface SubmitData {
+  name: Name;
+  submitCount: number;
+  id: string;
+  value: string;
+}
+
 export type Name =
   | 'Coding Assistant'
   | "Explain Like I'm 5"

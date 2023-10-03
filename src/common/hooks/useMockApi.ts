@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { scrollToBottom } from '../lib/utils';
-import { SubmitData } from '@/features/chatInterface/ChatInterfaceForm';
+import { type SubmitData } from '@/features/chatInterface/ChatInterface';
 import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
 import {
   getMessagesActions,
