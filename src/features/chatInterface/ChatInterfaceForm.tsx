@@ -9,15 +9,10 @@ import { cn, scrollToBottom } from '@/common/lib/utils';
 import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
 import { flushSync } from 'react-dom';
-import useMockApi from '@/common/hooks/useMockApi';
-import { Name } from './ChatInterface';
+import { Name, SubmitData } from './ChatInterface';
 import { getMessagesActions } from './messagesSliceutils';
-
-export interface SubmitData {
-  name: Name;
-  submitCount: number;
-  id: string;
-}
+import useCallApi from '@/common/hooks/useCallApi';
+// import useMockApi from '@/common/hooks/useMockApi';
 
 export interface ChatInterfaceFormProps {
   name: Name;
@@ -34,10 +29,11 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
     name,
     submitCount: 0,
     id: '',
+    value: '',
   });
 
   useResizeListener(textarea.adjustTextareaHeight);
-  useMockApi(submitData);
+  useCallApi(submitData);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
@@ -79,6 +75,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         name,
         submitCount: submitData.submitCount + 1,
         id: assistantId,
+        value,
       });
     }
   }
