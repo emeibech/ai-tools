@@ -100,7 +100,8 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         model: extractModel(value),
       });
 
-      scrollToBottom();
+      // This ensures the dom is updated before calling scrollToBottom
+      requestAnimationFrame(() => scrollToBottom());
     }
   }
 
