@@ -65,7 +65,6 @@ function getModel({ chatInterface, tokenEstimate }: GetModelParams) {
 
 function removeIds(messages: Messages[]) {
   const noIds = messages.map(({ role, content }) => ({ role, content }));
-  noIds.pop();
   return noIds;
 }
 
@@ -96,7 +95,7 @@ export default function useCallApi(submitData: SubmitData) {
     a non-state variable from submitData properties instead*/
     const messagesPrompt: MessagesParam[] = [
       ...noIdsHistory,
-      { role: 'assistant', content: prompt },
+      { role: 'user', content: prompt },
     ];
 
     /* I can't afford using high-context models for all the chatbots 
@@ -145,6 +144,8 @@ export default function useCallApi(submitData: SubmitData) {
 
         setChunkCount(0);
         setIsDone(true);
+
+        console.log(getTokenEstimate(messagesPrompt));
       } catch (error) {
         handleCatchError(error);
       }
