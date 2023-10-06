@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { handleCatchError, scrollToBottom } from '../lib/utils';
 import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
-import {
-  getMessagesActions,
-  getMessagesState,
-} from '@/features/chatInterface/messagesSliceutils';
+import { getMessagesActions } from '@/features/chatInterface/messagesSliceutils';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { type ReadableStream } from 'web-streams-polyfill';
 import {
@@ -76,12 +73,9 @@ const baseUrl = import.meta.env.VITE_AI_URL;
 
 export default function useCallApi(submitData: SubmitData) {
   const [isDone, setIsDone] = useState(true);
+  const [chunkCount, setChunkCount] = useState(0);
   const scrollDirection = useAppSelector(direction);
   const dispatch = useAppDispatch();
-  const msgs = getMessagesState(submitData.chatInterface);
-
-  // This is for the second useEffect with the autoscroll
-  const messages = useAppSelector(msgs);
 
   useEffect(() => {
     console.log('useCallApi Effect');
@@ -145,8 +139,11 @@ export default function useCallApi(submitData: SubmitData) {
               content: decoder.decode(chunk),
             }),
           );
+
+          setChunkCount((prev) => prev + 1);
         }
 
+        setChunkCount(0);
         setIsDone(true);
       } catch (error) {
         handleCatchError(error);
@@ -162,6 +159,8 @@ export default function useCallApi(submitData: SubmitData) {
 
   useEffect(() => {
     console.log('scrollController effect');
-    if (!isDone && scrollDirection === 'down') scrollToBottom();
-  }, [isDone, scrollDirection, messages]);
+    if (!isDone && scrollDirection === 'down' && chunkCount > 0) {
+      scrollToBottom();
+    }
+  }, [isDone, scrollDirection, chunkCount]);
 }
