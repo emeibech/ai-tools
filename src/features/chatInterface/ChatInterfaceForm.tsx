@@ -1,4 +1,10 @@
-import { ChangeEvent, KeyboardEvent, FormEvent, useRef, useState } from 'react';
+import {
+  type ChangeEvent,
+  type KeyboardEvent,
+  type FormEvent,
+  useRef,
+  useState,
+} from 'react';
 import { SendIcon } from '@/common/components/ui/Icons';
 import { Button } from '@/common/components/ui/button';
 import { Textarea } from '@/common/components/ui/textarea';
@@ -8,11 +14,23 @@ import { nanoid } from '@reduxjs/toolkit';
 import { cn, scrollToBottom } from '@/common/lib/utils';
 import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
-import { flushSync } from 'react-dom';
 import { Name, SubmitData } from './ChatInterface';
-import { getMessagesActions } from './messagesSliceutils';
+import { getMessagesActions, getMessagesState } from './messagesSliceutils';
 import useCallApi from '@/common/hooks/useCallApi';
-// import useMockApi from '@/common/hooks/useMockApi';
+
+export type Model = 'gpt-4' | '';
+
+function extractModel(text: string) {
+  const commandIndex = text.indexOf('use-gpt-4');
+  if (commandIndex === -1) return '';
+  return text.slice(commandIndex + 4, commandIndex + 9) as Model;
+}
+
+function cleanText(text: string) {
+  const commandIndex = text.indexOf('use-gpt-4');
+  if (commandIndex === -1) return text;
+  return text.replace('use-gpt-4', '').trim();
+}
 
 export interface ChatInterfaceFormProps {
   name: Name;
@@ -21,15 +39,19 @@ export interface ChatInterfaceFormProps {
 export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [value, setValue] = useState<string>('');
   const textarea = useTextareaAutoresize(textareaRef);
   const dispatch = useAppDispatch();
   const { messageAdded } = getMessagesActions(name);
+  const [value, setValue] = useState<string>('');
+  const msgs = getMessagesState(name);
+  const messages = useAppSelector(msgs);
   const [submitData, setSubmitData] = useState<SubmitData>({
-    name,
+    chatInterface: undefined,
+    chatHistory: [],
+    responseId: '',
+    prompt: '',
     submitCount: 0,
-    id: '',
-    value: '',
+    model: '',
   });
 
   useResizeListener(textarea.adjustTextareaHeight);
@@ -43,6 +65,8 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   function handleSubmit(event?: FormEvent<HTMLFormElement>) {
     event?.preventDefault();
 
+    const prompt = name === 'Coding Assistant' ? cleanText(value) : value;
+
     if (value.length > 0) {
       setValue('');
       textarea.resetTextareaHeight();
@@ -51,32 +75,32 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       const userId = `user-${nanoid()}`;
       const assistantId = `assistant-${nanoid()}`;
 
-      flushSync(() => {
-        dispatch(
-          messageAdded({
-            id: userId,
-            role: 'user',
-            content: value,
-          }),
-        );
+      dispatch(
+        messageAdded({
+          id: userId,
+          role: 'user',
+          content: prompt,
+        }),
+      );
 
-        dispatch(
-          messageAdded({
-            id: assistantId,
-            role: 'assistant',
-            content: '',
-          }),
-        );
+      dispatch(
+        messageAdded({
+          id: assistantId,
+          role: 'assistant',
+          content: '',
+        }),
+      );
+
+      setSubmitData({
+        prompt,
+        chatInterface: name,
+        chatHistory: messages,
+        responseId: assistantId,
+        submitCount: submitData.submitCount + 1,
+        model: extractModel(value),
       });
 
       scrollToBottom();
-
-      setSubmitData({
-        name,
-        submitCount: submitData.submitCount + 1,
-        id: assistantId,
-        value,
-      });
     }
   }
 

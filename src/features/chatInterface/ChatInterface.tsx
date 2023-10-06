@@ -2,16 +2,9 @@ import { ReactNode } from 'react';
 import { cn } from '@/common/lib/utils';
 import useGetScrollDir from '../scrollDirection/useGetScrollDir';
 import ChatMessage from './ChatMessage';
-import ChatInterfaceForm from './ChatInterfaceForm';
+import ChatInterfaceForm, { Model } from './ChatInterfaceForm';
 import { useAppSelector } from '@/app/hooks';
 import { getMessagesState } from './messagesSliceutils';
-
-export interface SubmitData {
-  name: Name;
-  submitCount: number;
-  id: string;
-  value: string;
-}
 
 export type Name =
   | 'Coding Assistant'
@@ -29,6 +22,15 @@ export interface Messages {
   id: string;
   role: 'assistant' | 'user';
   content: string;
+}
+
+export interface SubmitData {
+  chatInterface: Name;
+  chatHistory: Messages[];
+  responseId: string;
+  prompt: string;
+  submitCount: number;
+  model: Model;
 }
 
 export default function ChatInterface({
