@@ -37,7 +37,7 @@ export default function Code({ code }: CodeProps) {
         <span className="font-sans">{language}</span>
         <span className="flex items-center">
           <CopyToClipboard
-            text={codeBlock}
+            text={codeBlock.slice(1)}
             onCopy={() => {
               setCopied(true);
               setTimeout(() => {
