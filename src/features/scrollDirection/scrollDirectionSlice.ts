@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
 
 export interface ScrollDirection {
@@ -13,15 +13,19 @@ export const scrollDirSlice = createSlice({
   name: 'scrollDirection',
   initialState,
   reducers: {
-    setScrollDirUp: (state) => {
-      state.value = 'up';
-    },
-    setScrollDirDown: (state) => {
-      state.value = 'down';
+    setScrollDir: (state, action) => {
+      if (state.value !== action.payload) {
+        state.value = action.payload;
+      }
     },
   },
 });
 
-export const { setScrollDirUp, setScrollDirDown } = scrollDirSlice.actions;
+export const currentDirection = createSelector(
+  (state) => state.scrollDirection.value,
+  (value) => value,
+);
+
+export const { setScrollDir } = scrollDirSlice.actions;
 export const direction = (state: RootState) => state.scrollDirection.value;
 export default scrollDirSlice.reducer;
