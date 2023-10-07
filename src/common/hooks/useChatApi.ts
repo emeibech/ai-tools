@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { handleCatchError } from '../lib/utils';
 import { getMessagesActions } from '@/features/chatInterface/messagesSliceutils';
 import { useAppDispatch } from '@/app/hooks';
-import { type ReadableStream } from 'web-streams-polyfill';
 import {
   type Messages,
   type Name,
   type ChatApiArgs,
 } from '@/features/chatInterface/ChatInterface';
 import useAutoScroll from './useAutoScroll';
+import useGetScrollDir from './useGetScrollDir';
 
 function getUrlParams(name: Name) {
   if (name === 'Coding Assistant') return '/codingassistant?model=';
@@ -73,7 +73,8 @@ const baseUrl = import.meta.env.VITE_AI_URL;
 export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const [isDone, setIsDone] = useState(true);
   const dispatch = useAppDispatch();
-  const setChunkCount = useAutoScroll(isDone);
+  const scrollDirection = useGetScrollDir();
+  const setChunkSentCount = useAutoScroll({ isDone, scrollDirection });
 
   useEffect(() => {
     console.log('useChatApi Effect');
@@ -130,19 +131,30 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
           throw new Error(`${response.status}: ${response.statusText}`);
         }
 
-        for await (const chunk of response.body as ReadableStream) {
-          dispatch(
-            messageAppended({
-              id: responseId,
-              content: decoder.decode(chunk),
-            }),
-          );
+        if (response.body) {
+          const reader = response.body.getReader();
+          let done = false;
 
-          setChunkCount((prev) => prev + 1);
+          while (!done) {
+            const { value, done: readerDone } = await reader.read();
+
+            if (readerDone) {
+              done = true;
+            } else {
+              dispatch(
+                messageAppended({
+                  id: responseId,
+                  content: decoder.decode(value),
+                }),
+              );
+
+              setChunkSentCount((prev) => prev + 1);
+            }
+          }
+
+          setChunkSentCount(0);
+          setIsDone(true);
         }
-
-        setChunkCount(0);
-        setIsDone(true);
       } catch (error) {
         handleCatchError(error);
       }
@@ -153,5 +165,5 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       setIsDone(false);
       streamData();
     }
-  }, [dispatch, setChunkCount, chatApiArgs]);
+  }, [dispatch, setChunkSentCount, chatApiArgs]);
 }
