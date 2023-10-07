@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { handleCatchError, scrollToBottom } from '../lib/utils';
-import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
+import { handleCatchError } from '../lib/utils';
 import { getMessagesActions } from '@/features/chatInterface/messagesSliceutils';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useAppDispatch } from '@/app/hooks';
 import { type ReadableStream } from 'web-streams-polyfill';
 import {
   type Messages,
   type Name,
   type SubmitData,
 } from '@/features/chatInterface/ChatInterface';
+import useAutoScroll from './useAutoScroll';
 
 function getUrlParams(name: Name) {
   if (name === 'Coding Assistant') return '/codingassistant?model=';
@@ -72,9 +72,8 @@ const baseUrl = import.meta.env.VITE_AI_URL;
 
 export default function useCallApi(submitData: SubmitData) {
   const [isDone, setIsDone] = useState(true);
-  const [chunkCount, setChunkCount] = useState(0);
-  const scrollDirection = useAppSelector(direction);
   const dispatch = useAppDispatch();
+  const setChunkCount = useAutoScroll(isDone);
 
   useEffect(() => {
     console.log('useCallApi Effect');
@@ -156,12 +155,5 @@ export default function useCallApi(submitData: SubmitData) {
       setIsDone(false);
       streamData();
     }
-  }, [dispatch, submitData]);
-
-  useEffect(() => {
-    console.log('scrollController effect');
-    if (!isDone && scrollDirection === 'down' && chunkCount > 0) {
-      scrollToBottom();
-    }
-  }, [isDone, scrollDirection, chunkCount]);
+  }, [dispatch, setChunkCount, submitData]);
 }
