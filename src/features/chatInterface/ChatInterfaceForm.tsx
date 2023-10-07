@@ -14,9 +14,9 @@ import { nanoid } from '@reduxjs/toolkit';
 import { cn, scrollToBottom } from '@/common/lib/utils';
 import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
-import { Name, SubmitData } from './ChatInterface';
+import { Name, ChatApiArgs } from './ChatInterface';
 import { getMessagesActions, getMessagesState } from './messagesSliceutils';
-import useCallApi from '@/common/hooks/useCallApi';
+import useChatApi from '@/common/hooks/useChatApi';
 
 export type Model = 'gpt-4' | '';
 
@@ -45,7 +45,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const [value, setValue] = useState<string>('');
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
-  const [submitData, setSubmitData] = useState<SubmitData>({
+  const [chatApiArgs, setChatApiArgs] = useState<ChatApiArgs>({
     chatInterface: undefined,
     chatHistory: [],
     responseId: '',
@@ -55,7 +55,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   });
 
   useResizeListener(textarea.adjustTextareaHeight);
-  useCallApi(submitData);
+  useChatApi(chatApiArgs);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
@@ -91,12 +91,12 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         }),
       );
 
-      setSubmitData({
+      setChatApiArgs({
         prompt,
         chatInterface: name,
         chatHistory: messages,
         responseId: assistantId,
-        submitCount: submitData.submitCount + 1,
+        submitCount: chatApiArgs.submitCount + 1,
         model: extractModel(value),
       });
 

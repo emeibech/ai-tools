@@ -24,7 +24,7 @@ export interface Messages {
   content: string;
 }
 
-export interface SubmitData {
+export interface ChatApiArgs {
   chatInterface: Name;
   chatHistory: Messages[];
   responseId: string;

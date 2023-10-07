@@ -6,7 +6,7 @@ import { type ReadableStream } from 'web-streams-polyfill';
 import {
   type Messages,
   type Name,
-  type SubmitData,
+  type ChatApiArgs,
 } from '@/features/chatInterface/ChatInterface';
 import useAutoScroll from './useAutoScroll';
 
@@ -70,13 +70,13 @@ function removeIds(messages: Messages[]) {
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
-export default function useCallApi(submitData: SubmitData) {
+export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const [isDone, setIsDone] = useState(true);
   const dispatch = useAppDispatch();
   const setChunkCount = useAutoScroll(isDone);
 
   useEffect(() => {
-    console.log('useCallApi Effect');
+    console.log('useChatApi Effect');
     const {
       chatInterface,
       prompt,
@@ -84,7 +84,7 @@ export default function useCallApi(submitData: SubmitData) {
       model,
       responseId,
       submitCount,
-    } = submitData;
+    } = chatApiArgs;
     const { messageAppended } = getMessagesActions(chatInterface);
     const tokenLimit = chatInterface === 'Coding Assistant' ? 15000 : 3000;
     const noIdsHistory = removeIds(chatHistory);
@@ -143,8 +143,6 @@ export default function useCallApi(submitData: SubmitData) {
 
         setChunkCount(0);
         setIsDone(true);
-
-        console.log(getTokenEstimate(messagesPrompt));
       } catch (error) {
         handleCatchError(error);
       }
@@ -155,5 +153,5 @@ export default function useCallApi(submitData: SubmitData) {
       setIsDone(false);
       streamData();
     }
-  }, [dispatch, setChunkCount, submitData]);
+  }, [dispatch, setChunkCount, chatApiArgs]);
 }

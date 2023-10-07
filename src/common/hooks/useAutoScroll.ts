@@ -8,8 +8,7 @@ export default function useAutoScroll(isDone: boolean) {
   const scrollDirection = useAppSelector(direction);
 
   useEffect(() => {
-    console.log('scrollController effect');
-    console.log({ chunkCount });
+    console.log('autoScroll effect');
     if (!isDone && scrollDirection === 'down' && chunkCount > 0) {
       scrollToBottom();
     }
