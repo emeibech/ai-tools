@@ -16,9 +16,7 @@ export function convertEntitiesToCharacters(html: string): string | null {
   return doc.documentElement.textContent;
 }
 
-export type Behavior = 'auto' | 'smooth' | 'instant';
-
-export function scrollToBottom(behavior: Behavior = 'smooth'): void {
+export function scrollToBottom(behavior: ScrollBehavior = 'smooth'): void {
   window.scrollTo({
     left: 0,
     top: document.body.scrollHeight,
@@ -26,17 +24,11 @@ export function scrollToBottom(behavior: Behavior = 'smooth'): void {
   });
 }
 
-export interface ScrollWindowToOptions {
-  left?: number;
-  top: number;
-  behavior?: Behavior;
-}
-
 export function scrollWindowTo({
   top,
   left = 0,
-  behavior = 'instant',
-}: ScrollWindowToOptions): void {
+  behavior = 'instant' as ScrollBehavior,
+}: ScrollToOptions): void {
   requestAnimationFrame(() => {
     window.scrollTo({
       left,

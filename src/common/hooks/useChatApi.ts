@@ -21,7 +21,7 @@ function getUrlParams(name: Name) {
   This function will be used to decide whether to change model (this only 
   applies to codingassistant since higher context costs more and I can
   only afford to use it on this one) or to cut some of the old messages */
-function getTokenEstimate(messages: Messages[] | MessagesParam[]) {
+function getTokenEstimate(messages: MessagesParam[]) {
   const combinedMessages = messages.reduce(
     (acc, cur) => (acc += cur.content),
     '',
@@ -43,7 +43,7 @@ interface TrimMessages {
 /* Recursively removes the first message object in messages array until the 
 entire message history is less than the approximate tokenLimit param. 
 This is to avoid getting token limit error. */
-function trimMessages({ messages, tokenLimit }: TrimMessages) {
+function trimMessages({ messages, tokenLimit }: TrimMessages): MessagesParam[] {
   const estimatedTokens = getTokenEstimate(messages);
   if (estimatedTokens < tokenLimit) return messages;
   const trimmedMessages = messages.slice(1);

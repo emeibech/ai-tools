@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { scrollToBottom } from '../lib/utils';
-import { type SubmitData } from '@/features/chatInterface/ChatInterface';
+import { type ChatApiArgs } from '@/features/chatInterface/ChatInterface';
 import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
 import {
   getMessagesActions,
@@ -40,17 +40,17 @@ function mockStreamingApi(mockData: unknown[], maxDelay: number = 100) {
   });
 }
 
-export default function useMockApi(submitData: SubmitData) {
+export default function useMockApi(chatApiArgs: ChatApiArgs) {
   const [isDone, setIsDone] = useState(true);
   const scrollDirection = useAppSelector(direction);
-  const msgs = getMessagesState(submitData.name);
+  const msgs = getMessagesState(chatApiArgs.chatInterface);
   const messages = useAppSelector(msgs);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     console.log('useMockApi Effect');
-    if (submitData.submitCount > 0) {
-      const { messageAppended } = getMessagesActions(submitData.name);
+    if (chatApiArgs.submitCount > 0) {
+      const { messageAppended } = getMessagesActions(chatApiArgs.chatInterface);
       const fetchData = async () => {
         const reader = mockStreamingApi([
           ...mockData,
@@ -82,7 +82,7 @@ export default function useMockApi(submitData: SubmitData) {
 
           dispatch(
             messageAppended({
-              id: submitData.id,
+              id: chatApiArgs.responseId,
               content: chunk,
             }),
           );
@@ -95,7 +95,7 @@ export default function useMockApi(submitData: SubmitData) {
 
       fetchData();
     }
-  }, [dispatch, submitData]);
+  }, [dispatch, chatApiArgs]);
 
   useEffect(() => {
     console.log('scrollController effect');
