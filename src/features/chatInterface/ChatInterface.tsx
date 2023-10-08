@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { cn } from '@/common/lib/utils';
-import useGetScrollDir from '../scrollDirection/useGetScrollDir';
 import ChatMessage from './ChatMessage';
 import ChatInterfaceForm, { Model } from './ChatInterfaceForm';
 import { useAppSelector } from '@/app/hooks';
@@ -38,7 +37,6 @@ export default function ChatInterface({
   children,
   renderCodeBlocks = false,
 }: ChatInterfaceProps) {
-  const scrollDirection = useGetScrollDir();
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
 
@@ -57,18 +55,6 @@ export default function ChatInterface({
 
   return (
     <section className="relative max-w-[1280px]">
-      <div
-        className={cn(
-          scrollDirection === 'down' ? '-translate-y-full' : '-translate-y-0',
-          'sticky top-10 lg:top-0 py-1 bg-background z-10 border-b',
-          'transition-transform duration-300',
-        )}
-      >
-        <h2 className={cn('sm:text-2xl font-medium min-w-full text-center')}>
-          {name}
-        </h2>
-      </div>
-
       <section className={cn('min-h-[85vh] max-w-[90ch] mx-auto')}>
         {children}
         {listMessages}
