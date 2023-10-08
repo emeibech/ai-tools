@@ -166,7 +166,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       <strong
         className={cn(
           'col-span-2 py-2',
-          'text-center text-aquire tracking-wide italic',
+          'text-center tracking-wide italic',
           'sm:text-lg sm:py-4',
         )}
       >

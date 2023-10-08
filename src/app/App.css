@@ -1,31 +1,3 @@
 #root {
   margin: 0 auto;
 }
-
-@font-face {
-  font-family: tektur;
-  src: url("../assets/fonts/tektur.ttf");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: aquire;
-  src: url("../assets/fonts/aquire.otf");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: neue;
-  src: url("../assets/fonts/helvetica-neue-extended.ttf");
-  font-display: swap;
-}
-
-[data-name="site-name"] > a,
-.text-tektur {
-  font-family: tektur;
-}
-
-[data-name="site-name"] > a > span,
-.text-aquire {
-  font-family: aquire;
-}
