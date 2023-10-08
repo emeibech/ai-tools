@@ -20,10 +20,12 @@
   font-display: swap;
 }
 
-[data-name="site-name"] > a {
+[data-name="site-name"] > a,
+.text-tektur {
   font-family: tektur;
 }
 
-[data-name="site-name"] > a > span {
+[data-name="site-name"] > a > span,
+.text-aquire {
   font-family: aquire;
 }
