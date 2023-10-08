@@ -1,18 +1,26 @@
-import { useAppSelector } from '@/app/hooks';
-import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
 import { useEffect, useState } from 'react';
 import { scrollToBottom } from '../lib/utils';
+import { type ScrollDirection } from './useGetScrollDir';
 
-export default function useAutoScroll(isDone: boolean) {
-  const [chunkCount, setChunkCount] = useState(0);
-  const scrollDirection = useAppSelector(direction);
+export interface AutoScrollArgs {
+  isDone: boolean;
+  scrollDirection: ScrollDirection;
+}
+
+export default function useAutoScroll({
+  isDone,
+  scrollDirection,
+}: AutoScrollArgs) {
+  const [chunkSentCount, setChunkSentCount] = useState(0);
+  const isScrolling = chunkSentCount > 0;
 
   useEffect(() => {
     console.log('autoScroll effect');
-    if (!isDone && scrollDirection === 'down' && chunkCount > 0) {
+    if (!isDone && scrollDirection === 'down' && isScrolling) {
       scrollToBottom();
+      console.log(chunkSentCount);
     }
-  }, [isDone, scrollDirection, chunkCount]);
+  }, [isDone, scrollDirection, isScrolling, chunkSentCount]);
 
-  return setChunkCount;
+  return setChunkSentCount;
 }
