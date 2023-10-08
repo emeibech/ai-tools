@@ -118,7 +118,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       className={cn(
         'grid grid-cols-2 mt-8 bg-background',
         'px-4 md:px-20',
-        'sticky bottom-4 inset-x-40',
+        'sticky bottom-0 inset-x-40',
       )}
     >
       <div
@@ -162,15 +162,15 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         </Button>
       </div>
 
-      <em
+      <strong
         className={cn(
           'col-span-2 py-2',
-          'text-center font-medium text-tektur tracking-wide',
-          'sm:text-lg',
+          'text-center text-aquire tracking-wide italic',
+          'sm:text-lg sm:py-4',
         )}
       >
         {name}
-      </em>
+      </strong>
     </form>
   );
 }

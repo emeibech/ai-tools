@@ -42,16 +42,40 @@ function displayAvatar(id: string) {
 
   if (idSlice === 'user')
     return (
-      <Avatar className=" justify-self-center py-4 text-center">
-        <AvatarImage src={friend} className="bg-accent rounded-full" />
-        <AvatarFallback>User</AvatarFallback>
+      <Avatar className="justify-self-center py-4 text-center">
+        <AvatarImage
+          src={friend}
+          height="40px"
+          width="40px"
+          className="bg-accent rounded-full"
+        />
+        <AvatarFallback
+          className={cn(
+            'bg-accent rounded-full w-10',
+            'text-sm font-medium text-background',
+          )}
+        >
+          User
+        </AvatarFallback>
       </Avatar>
     );
 
   return (
-    <Avatar className=" justify-self-center py-4 text-center">
-      <AvatarImage src={chatBot} className="bg-accent rounded-full" />
-      <AvatarFallback>AI</AvatarFallback>
+    <Avatar className="justify-self-center py-4 text-center">
+      <AvatarImage
+        src={chatBot}
+        height="40px"
+        width="40px"
+        className="bg-accent rounded-full"
+      />
+      <AvatarFallback
+        className={cn(
+          'bg-accent rounded-full w-10',
+          'text-sm font-medium text-background',
+        )}
+      >
+        AI
+      </AvatarFallback>
     </Avatar>
   );
 }
