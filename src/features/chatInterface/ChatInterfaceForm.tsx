@@ -134,7 +134,8 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
           className={cn(
             textarea.getTaiwindClasses(),
             'text-base bg-field border-none focus-visible:ring-0',
-            'min-h-[2rem] py-1 pl-4 pr-12 rounded-xl resize-none',
+            'min-h-[2rem] py-1 pl-4 rounded-xl resize-none',
+            'sm: pr-14',
           )}
           cols={70}
           rows={1}
@@ -149,7 +150,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       <div
         className={cn(
           'col-start-2 row-start-1',
-          'justify-self-end self-end mr-2 mb-2 z-0',
+          'justify-self-end self-end mr-4 mb-2 z-0',
         )}
       >
         <Button
