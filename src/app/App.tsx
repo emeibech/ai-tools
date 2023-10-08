@@ -1,25 +1,22 @@
 import { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useAppSelector } from '../app/hooks';
-import { darkModeStatus } from '../features/darkmode/darkmodeSlice';
 import { cn } from '../common/lib/utils';
 import Header from '../layout/header/Header';
 import Nav from '../layout/navigation/Nav';
 import SiteTitle from '../layout/header/SiteTitle';
 import Footer from '../layout/footer/Footer';
 import './App.css';
+import useDarkmodeToggler from '@/common/hooks/useDarkmodeToggler';
 
 export default function App({ children }: { children?: ReactNode }) {
-  const darkmode = useAppSelector(darkModeStatus);
+  useDarkmodeToggler();
 
   return (
     <div
       className={cn(
-        darkmode ? 'dark' : '',
         'bg-background text-foreground',
         'lg:grid lg:grid-cols-[260px_1fr_80px]',
       )}
-      data-darkmode={darkmode}
     >
       <Header
         className={cn(
