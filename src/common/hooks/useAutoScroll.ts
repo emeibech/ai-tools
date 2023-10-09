@@ -12,15 +12,13 @@ export default function useAutoScroll({
   scrollDirection,
 }: AutoScrollArgs) {
   const [chunkSentCount, setChunkSentCount] = useState(0);
-  const isScrolling = chunkSentCount > 0;
 
   useEffect(() => {
     console.log('autoScroll effect');
-    if (!isDone && scrollDirection === 'down' && isScrolling) {
-      scrollToBottom();
-      console.log(chunkSentCount);
-    }
-  }, [isDone, scrollDirection, isScrolling, chunkSentCount]);
+    const isScrolling = chunkSentCount > 0;
+
+    if (!isDone && scrollDirection === 'down' && isScrolling) scrollToBottom();
+  }, [isDone, scrollDirection, chunkSentCount]);
 
   return setChunkSentCount;
 }
