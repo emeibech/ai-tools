@@ -17,10 +17,12 @@ export function convertEntitiesToCharacters(html: string): string | null {
 }
 
 export function scrollToBottom(behavior: ScrollBehavior = 'smooth'): void {
-  window.scrollTo({
-    left: 0,
-    top: document.body.scrollHeight,
-    behavior: behavior,
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      left: 0,
+      top: document.body.scrollHeight,
+      behavior: behavior,
+    });
   });
 }
 
