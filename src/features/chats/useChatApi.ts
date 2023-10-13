@@ -73,8 +73,11 @@ const baseUrl = import.meta.env.VITE_AI_URL;
 export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const [isDone, setIsDone] = useState(true);
   const dispatch = useAppDispatch();
-  const scrollDirection = useGetScrollDir();
-  const setChunkSentCount = useAutoScroll({ isDone, scrollDirection });
+  const { scrollDir, setScrollDir } = useGetScrollDir();
+  const setChunkSentCount = useAutoScroll({
+    isDone,
+    scrollDir,
+  });
 
   useEffect(() => {
     console.log('useChatApi Effect');
@@ -162,8 +165,9 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
 
     // This condition is so it doesn't run on first mount
     if (submitCount > 0) {
+      setScrollDir('down');
       setIsDone(false);
       streamData();
     }
-  }, [dispatch, setChunkSentCount, chatApiArgs]);
+  }, [dispatch, setChunkSentCount, setScrollDir, chatApiArgs]);
 }

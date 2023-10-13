@@ -17,8 +17,8 @@ export interface ApiArgs {
 export default function useApi(apiArgs: ApiArgs) {
   const [isDone, setIsDone] = useState(true);
   const dispatch = useAppDispatch();
-  const scrollDirection = useGetScrollDir();
-  const setChunkSentCount = useAutoScroll({ isDone, scrollDirection });
+  const { scrollDir, setScrollDir } = useGetScrollDir();
+  const setChunkSentCount = useAutoScroll({ isDone, scrollDir });
 
   useEffect(() => {
     console.log('useApi effect');
@@ -69,8 +69,9 @@ export default function useApi(apiArgs: ApiArgs) {
     }
 
     if (submitCount > 0) {
+      setScrollDir('down');
       setIsDone(false);
       streamData();
     }
-  }, [dispatch, setChunkSentCount, apiArgs]);
+  }, [dispatch, setChunkSentCount, setScrollDir, apiArgs]);
 }

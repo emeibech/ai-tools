@@ -4,21 +4,18 @@ import { type ScrollDirection } from './useGetScrollDir';
 
 export interface AutoScrollArgs {
   isDone: boolean;
-  scrollDirection: ScrollDirection;
+  scrollDir: ScrollDirection;
 }
 
-export default function useAutoScroll({
-  isDone,
-  scrollDirection,
-}: AutoScrollArgs) {
+export default function useAutoScroll({ isDone, scrollDir }: AutoScrollArgs) {
   const [chunkSentCount, setChunkSentCount] = useState(0);
 
   useEffect(() => {
     console.log('autoScroll effect');
     const isScrolling = chunkSentCount > 0;
 
-    if (!isDone && scrollDirection === 'down' && isScrolling) scrollToBottom();
-  }, [isDone, scrollDirection, chunkSentCount]);
+    if (!isDone && scrollDir === 'down' && isScrolling) scrollToBottom();
+  }, [isDone, scrollDir, chunkSentCount]);
 
   return setChunkSentCount;
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 export type ScrollDirection = 'up' | 'down';
 
 export default function useGetScrollDir() {
-  const [scrollDir, setScrollDir] = useState<ScrollDirection>('up');
+  const [scrollDir, setScrollDir] = useState<ScrollDirection>('down');
 
   useEffect(() => {
     console.log('useGetScrollDirection Effect');
@@ -28,5 +28,5 @@ export default function useGetScrollDir() {
     };
   }, []);
 
-  return scrollDir;
+  return { scrollDir, setScrollDir };
 }
