@@ -23,8 +23,6 @@ export default function Code({ code }: CodeProps) {
   const darkmode = useAppSelector(darkModeStatus);
   const { language, codeBlock } = extractLanguage(code);
 
-  console.log({ language });
-
   return (
     <pre className="whitespace-pre-wrap relative">
       <div

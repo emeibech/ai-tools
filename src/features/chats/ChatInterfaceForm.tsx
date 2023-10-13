@@ -100,8 +100,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         model: extractModel(value),
       });
 
-      // Wait for the next paint before calling scrollToBottom
-      requestAnimationFrame(() => scrollToBottom());
+      scrollToBottom();
     }
   }
 
