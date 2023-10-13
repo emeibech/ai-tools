@@ -1,8 +1,16 @@
 import { cn } from '@/common/lib/utils';
 import CodeAnalyzerForm from './CodeAnalyzerForm';
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
+import { useAppSelector } from '@/app/hooks';
+import { getResponsesState } from '@/features/tools/toolsSlicesUtils';
+import { CodeHighlighter } from '@/features/chats/CodeHighlighter';
+import { useState } from 'react';
+import Code from '@/features/chats/Code';
 
 export default function CodeAnalyzer() {
+  const response = useAppSelector(getResponsesState('codeanalyzer'));
+  const [code, setCode] = useState<string>('');
+
   useSetScrollPosition('codeanalyzer');
   return (
     <main
@@ -28,7 +36,15 @@ export default function CodeAnalyzer() {
         summary and a structured break down of the code.
       </p>
 
-      <CodeAnalyzerForm />
+      <CodeAnalyzerForm route="codeanalyzer" setCode={setCode} />
+
+      <section className="max-w-[920px] mx-auto min-w-full">
+        {code !== '' && <Code code={`\n${code}`} />}
+
+        <pre className="whitespace-pre-wrap">
+          <CodeHighlighter>{response}</CodeHighlighter>
+        </pre>
+      </section>
     </main>
   );
 }
