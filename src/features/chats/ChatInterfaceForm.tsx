@@ -16,7 +16,7 @@ import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
 import { Name, ChatApiArgs } from './ChatInterface';
 import { getMessagesActions, getMessagesState } from './messagesSliceutils';
-import useChatApi from '@/common/hooks/useChatApi';
+import useChatApi from './useChatApi';
 
 export type Model = 'gpt-4' | '';
 

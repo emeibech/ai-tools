@@ -9,7 +9,7 @@ import {
 } from '@/features/tools/toolsSlicesUtils';
 
 export interface ApiArgs {
-  code: string;
+  prompt: string;
   route: Tool;
   submitCount: number;
 }
@@ -22,11 +22,11 @@ export default function useApi(apiArgs: ApiArgs) {
 
   useEffect(() => {
     console.log('useApi effect');
-    const { route, code, submitCount } = apiArgs;
+    const { route, prompt, submitCount } = apiArgs;
     const { responseAppended } = getResponsesActions(route);
     const baseUrl = import.meta.env.VITE_AI_URL;
     const url = `${baseUrl}/${route}`;
-    const body = [{ role: 'user', content: code }];
+    const body = [{ role: 'user', content: prompt }];
     const requestOptions = {
       method: 'POST',
       headers: {

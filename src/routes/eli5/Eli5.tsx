@@ -1,7 +1,7 @@
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
 import { cn } from '@/common/lib/utils';
-import ChatInterface from '@/features/chatInterface/ChatInterface';
-import ChatMessage from '@/features/chatInterface/ChatMessage';
+import ChatInterface from '@/features/chats/ChatInterface';
+import ChatMessage from '@/features/chats/ChatMessage';
 import { nanoid } from '@reduxjs/toolkit';
 
 const id = nanoid();
@@ -17,7 +17,9 @@ export default function CodingAssistant() {
       )}
     >
       <ChatInterface name="Explain Like I'm 5">
-        <ChatMessage id={`assistant-${id}`}>What up?</ChatMessage>
+        <ChatMessage id={`assistant-${id}`} name="Explain Like I'm 5">
+          What up?
+        </ChatMessage>
       </ChatInterface>
     </main>
   );

@@ -25,7 +25,7 @@ export default function CodeAnalyzerForm({
   const codeRef = useRef<HTMLTextAreaElement>(null);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
-    code: '',
+    prompt: '',
     submitCount: 0,
   });
 
@@ -55,8 +55,7 @@ export default function CodeAnalyzerForm({
     setCode(values.code);
     setApiArgs({
       route,
-
-      code: values.code,
+      prompt: values.code,
       submitCount: apiArgs.submitCount + 1,
     });
 
