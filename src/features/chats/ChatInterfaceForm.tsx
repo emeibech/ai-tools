@@ -46,7 +46,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
   const [chatApiArgs, setChatApiArgs] = useState<ChatApiArgs>({
-    chatInterface: undefined,
+    chatInterface: name,
     chatHistory: [],
     responseId: '',
     prompt: '',
@@ -100,7 +100,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         model: extractModel(value),
       });
 
-      // This ensures the dom is updated before calling scrollToBottom
+      // Wait for the next paint before calling scrollToBottom
       requestAnimationFrame(() => scrollToBottom());
     }
   }

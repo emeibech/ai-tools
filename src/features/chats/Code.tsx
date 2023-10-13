@@ -11,20 +11,19 @@ interface CodeProps {
   code: string;
 }
 
-function extractLanguage(code: string): {
-  language: string;
-  codeBlock: string;
-} {
+function extractLanguage(code: string) {
   const linebreakIndex = code.indexOf('\n');
   const language = code.slice(0, linebreakIndex);
   const codeBlock = code.slice(linebreakIndex, -1);
-  return { language, codeBlock };
+  return { language: language, codeBlock };
 }
 
 export default function Code({ code }: CodeProps) {
   const [copied, setCopied] = useState(false);
   const darkmode = useAppSelector(darkModeStatus);
   const { language, codeBlock } = extractLanguage(code);
+
+  console.log({ language });
 
   return (
     <pre className="whitespace-pre-wrap relative">
@@ -62,7 +61,7 @@ export default function Code({ code }: CodeProps) {
       </div>
 
       <Highlight
-        language={language && 'js'}
+        language="jsx"
         theme={darkmode ? themes.vsDark : themes.nightOwlLight}
         code={codeBlock}
       >

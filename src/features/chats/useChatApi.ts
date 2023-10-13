@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { handleCatchError } from '../lib/utils';
-import { getMessagesActions } from '@/features/chatInterface/messagesSliceutils';
+import { handleCatchError } from '@/common/lib/utils';
+import { getMessagesActions } from '@/features/chats/messagesSliceutils';
 import { useAppDispatch } from '@/app/hooks';
 import {
   type Messages,
   type Name,
   type ChatApiArgs,
-} from '@/features/chatInterface/ChatInterface';
-import useAutoScroll from './useAutoScroll';
-import useGetScrollDir from './useGetScrollDir';
+} from '@/features/chats/ChatInterface';
+import useAutoScroll from '@/common/hooks/useAutoScroll';
+import useGetScrollDir from '@/common/hooks/useGetScrollDir';
 
 function getUrlParams(name: Name) {
   if (name === 'Coding Assistant') return '/codingassistant?model=';

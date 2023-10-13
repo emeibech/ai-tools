@@ -6,7 +6,7 @@ export default function useDarkmodeToggler() {
   const darkmode = useAppSelector(darkModeStatus);
 
   useEffect(() => {
-    console.log('scrollbar toggler');
+    console.log('darkmode toggler');
     if (darkmode) {
       document.body.classList.add('dark');
     } else {

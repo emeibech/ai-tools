@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { scrollToBottom } from '../lib/utils';
-import { type ChatApiArgs } from '@/features/chatInterface/ChatInterface';
+import { type ChatApiArgs } from '@/features/chats/ChatInterface';
 import { direction } from '@/features/scrollDirection/scrollDirectionSlice';
 import {
   getMessagesActions,
   getMessagesState,
-} from '@/features/chatInterface/messagesSliceutils';
+} from '@/features/chats/messagesSliceutils';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 
 const mockData = [

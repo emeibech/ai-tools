@@ -7,32 +7,17 @@ import { ReactNode, forwardRef } from 'react';
 import chatBot from './imgs/chatbot.png';
 import friend from './imgs/friend.png';
 import { Separator } from '@/common/components/ui/separator';
-import Code from './Code';
 import { AvatarFallback } from '@/common/components/ui/avatar';
 import { Name } from './ChatInterface';
 import { getMessagesActions } from './messagesSliceutils';
 import { useAppDispatch } from '@/app/hooks';
+import { CodeHighlighter } from './CodeHighlighter';
 
 interface ChatMessageProps {
-  name?: Name;
+  name: Name;
   renderCodeBlocks?: boolean;
   children: ReactNode;
   id: string;
-}
-
-function formatMessage(message: ReactNode): JSX.Element {
-  const messageString = `${message}`;
-  const codeBlocks = messageString.split('```');
-
-  const formattedMessage = codeBlocks.map((block, index) => {
-    if (index % 2 === 0) {
-      return <p key={`text-${index}`}>{block}</p>;
-    } else {
-      return <Code key={`code-${index}`} code={block} />;
-    }
-  });
-
-  return <>{formattedMessage}</>;
 }
 
 function displayAvatar(id: string) {
@@ -109,7 +94,11 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
               'min-[375px]:text-base sm:px-6',
             )}
           >
-            {renderCodeBlocks ? formatMessage(children) : children}
+            {renderCodeBlocks ? (
+              <CodeHighlighter>{children}</CodeHighlighter>
+            ) : (
+              children
+            )}
           </div>
 
           <div
