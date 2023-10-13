@@ -7,8 +7,9 @@ import useLabelAnimation from '@/common/hooks/useLabelAnimation';
 import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
 import useFormLogic from '@/common/hooks/useFormLogic';
-import { Tool } from '@/features/tools/toolsSlicesUtils';
+import { Tool, getResponsesActions } from '@/features/tools/toolsSlicesUtils';
 import useApi, { ApiArgs } from '@/features/tools/useApi';
+import { useAppDispatch } from '@/app/hooks';
 
 const schema = { code: z.string().min(5).max(5000) };
 const defaultValues = { code: '' };
@@ -23,6 +24,8 @@ export default function CodeAnalyzerForm({
   setCode,
 }: CodeAnalyzerFormProps) {
   const codeRef = useRef<HTMLTextAreaElement>(null);
+  const dispatch = useAppDispatch();
+  const { responseReset } = getResponsesActions(route);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
     prompt: '',
@@ -52,6 +55,7 @@ export default function CodeAnalyzerForm({
 
   function handleSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
+    dispatch(responseReset());
     setCode(values.code);
     setApiArgs({
       route,
@@ -59,7 +63,7 @@ export default function CodeAnalyzerForm({
       submitCount: apiArgs.submitCount + 1,
     });
 
-    requestAnimationFrame(() => scrollToBottom());
+    scrollToBottom();
   }
 
   return (

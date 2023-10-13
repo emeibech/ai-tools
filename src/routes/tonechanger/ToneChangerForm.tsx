@@ -1,4 +1,4 @@
-import { cn } from '@/common/lib/utils';
+import { cn, scrollToBottom } from '@/common/lib/utils';
 import * as z from 'zod';
 import { Textarea } from '@/common/components/ui/textarea';
 import { Button } from '@/common/components/ui/button';
@@ -6,8 +6,11 @@ import { Input } from '@/common/components/ui/input';
 import useLabelAnimation from '@/common/hooks/useLabelAnimation';
 import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import useFormLogic from '@/common/hooks/useFormLogic';
+import { Tool, getResponsesActions } from '@/features/tools/toolsSlicesUtils';
+import useApi, { ApiArgs } from '@/features/tools/useApi';
+import { useAppDispatch } from '@/app/hooks';
 
 const schema = {
   tone: z.string().min(2).max(100),
@@ -19,9 +22,40 @@ const defaultValues = {
   message: '',
 };
 
-export default function ToneChangerForm() {
+interface FormatToneChangerPromptArgs {
+  tone: string;
+  message: string;
+}
+
+function formatToneChangerPrompt({
+  tone,
+  message,
+}: FormatToneChangerPromptArgs) {
+  return `Tone: ${tone}\nMessage: ${message}`;
+}
+
+interface ToneChangerFormProps {
+  route: Tool;
+  setPrompt: (prompt: string) => void;
+}
+
+export default function ToneChangerForm({
+  route,
+  setPrompt,
+}: ToneChangerFormProps) {
   const toneRef = useRef(null);
   const messageRef = useRef(null);
+  const dispatch = useAppDispatch();
+  const { responseReset } = getResponsesActions(route);
+
+  const [apiArgs, setApiArgs] = useState<ApiArgs>({
+    route,
+    prompt: '',
+    submitCount: 0,
+  });
+
+  useApi(apiArgs);
+
   const { form, FormSchema, getFieldState, getValidationStyles } = useFormLogic(
     {
       schema,
@@ -29,7 +63,7 @@ export default function ToneChangerForm() {
       mode: 'onTouched',
       resetLabelState,
       refs: [toneRef, messageRef],
-    }
+    },
   );
 
   const toneLabel = useLabelAnimation({
@@ -49,6 +83,25 @@ export default function ToneChangerForm() {
 
   function onSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
+    dispatch(responseReset());
+
+    setPrompt(
+      formatToneChangerPrompt({
+        tone: values.tone,
+        message: values.message,
+      }),
+    );
+
+    setApiArgs({
+      route,
+      submitCount: apiArgs.submitCount + 1,
+      prompt: formatToneChangerPrompt({
+        tone: values.tone,
+        message: values.message,
+      }),
+    });
+
+    scrollToBottom();
   }
 
   return (
@@ -67,7 +120,7 @@ export default function ToneChangerForm() {
                 type="text"
                 className={cn(
                   getValidationStyles(getFieldState('tone').invalid),
-                  'max-w-[460px]'
+                  'max-w-[460px]',
                 )}
                 ref={toneRef}
               />
@@ -83,7 +136,7 @@ export default function ToneChangerForm() {
                 {...field}
                 className={cn(
                   getValidationStyles(getFieldState('message').invalid),
-                  'resize-none'
+                  'resize-none',
                 )}
                 cols={100}
                 rows={10}
@@ -98,7 +151,7 @@ export default function ToneChangerForm() {
           className={cn(
             'p-2 px-8 mx-auto',
             'justify-self-end max-w-max',
-            'transition duration-300'
+            'transition duration-300',
           )}
         >
           Change Tone

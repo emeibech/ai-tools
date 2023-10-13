@@ -1,4 +1,4 @@
-import { cn } from '@/common/lib/utils';
+import { cn, scrollToBottom } from '@/common/lib/utils';
 import * as z from 'zod';
 import { Textarea } from '@/common/components/ui/textarea';
 import { Button } from '@/common/components/ui/button';
@@ -7,7 +7,10 @@ import useLabelAnimation from '@/common/hooks/useLabelAnimation';
 import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
 import useFormLogic from '@/common/hooks/useFormLogic';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { Tool, getResponsesActions } from '@/features/tools/toolsSlicesUtils';
+import useApi, { ApiArgs } from '@/features/tools/useApi';
+import { useAppDispatch } from '@/app/hooks';
 
 const schema = {
   subject: z.string().min(2).max(100),
@@ -21,10 +24,42 @@ const defaultValues = {
   context: '',
 };
 
-export default function StoryGeneratorForm() {
+interface FormatStoryGeneratorPromptArgs {
+  subject: string;
+  style?: string;
+  context?: string;
+}
+
+function formatStoryGeneratorPrompt({
+  subject,
+  style,
+  context,
+}: FormatStoryGeneratorPromptArgs) {
+  return `Subject: ${subject}\nStyle: ${style}\nContext: ${context}`;
+}
+
+interface StoryGeneratorFormProps {
+  route: Tool;
+  setPrompt: (prompt: string) => void;
+}
+
+export default function StoryGeneratorForm({
+  route,
+  setPrompt,
+}: StoryGeneratorFormProps) {
   const subjectRef = useRef(null);
   const styleRef = useRef(null);
   const contextRef = useRef(null);
+  const dispatch = useAppDispatch();
+  const { responseReset } = getResponsesActions(route);
+
+  const [apiArgs, setApiArgs] = useState<ApiArgs>({
+    route,
+    prompt: '',
+    submitCount: 0,
+  });
+
+  useApi(apiArgs);
 
   const { form, FormSchema, getFieldState, getValidationStyles } = useFormLogic(
     {
@@ -33,7 +68,7 @@ export default function StoryGeneratorForm() {
       mode: 'onTouched',
       resetLabelState,
       refs: [subjectRef, styleRef, contextRef],
-    }
+    },
   );
 
   const subjectLabel = useLabelAnimation({
@@ -59,6 +94,26 @@ export default function StoryGeneratorForm() {
 
   function handleSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
+    dispatch(responseReset());
+    setPrompt(
+      formatStoryGeneratorPrompt({
+        subject: values.subject,
+        style: values.style,
+        context: values.context,
+      }),
+    );
+
+    setApiArgs({
+      route,
+      submitCount: apiArgs.submitCount + 1,
+      prompt: formatStoryGeneratorPrompt({
+        subject: values.subject,
+        style: values.style,
+        context: values.context,
+      }),
+    });
+
+    scrollToBottom();
   }
 
   return (
@@ -81,7 +136,7 @@ export default function StoryGeneratorForm() {
                 type="text"
                 className={cn(
                   getValidationStyles(getFieldState('subject').invalid),
-                  'max-w-[420px]'
+                  'max-w-[420px]',
                 )}
                 ref={subjectRef}
               />
@@ -103,7 +158,7 @@ export default function StoryGeneratorForm() {
                 type="text"
                 className={cn(
                   getValidationStyles(getFieldState('style').invalid),
-                  'max-w-[420px]'
+                  'max-w-[420px]',
                 )}
                 ref={styleRef}
               />
@@ -124,7 +179,7 @@ export default function StoryGeneratorForm() {
                 {...field}
                 className={cn(
                   getValidationStyles(getFieldState('context').invalid),
-                  'resize-none'
+                  'resize-none',
                 )}
                 cols={100}
                 rows={5}
@@ -139,7 +194,7 @@ export default function StoryGeneratorForm() {
           className={cn(
             'p-2 px-8 mx-auto',
             'justify-self-end max-w-max',
-            'transition duration-300'
+            'transition duration-300',
           )}
         >
           Generate Story

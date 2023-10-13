@@ -39,11 +39,13 @@ export default function CodeAnalyzer() {
       <CodeAnalyzerForm route="codeanalyzer" setCode={setCode} />
 
       <section className="max-w-[920px] mx-auto min-w-full">
-        {code !== '' && <Code code={`\n${code}`} />}
+        <article>{code !== '' && <Code code={`\n${code}`} />}</article>
 
-        <pre className="whitespace-pre-wrap">
-          <CodeHighlighter>{response}</CodeHighlighter>
-        </pre>
+        <article className="mt-8">
+          <p className="whitespace-pre-wrap">
+            <CodeHighlighter>{response}</CodeHighlighter>
+          </p>
+        </article>
       </section>
     </main>
   );
