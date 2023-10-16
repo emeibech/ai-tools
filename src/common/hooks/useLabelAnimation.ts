@@ -56,13 +56,13 @@ export default function useLabelAnimation({
   const getAnimationStyles = (): string => {
     switch (fieldState) {
       case 'focusedInvalid':
-        return 'translate-y-0 -translate-x-1 scale-90 text-destructive';
+        return 'translate-y-0 -translate-x-1 scale-90 text-destructive pb-0.5';
       case 'focusedValid':
-        return 'translate-y-0 -translate-x-1 scale-90 text-foreground transition-transform';
+        return 'translate-y-0 -translate-x-1 scale-90 text-foreground transition-transform pb-0.5';
       case 'blurredInvalid':
-        return 'translate-y-0 -translate-x-1 scale-90 text-destructive transition-transform';
+        return 'translate-y-0 -translate-x-1 scale-90 text-destructive transition-transform pb-0.5';
       case 'blurredValid':
-        return 'translate-y-0 -translate-x-1 scale-90 text-muted-foreground transition-transform';
+        return 'translate-y-0 -translate-x-1 scale-90 text-muted-foreground transition-transform pb-0.5';
       default:
         return 'translate-y-5 text-muted-foreground transition-transform';
     }
