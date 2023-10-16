@@ -1,14 +1,16 @@
 import { cn } from '@/common/lib/utils';
 import StoryGeneratorForm from './StoryGeneratorForm';
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
-import { useState } from 'react';
-import { getResponsesState } from '@/features/tools/toolsSlicesUtils';
+import {
+  getPromptsState,
+  getResponsesState,
+} from '@/features/tools/toolsSlicesUtils';
 import { useAppSelector } from '@/app/hooks';
 import { Separator } from '@/common/components/ui/separator';
 
 export default function StoryGenerator() {
   const response = useAppSelector(getResponsesState('storygenerator'));
-  const [prompt, setPrompt] = useState('');
+  const prompt = useAppSelector(getPromptsState('storygenerator'));
   useSetScrollPosition('storygenerator');
   return (
     <main
@@ -36,7 +38,7 @@ export default function StoryGenerator() {
         you can also just use them as is.
       </p>
 
-      <StoryGeneratorForm route="storygenerator" setPrompt={setPrompt} />
+      <StoryGeneratorForm route="storygenerator" />
 
       <section className="max-w-[920px] mx-auto min-w-full">
         <article>

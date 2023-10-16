@@ -2,13 +2,15 @@ import { cn } from '@/common/lib/utils';
 import ToneChangerForm from './ToneChangerForm';
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
 import { useAppSelector } from '@/app/hooks';
-import { getResponsesState } from '@/features/tools/toolsSlicesUtils';
-import { useState } from 'react';
+import {
+  getPromptsState,
+  getResponsesState,
+} from '@/features/tools/toolsSlicesUtils';
 import { Separator } from '@/common/components/ui/separator';
 
 export default function ToneChanger() {
   const response = useAppSelector(getResponsesState('tonechanger'));
-  const [prompt, setPrompt] = useState('');
+  const prompt = useAppSelector(getPromptsState('tonechanger'));
   useSetScrollPosition('tonechanger');
   return (
     <main
@@ -36,7 +38,7 @@ export default function ToneChanger() {
         jumping-off points.
       </p>
 
-      <ToneChangerForm route="tonechanger" setPrompt={setPrompt} />
+      <ToneChangerForm route="tonechanger" />
 
       <section className="max-w-[920px] mx-auto min-w-full">
         <article>

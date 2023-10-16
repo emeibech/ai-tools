@@ -7,7 +7,11 @@ import useLabelAnimation from '@/common/hooks/useLabelAnimation';
 import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
 import useFormLogic from '@/common/hooks/useFormLogic';
-import { Tool, getResponsesActions } from '@/features/tools/toolsSlicesUtils';
+import {
+  Tool,
+  getPromptsActions,
+  getResponsesActions,
+} from '@/features/tools/toolsSlicesUtils';
 import useApi, { ApiArgs } from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 
@@ -16,16 +20,13 @@ const defaultValues = { code: '' };
 
 export interface CodeAnalyzerFormProps {
   route: Tool;
-  setCode: (code: string) => void;
 }
 
-export default function CodeAnalyzerForm({
-  route,
-  setCode,
-}: CodeAnalyzerFormProps) {
+export default function CodeAnalyzerForm({ route }: CodeAnalyzerFormProps) {
   const codeRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);
+  const { promptAppended, promptReset } = getPromptsActions(route);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
     prompt: '',
@@ -56,7 +57,8 @@ export default function CodeAnalyzerForm({
   function handleSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
     dispatch(responseReset());
-    setCode(values.code);
+    dispatch(promptReset());
+    dispatch(promptAppended(values.code));
     setApiArgs({
       route,
       prompt: values.code,

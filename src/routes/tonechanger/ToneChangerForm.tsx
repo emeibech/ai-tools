@@ -8,7 +8,11 @@ import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
 import { useRef, useState } from 'react';
 import useFormLogic from '@/common/hooks/useFormLogic';
-import { Tool, getResponsesActions } from '@/features/tools/toolsSlicesUtils';
+import {
+  Tool,
+  getPromptsActions,
+  getResponsesActions,
+} from '@/features/tools/toolsSlicesUtils';
 import useApi, { ApiArgs } from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 
@@ -36,17 +40,14 @@ function formatToneChangerPrompt({
 
 interface ToneChangerFormProps {
   route: Tool;
-  setPrompt: (prompt: string) => void;
 }
 
-export default function ToneChangerForm({
-  route,
-  setPrompt,
-}: ToneChangerFormProps) {
+export default function ToneChangerForm({ route }: ToneChangerFormProps) {
   const toneRef = useRef(null);
   const messageRef = useRef(null);
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);
+  const { promptAppended, promptReset } = getPromptsActions(route);
 
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
@@ -83,13 +84,15 @@ export default function ToneChangerForm({
 
   function onSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
+    dispatch(promptReset());
     dispatch(responseReset());
-
-    setPrompt(
-      formatToneChangerPrompt({
-        tone: values.tone,
-        message: values.message,
-      }),
+    dispatch(
+      promptAppended(
+        formatToneChangerPrompt({
+          tone: values.tone,
+          message: values.message,
+        }),
+      ),
     );
 
     setApiArgs({

@@ -8,7 +8,11 @@ import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
 import useFormLogic from '@/common/hooks/useFormLogic';
 import { useRef, useState } from 'react';
-import { Tool, getResponsesActions } from '@/features/tools/toolsSlicesUtils';
+import {
+  Tool,
+  getPromptsActions,
+  getResponsesActions,
+} from '@/features/tools/toolsSlicesUtils';
 import useApi, { ApiArgs } from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 
@@ -40,18 +44,15 @@ function formatStoryGeneratorPrompt({
 
 interface StoryGeneratorFormProps {
   route: Tool;
-  setPrompt: (prompt: string) => void;
 }
 
-export default function StoryGeneratorForm({
-  route,
-  setPrompt,
-}: StoryGeneratorFormProps) {
+export default function StoryGeneratorForm({ route }: StoryGeneratorFormProps) {
   const subjectRef = useRef(null);
   const styleRef = useRef(null);
   const contextRef = useRef(null);
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);
+  const { promptAppended, promptReset } = getPromptsActions(route);
 
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
@@ -95,12 +96,15 @@ export default function StoryGeneratorForm({
   function handleSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
     dispatch(responseReset());
-    setPrompt(
-      formatStoryGeneratorPrompt({
-        subject: values.subject,
-        style: values.style,
-        context: values.context,
-      }),
+    dispatch(promptReset());
+    dispatch(
+      promptAppended(
+        formatStoryGeneratorPrompt({
+          subject: values.subject,
+          style: values.style,
+          context: values.context,
+        }),
+      ),
     );
 
     setApiArgs({

@@ -10,19 +10,19 @@ const reducers = {
   },
 };
 
-export const codeAnalyzerSlice = createSlice({
+export const codeAnalyzerResponseSlice = createSlice({
   name: 'code analyzer response',
   initialState,
   reducers,
 });
 
-export const toneChangerSlice = createSlice({
+export const toneChangerResponseSlice = createSlice({
   name: 'tone changer response',
   initialState,
   reducers,
 });
 
-export const storyGeneratorSlice = createSlice({
+export const storyGeneratorResponseSlice = createSlice({
   name: 'story generator response',
   initialState,
   reducers,
@@ -31,25 +31,32 @@ export const storyGeneratorSlice = createSlice({
 export const {
   responseReset: codeAnalyzerResponseReset,
   responseAppended: codeAnalyzerResponseAppended,
-} = codeAnalyzerSlice.actions;
+} = codeAnalyzerResponseSlice.actions;
 
 export const {
   responseReset: toneChangerResponseReset,
   responseAppended: toneChangerResponseAppended,
-} = toneChangerSlice.actions;
+} = toneChangerResponseSlice.actions;
 
 export const {
   responseReset: storyGeneratorResponseReset,
   responseAppended: storyGeneratorResponseAppended,
-} = storyGeneratorSlice.actions;
+} = storyGeneratorResponseSlice.actions;
 
-export const codeAnalyzerResponse = (state: RootState) => state.codeAnalyzer;
-export const toneChangeResponse = (state: RootState) => state.toneChanger;
-export const storyGeneratorResponse = (state: RootState) =>
-  state.storyGenerator;
+export const codeAnalyzerResponse = (state: RootState) => {
+  return state.codeAnalyzerResponse;
+};
+
+export const toneChangeResponse = (state: RootState) => {
+  return state.toneChangerResponse;
+};
+
+export const storyGeneratorResponse = (state: RootState) => {
+  return state.storyGeneratorResponse;
+};
 
 export default {
-  codeAnalyzer: codeAnalyzerSlice.reducer,
-  toneChanger: toneChangerSlice.reducer,
-  storyGenerator: storyGeneratorSlice.reducer,
+  codeAnalyzerResponse: codeAnalyzerResponseSlice.reducer,
+  toneChangerResponse: toneChangerResponseSlice.reducer,
+  storyGeneratorResponse: storyGeneratorResponseSlice.reducer,
 };

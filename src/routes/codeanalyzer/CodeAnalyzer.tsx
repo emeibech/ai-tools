@@ -2,14 +2,16 @@ import { cn } from '@/common/lib/utils';
 import CodeAnalyzerForm from './CodeAnalyzerForm';
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
 import { useAppSelector } from '@/app/hooks';
-import { getResponsesState } from '@/features/tools/toolsSlicesUtils';
+import {
+  getPromptsState,
+  getResponsesState,
+} from '@/features/tools/toolsSlicesUtils';
 import { CodeHighlighter } from '@/features/chats/CodeHighlighter';
-import { useState } from 'react';
 import Code from '@/features/chats/Code';
 
 export default function CodeAnalyzer() {
   const response = useAppSelector(getResponsesState('codeanalyzer'));
-  const [code, setCode] = useState<string>('');
+  const prompt = useAppSelector(getPromptsState('codeanalyzer'));
 
   useSetScrollPosition('codeanalyzer');
   return (
@@ -36,10 +38,10 @@ export default function CodeAnalyzer() {
         summary and a structured break down of the code.
       </p>
 
-      <CodeAnalyzerForm route="codeanalyzer" setCode={setCode} />
+      <CodeAnalyzerForm route="codeanalyzer" />
 
       <section className="max-w-[920px] mx-auto min-w-full">
-        <article>{code !== '' && <Code code={`\n${code}`} />}</article>
+        <article>{prompt !== '' && <Code code={`\n${prompt}`} />}</article>
 
         <article className="mt-8">
           <p className="whitespace-pre-wrap">
