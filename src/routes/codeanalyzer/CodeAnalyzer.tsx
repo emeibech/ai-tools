@@ -43,10 +43,8 @@ export default function CodeAnalyzer() {
       <section className="max-w-[920px] mx-auto min-w-full">
         <article>{prompt !== '' && <Code code={`\n${prompt}`} />}</article>
 
-        <article className="mt-8">
-          <p className="whitespace-pre-wrap">
-            <CodeHighlighter>{response}</CodeHighlighter>
-          </p>
+        <article className="mt-8 whitespace-pre-wrap">
+          <CodeHighlighter>{response}</CodeHighlighter>
         </article>
       </section>
     </main>
