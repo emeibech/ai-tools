@@ -15,7 +15,12 @@ import {
 import useApi, { ApiArgs } from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 
-const schema = { code: z.string().min(5).max(5000) };
+const schema = {
+  code: z
+    .string()
+    .min(5, { message: 'Code must contain at least 5 characters' })
+    .max(5000, { message: 'Code must contain at most 5000 characters' }),
+};
 const defaultValues = { code: '' };
 
 export interface CodeAnalyzerFormProps {

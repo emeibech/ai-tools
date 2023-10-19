@@ -17,9 +17,18 @@ import useApi, { ApiArgs } from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 
 const schema = {
-  subject: z.string().min(2).max(100),
-  style: z.string().min(0).max(100),
-  context: z.string().min(0).max(5000),
+  subject: z
+    .string()
+    .min(2, { message: 'Subject must contain at least 2 characters' })
+    .max(100, { message: 'Subject must contain at most 100 characters' }),
+  style: z
+    .string()
+    .min(0)
+    .max(100, { message: 'Style must contain at most 100 characters' }),
+  context: z
+    .string()
+    .min(0)
+    .max(5000, { message: 'Context must contain at most 5000 characters' }),
 };
 
 const defaultValues = {

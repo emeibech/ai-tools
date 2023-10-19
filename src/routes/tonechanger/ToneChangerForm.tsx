@@ -17,8 +17,14 @@ import useApi, { ApiArgs } from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 
 const schema = {
-  tone: z.string().min(2).max(100),
-  message: z.string().min(5).max(5000),
+  tone: z
+    .string()
+    .min(2, { message: 'Tone must contain at least 2 characters' })
+    .max(100, { message: 'Tone must contain at most 100 characters' }),
+  message: z
+    .string()
+    .min(5, { message: 'Message must contain at least 5 characters' })
+    .max(5000, { message: 'Message must contain at most 5000 characters' }),
 };
 
 const defaultValues = {
