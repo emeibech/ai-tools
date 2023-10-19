@@ -36,7 +36,7 @@ function displayAvatar(id: string) {
         />
         <AvatarFallback
           className={cn(
-            'bg-accent rounded-full w-10',
+            'bg-accent rounded-full w-10 h-10',
             'text-sm font-medium text-background',
           )}
         >
@@ -55,7 +55,7 @@ function displayAvatar(id: string) {
       />
       <AvatarFallback
         className={cn(
-          'bg-accent rounded-full w-10',
+          'bg-accent rounded-full w-10 h-10',
           'text-sm font-medium text-background',
         )}
       >
