@@ -17,9 +17,22 @@ export default function CodingAssistant() {
       )}
     >
       <ChatInterface name="Explain Like I'm 5">
-        <ChatMessage id={`assistant-${id}`} name="Explain Like I'm 5">
-          What up?
-        </ChatMessage>
+        <article className="pt-4">
+          <ChatMessage
+            id={`assistant-${id}`}
+            name="Explain Like I'm 5"
+            initialMessage={true}
+          >
+            <p>Oh, hi!</p>
+
+            <p className="mt-4">
+              I'm your ELI5 assistant, a chatbot designed to explain stuff in
+              layperson's terms using simple analogies.
+            </p>
+
+            <p className="mt-4">What do you want to know?</p>
+          </ChatMessage>
+        </article>
       </ChatInterface>
     </main>
   );

@@ -17,9 +17,20 @@ export default function CodingAssistant() {
       )}
     >
       <ChatInterface name="Coding Assistant" renderCodeBlocks>
-        <ChatMessage id={`assistant-${id}`} name="Coding Assistant">
-          What up?
-        </ChatMessage>
+        <article className="pt-4">
+          <ChatMessage
+            id={`assistant-${id}`}
+            name="Coding Assistant"
+            initialMessage={true}
+          >
+            <p>
+              Oh, hi! I'm a chatbot designed to answer programming questions,
+              generate code, and provide suggestions or recommendations.
+            </p>
+
+            <p className="mt-4">How can I assist you today?</p>
+          </ChatMessage>
+        </article>
       </ChatInterface>
     </main>
   );

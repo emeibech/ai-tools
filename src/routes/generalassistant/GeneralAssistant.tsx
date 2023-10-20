@@ -17,9 +17,17 @@ export default function CodingAssistant() {
       )}
     >
       <ChatInterface name="General Assistant">
-        <ChatMessage id={`assistant-${id}`} name="General Assistant">
-          What up?
-        </ChatMessage>
+        <article className="pt-4">
+          <ChatMessage
+            id={`assistant-${id}`}
+            name="General Assistant"
+            initialMessage={true}
+          >
+            <p>I'm essentially ChatGPT but with a different skin.</p>
+
+            <p className="mt-4">How can I assist you today?</p>
+          </ChatMessage>
+        </article>
       </ChatInterface>
     </main>
   );
