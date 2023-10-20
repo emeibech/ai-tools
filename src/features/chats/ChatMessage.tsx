@@ -13,13 +13,6 @@ import { getMessagesActions } from './messagesSliceutils';
 import { useAppDispatch } from '@/app/hooks';
 import { CodeHighlighter } from './CodeHighlighter';
 
-interface ChatMessageProps {
-  name: Name;
-  renderCodeBlocks?: boolean;
-  children: ReactNode;
-  id: string;
-}
-
 function displayAvatar(id: string) {
   if (!id) return;
 
@@ -65,8 +58,19 @@ function displayAvatar(id: string) {
   );
 }
 
+interface ChatMessageProps {
+  name: Name;
+  children: ReactNode;
+  id: string;
+  renderCodeBlocks?: boolean;
+  initialMessage?: boolean;
+}
+
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
-  ({ children, name, id, renderCodeBlocks = false }, ref) => {
+  (
+    { children, name, id, renderCodeBlocks = false, initialMessage = false },
+    ref,
+  ) => {
     const dispatch = useAppDispatch();
     const { messageRemoved } = getMessagesActions(name);
 
@@ -107,7 +111,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
               'min-[375px]:col-span-1 min-[375px]:self-start',
             )}
           >
-            {name ? (
+            {!initialMessage && (
               <Button
                 onClick={handleClick}
                 id={id}
@@ -120,7 +124,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
               >
                 <MinusCircle width="16px" height="16px" />
               </Button>
-            ) : null}
+            )}
           </div>
         </article>
 
