@@ -70,12 +70,14 @@ function removeIds(messages: Messages[]) {
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
+export type Status = 'idle' | 'requesting' | 'streaming';
+
 export default function useChatApi(chatApiArgs: ChatApiArgs) {
-  const [isDone, setIsDone] = useState(true);
+  const [status, setStatus] = useState<Status>('idle');
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
   const setChunkSentCount = useAutoScroll({
-    isDone,
+    status,
     scrollDir,
   });
 
@@ -129,6 +131,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       try {
         const response = await fetch(url, requestOptions);
         const decoder = new TextDecoder();
+        setStatus('streaming');
 
         if (!response.ok) {
           throw new Error(`${response.status}: ${response.statusText}`);
@@ -156,7 +159,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
           }
 
           setChunkSentCount(0);
-          setIsDone(true);
+          setStatus('idle');
         }
       } catch (error) {
         handleCatchError(error);
@@ -166,7 +169,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     // This condition is so it doesn't run on first mount
     if (submitCount > 0) {
       setScrollDir('down');
-      setIsDone(false);
+      setStatus('requesting');
       streamData();
     }
   }, [dispatch, setChunkSentCount, setScrollDir, chatApiArgs]);

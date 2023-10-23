@@ -7,6 +7,7 @@ import {
   type Tool,
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
+import { Status } from '../chats/useChatApi';
 
 export interface ApiArgs {
   prompt: string;
@@ -15,10 +16,10 @@ export interface ApiArgs {
 }
 
 export default function useApi(apiArgs: ApiArgs) {
-  const [isDone, setIsDone] = useState(true);
+  const [status, setStatus] = useState<Status>('idle');
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
-  const setChunkSentCount = useAutoScroll({ isDone, scrollDir });
+  const setChunkSentCount = useAutoScroll({ status, scrollDir });
 
   useEffect(() => {
     console.log('useApi effect');
@@ -39,6 +40,7 @@ export default function useApi(apiArgs: ApiArgs) {
       try {
         const response = await fetch(url, requestOptions);
         const decoder = new TextDecoder();
+        setStatus('streaming');
 
         if (!response.ok) {
           throw new Error(`${response.status}: ${response.statusText}`);
@@ -60,7 +62,7 @@ export default function useApi(apiArgs: ApiArgs) {
           }
 
           setChunkSentCount(0);
-          setIsDone(true);
+          setStatus('idle');
         }
       } catch (error) {
         console.log('catch error');
@@ -70,7 +72,7 @@ export default function useApi(apiArgs: ApiArgs) {
 
     if (submitCount > 0) {
       setScrollDir('down');
-      setIsDone(false);
+      setStatus('requesting');
       streamData();
     }
   }, [dispatch, setChunkSentCount, setScrollDir, apiArgs]);
