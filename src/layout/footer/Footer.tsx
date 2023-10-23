@@ -1,16 +1,13 @@
-import { cn } from "@/common/lib/utils";
+import { cn } from '@/common/lib/utils';
+import { ClassName } from '@/types/layout';
 
-interface Props {
-  className?: string;
-}
-
-export default function Footer(props: Props) {
+export default function Footer({ className }: ClassName) {
   return (
     <footer
       className={cn(
-        props.className,
-        "text-xs text-muted-foreground text-center",
-        "self-end",
+        className,
+        'text-xs text-muted-foreground text-center',
+        'self-end',
       )}
     >
       <article>Copyright © 2023 emeibech AI.</article>

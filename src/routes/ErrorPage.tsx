@@ -1,6 +1,6 @@
+import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
 import App from '@/app/App';
 import { cn } from '@/common/lib/utils';
-import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
 
 export default function ErrorPage() {
   const error = useRouteError();

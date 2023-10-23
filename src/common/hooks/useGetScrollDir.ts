@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-
-export type ScrollDirection = 'up' | 'down';
+import type { ScrollDirection } from '@/types/hooks';
 
 export default function useGetScrollDir() {
   const [scrollDir, setScrollDir] = useState<ScrollDirection>('down');

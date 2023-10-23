@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 import { scrollToBottom } from '../lib/utils';
-import { type ScrollDirection } from './useGetScrollDir';
-import { Status } from '@/features/chats/useChatApi';
-
-export interface AutoScrollArgs {
-  status: Status;
-  scrollDir: ScrollDirection;
-}
+import type { AutoScrollArgs } from '@/types/hooks';
 
 export default function useAutoScroll({ status, scrollDir }: AutoScrollArgs) {
   const [chunkSentCount, setChunkSentCount] = useState(0);

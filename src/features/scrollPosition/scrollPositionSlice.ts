@@ -1,24 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
-
-export interface ScrollPositions {
-  home: number;
-  codeanalyzer: number;
-  codingassistant: number;
-  eli5: number;
-  storygenerator: number;
-  tonechanger: number;
-  generalassistant: number;
-}
-
-export type Route =
-  | 'home'
-  | 'codeanalyzer'
-  | 'codingassistant'
-  | 'eli5'
-  | 'storygenerator'
-  | 'tonechanger'
-  | 'generalassistant';
+import type { Route, ScrollPositions } from '@/types/features';
 
 const initialState: ScrollPositions = {
   home: 0,

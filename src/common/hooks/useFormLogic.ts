@@ -1,19 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { RefObject, useEffect } from 'react';
-
-interface UseFormLogicArgs {
-  schema: {
-    [key: string]: z.ZodString;
-  };
-  defaultValues: {
-    [key: string]: string;
-  };
-  mode: 'all' | 'onBlur' | 'onTouched' | 'onSubmit' | 'onChange';
-  refs: RefObject<HTMLElement>[];
-  resetLabelState: () => void;
-}
+import { useEffect } from 'react';
+import type { UseFormLogicArgs } from '@/types/hooks';
 
 export default function useFormLogic({
   schema,

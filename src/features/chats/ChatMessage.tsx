@@ -1,70 +1,17 @@
-import { MouseEvent } from 'react';
 import { Button } from '@/common/components/ui/button';
 import { cn } from '@/common/lib/utils';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { MinusCircle } from 'lucide-react';
-import { ReactNode, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import chatBot from './imgs/chatbot.png';
 import friend from './imgs/friend.png';
 import { Separator } from '@/common/components/ui/separator';
 import { AvatarFallback } from '@/common/components/ui/avatar';
-import { Name } from './ChatInterface';
 import { getMessagesActions } from './messagesSliceutils';
 import { useAppDispatch } from '@/app/hooks';
 import { CodeHighlighter } from './CodeHighlighter';
-
-function displayAvatar(id: string) {
-  if (!id) return;
-
-  const idSlice = id.slice(0, 4);
-
-  if (idSlice === 'user')
-    return (
-      <Avatar className="justify-self-center py-4 text-center">
-        <AvatarImage
-          src={friend}
-          height="40px"
-          width="40px"
-          className="bg-accent rounded-full"
-        />
-        <AvatarFallback
-          className={cn(
-            'bg-accent rounded-full w-10 h-10',
-            'text-sm font-medium text-background',
-          )}
-        >
-          User
-        </AvatarFallback>
-      </Avatar>
-    );
-
-  return (
-    <Avatar className="justify-self-center py-4 text-center">
-      <AvatarImage
-        src={chatBot}
-        height="40px"
-        width="40px"
-        className="bg-accent rounded-full"
-      />
-      <AvatarFallback
-        className={cn(
-          'bg-accent rounded-full w-10 h-10',
-          'text-sm font-medium text-background',
-        )}
-      >
-        AI
-      </AvatarFallback>
-    </Avatar>
-  );
-}
-
-interface ChatMessageProps {
-  name: Name;
-  children: ReactNode;
-  id: string;
-  renderCodeBlocks?: boolean;
-  initialMessage?: boolean;
-}
+import type { MouseEvent } from 'react';
+import type { ChatMessageProps } from '@/types/features';
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
   (
@@ -133,5 +80,50 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
     );
   },
 );
+
+function displayAvatar(id: string) {
+  if (!id) return;
+
+  const idSlice = id.slice(0, 4);
+
+  if (idSlice === 'user')
+    return (
+      <Avatar className="justify-self-center py-4 text-center">
+        <AvatarImage
+          src={friend}
+          height="40px"
+          width="40px"
+          className="bg-accent rounded-full"
+        />
+        <AvatarFallback
+          className={cn(
+            'bg-accent rounded-full w-10 h-10',
+            'text-sm font-medium text-background',
+          )}
+        >
+          User
+        </AvatarFallback>
+      </Avatar>
+    );
+
+  return (
+    <Avatar className="justify-self-center py-4 text-center">
+      <AvatarImage
+        src={chatBot}
+        height="40px"
+        width="40px"
+        className="bg-accent rounded-full"
+      />
+      <AvatarFallback
+        className={cn(
+          'bg-accent rounded-full w-10 h-10',
+          'text-sm font-medium text-background',
+        )}
+      >
+        AI
+      </AvatarFallback>
+    </Avatar>
+  );
+}
 
 export default ChatMessage;

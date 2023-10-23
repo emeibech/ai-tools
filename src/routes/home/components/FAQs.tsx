@@ -5,14 +5,11 @@ import {
   AccordionTrigger,
 } from '@/common/components/ui/accordion';
 import { cn } from '@/common/lib/utils';
+import type { ClassName } from '@/types/layout';
 
-interface Props {
-  className?: string;
-}
-
-export default function FAQs(props: Props) {
+export default function FAQs({ className }: ClassName) {
   return (
-    <Accordion type="multiple" className={cn(props.className, 'w-full')}>
+    <Accordion type="multiple" className={cn(className, 'w-full')}>
       <AccordionItem value="faq-1">
         <AccordionTrigger className="text-left text-lg">
           Who exactly are asking these "Frequently Asked Questions?"

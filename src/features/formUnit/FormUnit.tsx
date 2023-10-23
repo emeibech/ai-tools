@@ -6,21 +6,7 @@ import {
   FormMessage,
 } from '@/common/components/ui/form';
 import { cn } from '@/common/lib/utils';
-import { ReactNode } from 'react';
-import { FieldState } from '@/common/hooks/useLabelAnimation';
-
-interface FormUnitProps {
-  label: string;
-  description?: string;
-  children: ReactNode;
-  labelAnimator: {
-    onFocus: () => void;
-    onBlur: () => void;
-    resetState: () => void;
-    getFieldState: () => FieldState;
-    getAnimationStyles: () => string;
-  };
-}
+import type { FormUnitProps } from '@/types/features';
 
 export default function FormUnit({
   label,
@@ -35,7 +21,7 @@ export default function FormUnit({
           labelAnimator.getAnimationStyles(),
           'absolute left-2 px-1',
           'font-normal',
-          'bg-background'
+          'bg-background',
         )}
       >
         {label}

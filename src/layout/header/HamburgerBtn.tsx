@@ -1,5 +1,5 @@
-import { Button } from "@/common/components/ui/button";
-import React, { Ref } from "react";
+import React, { type Ref } from 'react';
+import { Button } from '@/common/components/ui/button';
 
 const HamburgerBtn = React.forwardRef(
   (props, forwardedRef: Ref<HTMLButtonElement> | undefined) => {

@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
-
-export interface Messages {
-  id: string;
-  role: 'assistant' | 'user';
-  content: string;
-}
+import type { Messages } from '@/types/features';
 
 const initialState: Messages[] = [];
 

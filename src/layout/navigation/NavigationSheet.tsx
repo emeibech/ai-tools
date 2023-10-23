@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { cn } from '@/common/lib/utils';
 import Footer from '../footer/Footer';
 import HamburgerBtn from '../header/HamburgerBtn';
@@ -9,13 +10,12 @@ import {
   SheetHeader,
   SheetTrigger,
 } from '@/common/components/ui/sheet';
-import { useState } from 'react';
+import type { NavigationSheetProps } from '@/types/layout';
 
-export default function NavigationSheet(props: {
-  side?: 'top' | 'bottom' | 'left' | 'right' | null | undefined;
-  className?: string;
-  'data-darkmode': boolean;
-}) {
+export default function NavigationSheet({
+  side,
+  className,
+}: NavigationSheetProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -24,12 +24,11 @@ export default function NavigationSheet(props: {
         <HamburgerBtn />
       </SheetTrigger>
       <SheetContent
-        side={props.side}
+        side={side}
         className={cn(
-          props.className,
+          className,
           'grid grid-flow-row grid-rows-[1fr_6fr_1fr] py-4',
         )}
-        data-darkmode={props['data-darkmode']}
       >
         <SheetHeader>
           <SiteTitle setIsOpen={setIsOpen} />

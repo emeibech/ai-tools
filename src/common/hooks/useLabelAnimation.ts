@@ -1,16 +1,5 @@
 import { useEffect, useState } from 'react';
-
-export type FieldState =
-  | 'default'
-  | 'focusedValid'
-  | 'focusedInvalid'
-  | 'blurredValid'
-  | 'blurredInvalid';
-
-interface useLabelAnimationProps {
-  isDirty: boolean;
-  isInvalid: boolean;
-}
+import type { FieldState, UseLabelAnimationProps } from '@/types/hooks';
 
 /**
  * Abstracts the animation of a label. This hook makes it possible to pick and choose
@@ -20,7 +9,7 @@ interface useLabelAnimationProps {
 export default function useLabelAnimation({
   isDirty,
   isInvalid,
-}: useLabelAnimationProps) {
+}: UseLabelAnimationProps) {
   const [fieldState, setFieldState] = useState<FieldState>('default');
 
   const onFocus = () => {

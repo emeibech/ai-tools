@@ -1,35 +1,9 @@
-import { ReactNode } from 'react';
 import { cn } from '@/common/lib/utils';
 import ChatMessage from './ChatMessage';
-import ChatInterfaceForm, { Model } from './ChatInterfaceForm';
+import ChatInterfaceForm from './ChatInterfaceForm';
 import { useAppSelector } from '@/app/hooks';
 import { getMessagesState } from './messagesSliceutils';
-
-export type Name =
-  | 'Coding Assistant'
-  | "Explain Like I'm 5"
-  | 'General Assistant';
-
-interface ChatInterfaceProps {
-  name: Name;
-  children: ReactNode;
-  renderCodeBlocks?: boolean;
-}
-
-export interface Messages {
-  id: string;
-  role: 'assistant' | 'user';
-  content: string;
-}
-
-export interface ChatApiArgs {
-  chatInterface: Name;
-  chatHistory: Messages[];
-  responseId: string;
-  prompt: string;
-  submitCount: number;
-  model: Model;
-}
+import type { ChatInterfaceProps } from '@/types/features';
 
 export default function ChatInterface({
   name,

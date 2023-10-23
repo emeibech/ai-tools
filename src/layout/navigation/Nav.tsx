@@ -1,66 +1,18 @@
 import { useAppSelector } from '@/app/hooks';
 import { cn, generateKeys, scrollWindowTo } from '@/common/lib/utils';
-import {
-  type ScrollPositions,
-  type Route,
-  positions,
-} from '@/features/scrollPosition/scrollPositionSlice';
+import { positions } from '@/features/scrollPosition/scrollPositionSlice';
 import { Link } from 'react-router-dom';
-
-function formatPath(path: string) {
-  return path.toLowerCase().replace(/\s/g, '');
-}
-
-interface GenerateListJsx {
-  nav: string[];
-  keys: string[];
-  scrollPositions: ScrollPositions;
-  setIsOpen?: (param: boolean) => void;
-}
-
-function generateListJsx({
-  nav,
-  keys,
-  setIsOpen,
-  scrollPositions,
-}: GenerateListJsx) {
-  return nav.map((item, index) => (
-    <li
-      key={keys[index]}
-      className={cn('flex flex-col gap-1 cursor-pointer', 'lg:gap-2')}
-      onClick={() => {
-        handleClick({ item: formatPath(item) as Route, scrollPositions });
-        if (setIsOpen) setIsOpen(false);
-      }}
-    >
-      <Link
-        className={cn('px-4 py-2 rounded text-sm', 'hover:bg-secondary')}
-        to={formatPath(item)}
-      >
-        {item}
-      </Link>
-    </li>
-  ));
-}
+import type { Route } from '@/types/features';
+import type {
+  GenerateListJsx,
+  HandleClickParams,
+  NavProps,
+} from '@/types/layout';
 
 const toolsNav = ['Code Analyzer', 'Story Generator', 'Tone Changer'];
 const toolsKeys = generateKeys(toolsNav);
 const chatsNav = ['Coding Assistant', 'General Assistant', 'Eli5'];
 const chatsKeys = generateKeys(chatsNav);
-
-export interface HandleClickParams {
-  item: Route;
-  scrollPositions: ScrollPositions;
-}
-
-function handleClick({ item, scrollPositions }: HandleClickParams) {
-  const top = scrollPositions[item];
-  scrollWindowTo({ top });
-}
-
-export interface NavProps {
-  setIsOpen?: (param: boolean) => void;
-}
 
 export default function Nav({ setIsOpen }: NavProps) {
   const scrollPositions = useAppSelector(positions);
@@ -96,4 +48,38 @@ export default function Nav({ setIsOpen }: NavProps) {
       </div>
     </nav>
   );
+}
+
+function formatPath(path: string) {
+  return path.toLowerCase().replace(/\s/g, '');
+}
+
+function generateListJsx({
+  nav,
+  keys,
+  setIsOpen,
+  scrollPositions,
+}: GenerateListJsx) {
+  return nav.map((item, index) => (
+    <li
+      key={keys[index]}
+      className={cn('flex flex-col gap-1 cursor-pointer', 'lg:gap-2')}
+      onClick={() => {
+        handleClick({ item: formatPath(item) as Route, scrollPositions });
+        if (setIsOpen) setIsOpen(false);
+      }}
+    >
+      <Link
+        className={cn('px-4 py-2 rounded text-sm', 'hover:bg-secondary')}
+        to={formatPath(item)}
+      >
+        {item}
+      </Link>
+    </li>
+  ));
+}
+
+function handleClick({ item, scrollPositions }: HandleClickParams) {
+  const top = scrollPositions[item];
+  scrollWindowTo({ top });
 }

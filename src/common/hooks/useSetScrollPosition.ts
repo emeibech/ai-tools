@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-import {
-  type Route,
-  setScrollPosition,
-} from '@/features/scrollPosition/scrollPositionSlice';
+import { setScrollPosition } from '@/features/scrollPosition/scrollPositionSlice';
 import { useAppDispatch } from '@/app/hooks';
+import type { Route } from '@/types/features';
 
 export default function useSetScrollPosition(route: Route) {
   const dispatch = useAppDispatch();

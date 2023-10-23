@@ -3,17 +3,8 @@ import { useEffect, useState } from 'react';
 import useGetScrollDir from '@/common/hooks/useGetScrollDir';
 import useAutoScroll from '@/common/hooks/useAutoScroll';
 import { handleCatchError } from '@/common/lib/utils';
-import {
-  type Tool,
-  getResponsesActions,
-} from '@/features/tools/toolsSlicesUtils';
-import { Status } from '../chats/useChatApi';
-
-export interface ApiArgs {
-  prompt: string;
-  route: Tool;
-  submitCount: number;
-}
+import { getResponsesActions } from '@/features/tools/toolsSlicesUtils';
+import type { ApiArgs, Status } from '@/types/features';
 
 export default function useApi(apiArgs: ApiArgs) {
   const [status, setStatus] = useState<Status>('idle');

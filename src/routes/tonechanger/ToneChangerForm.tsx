@@ -9,12 +9,13 @@ import FormUnit from '@/features/formUnit/FormUnit';
 import { useRef, useState } from 'react';
 import useFormLogic from '@/common/hooks/useFormLogic';
 import {
-  Tool,
   getPromptsActions,
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
-import useApi, { ApiArgs } from '@/features/tools/useApi';
+import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
+import type { FormatToneChangerPrompt, RouteProp } from '@/types/routes';
+import { ApiArgs } from '@/types/features';
 
 const schema = {
   tone: z
@@ -32,23 +33,7 @@ const defaultValues = {
   message: '',
 };
 
-interface FormatToneChangerPromptArgs {
-  tone: string;
-  message: string;
-}
-
-function formatToneChangerPrompt({
-  tone,
-  message,
-}: FormatToneChangerPromptArgs) {
-  return `Tone: ${tone}\nMessage: ${message}`;
-}
-
-interface ToneChangerFormProps {
-  route: Tool;
-}
-
-export default function ToneChangerForm({ route }: ToneChangerFormProps) {
+export default function ToneChangerForm({ route }: RouteProp) {
   const toneRef = useRef(null);
   const messageRef = useRef(null);
   const dispatch = useAppDispatch();
@@ -168,4 +153,8 @@ export default function ToneChangerForm({ route }: ToneChangerFormProps) {
       </form>
     </Form>
   );
+}
+
+function formatToneChangerPrompt({ tone, message }: FormatToneChangerPrompt) {
+  return `Tone: ${tone}\nMessage: ${message}`;
 }

@@ -1,4 +1,3 @@
-import { Name } from './ChatInterface';
 import {
   codingMessages,
   codingAdded,
@@ -13,6 +12,7 @@ import {
   generalAppended,
   generalRemoved,
 } from './messagesSlice';
+import type { Name } from '@/types/features';
 
 export function getMessagesState(name: Name) {
   if (name === 'Coding Assistant') return codingMessages;

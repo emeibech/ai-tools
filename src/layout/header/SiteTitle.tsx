@@ -2,14 +2,7 @@ import { useAppSelector } from '@/app/hooks';
 import { cn, scrollWindowTo } from '@/common/lib/utils';
 import { positions } from '@/features/scrollPosition/scrollPositionSlice';
 import { Link } from 'react-router-dom';
-
-function handleClick(top: number) {
-  scrollWindowTo({ top });
-}
-
-interface SiteTitleProps {
-  setIsOpen?: (param: boolean) => void;
-}
+import type { SiteTitleProps } from '@/types/layout';
 
 export default function SiteTitle({ setIsOpen }: SiteTitleProps) {
   const { home } = useAppSelector(positions);
@@ -30,4 +23,8 @@ export default function SiteTitle({ setIsOpen }: SiteTitleProps) {
       </Link>
     </h1>
   );
+}
+
+function handleClick(top: number) {
+  scrollWindowTo({ top });
 }

@@ -6,10 +6,7 @@ import { Highlight, themes } from 'prism-react-renderer';
 import { useAppSelector } from '@/app/hooks';
 import { darkModeStatus } from '../darkmode/darkmodeSlice';
 import { cn } from '@/common/lib/utils';
-
-interface CodeProps {
-  code: string;
-}
+import type { CodeProps } from '@/types/features';
 
 function extractLanguage(code: string) {
   const linebreakIndex = code.indexOf('\n');

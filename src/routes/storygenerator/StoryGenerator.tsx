@@ -11,7 +11,9 @@ import { Separator } from '@/common/components/ui/separator';
 export default function StoryGenerator() {
   const response = useAppSelector(getResponsesState('storygenerator'));
   const prompt = useAppSelector(getPromptsState('storygenerator'));
+
   useSetScrollPosition('storygenerator');
+
   return (
     <main
       className={cn(

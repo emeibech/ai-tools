@@ -11,7 +11,9 @@ import { Separator } from '@/common/components/ui/separator';
 export default function ToneChanger() {
   const response = useAppSelector(getResponsesState('tonechanger'));
   const prompt = useAppSelector(getPromptsState('tonechanger'));
+
   useSetScrollPosition('tonechanger');
+
   return (
     <main
       className={cn(

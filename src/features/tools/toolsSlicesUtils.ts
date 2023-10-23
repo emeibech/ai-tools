@@ -20,12 +20,7 @@ import {
   storyGeneratorResponseAppended,
   storyGeneratorResponseReset,
 } from './toolsResponsesSlices';
-
-export type Tool =
-  | 'codeanalyzer'
-  | 'tonechanger'
-  | 'storygenerator'
-  | undefined;
+import type { Tool } from '@/types/features';
 
 export function getResponsesState(tool: Tool) {
   if (tool === 'codeanalyzer') return codeAnalyzerResponse;

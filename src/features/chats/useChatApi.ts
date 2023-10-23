@@ -2,75 +2,19 @@ import { useEffect, useState } from 'react';
 import { handleCatchError } from '@/common/lib/utils';
 import { getMessagesActions } from '@/features/chats/messagesSliceutils';
 import { useAppDispatch } from '@/app/hooks';
-import {
-  type Messages,
-  type Name,
-  type ChatApiArgs,
-} from '@/features/chats/ChatInterface';
 import useAutoScroll from '@/common/hooks/useAutoScroll';
 import useGetScrollDir from '@/common/hooks/useGetScrollDir';
-
-function getUrlParams(name: Name) {
-  if (name === 'Coding Assistant') return '/codingassistant?model=';
-  if (name === 'General Assistant') return '/generalassistant';
-  if (name === "Explain Like I'm 5") return '/eli5';
-  return '';
-}
-
-/* According to OpenAI documentation, 1 token is about 4 characters. 
-  This function will be used to decide whether to change model (this only 
-  applies to codingassistant since higher context costs more and I can
-  only afford to use it on this one) or to cut some of the old messages */
-function getTokenEstimate(messages: MessagesParam[]) {
-  const combinedMessages = messages.reduce(
-    (acc, cur) => (acc += cur.content),
-    '',
-  );
-
-  return combinedMessages.length / 4;
-}
-
-type MessagesParam = {
-  role: 'user' | 'assistant';
-  content: string;
-};
-
-interface TrimMessages {
-  messages: MessagesParam[];
-  tokenLimit: 3000 | 15000;
-}
-
-/* Recursively removes the first message object in messages array until the 
-entire message history is less than the approximate tokenLimit param. 
-This is to avoid getting token limit error. */
-function trimMessages({ messages, tokenLimit }: TrimMessages): MessagesParam[] {
-  const estimatedTokens = getTokenEstimate(messages);
-  if (estimatedTokens < tokenLimit) return messages;
-  const trimmedMessages = messages.slice(1);
-  return trimMessages({ messages: trimmedMessages, tokenLimit });
-}
-
-interface GetModelParams {
-  chatInterface: Name;
-  tokenEstimate: number;
-}
-
-function getModel({ chatInterface, tokenEstimate }: GetModelParams) {
-  if (chatInterface === 'Coding Assistant') {
-    return tokenEstimate > 3000 ? 'gpt-3.5-turbo-16k' : 'gpt-3.5-turbo';
-  }
-
-  return '';
-}
-
-function removeIds(messages: Messages[]) {
-  const noIds = messages.map(({ role, content }) => ({ role, content }));
-  return noIds;
-}
+import type {
+  ChatApiArgs,
+  GetModelParams,
+  Messages,
+  MessagesParam,
+  Name,
+  Status,
+  TrimMessages,
+} from '@/types/features';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
-
-export type Status = 'idle' | 'requesting' | 'streaming';
 
 export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const [status, setStatus] = useState<Status>('idle');
@@ -173,4 +117,47 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       streamData();
     }
   }, [dispatch, setChunkSentCount, setScrollDir, chatApiArgs]);
+}
+
+function getUrlParams(name: Name) {
+  if (name === 'Coding Assistant') return '/codingassistant?model=';
+  if (name === 'General Assistant') return '/generalassistant';
+  if (name === "Explain Like I'm 5") return '/eli5';
+  return '';
+}
+
+/* According to OpenAI documentation, 1 token is about 4 characters. 
+  This function will be used to decide whether to change model (this only 
+  applies to codingassistant since higher context costs more and I can
+  only afford to use it on this one) or to cut some of the old messages */
+function getTokenEstimate(messages: MessagesParam[]) {
+  const combinedMessages = messages.reduce(
+    (acc, cur) => (acc += cur.content),
+    '',
+  );
+
+  return combinedMessages.length / 4;
+}
+
+/* Recursively removes the first message object in messages array until the 
+entire message history is less than the approximate tokenLimit param. 
+This is to avoid getting token limit error. */
+function trimMessages({ messages, tokenLimit }: TrimMessages): MessagesParam[] {
+  const estimatedTokens = getTokenEstimate(messages);
+  if (estimatedTokens < tokenLimit) return messages;
+  const trimmedMessages = messages.slice(1);
+  return trimMessages({ messages: trimmedMessages, tokenLimit });
+}
+
+function getModel({ chatInterface, tokenEstimate }: GetModelParams) {
+  if (chatInterface === 'Coding Assistant') {
+    return tokenEstimate > 3000 ? 'gpt-3.5-turbo-16k' : 'gpt-3.5-turbo';
+  }
+
+  return '';
+}
+
+function removeIds(messages: Messages[]) {
+  const noIds = messages.map(({ role, content }) => ({ role, content }));
+  return noIds;
 }

@@ -11,12 +11,9 @@ import {
   turnOnDarkmode,
 } from '@/features/darkmode/darkmodeSlice';
 import { useDispatch } from 'react-redux';
+import type { ClassName } from '@/types/layout';
 
-interface Props {
-  className?: string;
-}
-
-export default function Header(props: Props) {
+export default function Header({ className }: ClassName) {
   const darkmode = useAppSelector(darkModeStatus);
   const dispatch = useDispatch();
 
@@ -29,7 +26,7 @@ export default function Header(props: Props) {
   }
 
   return (
-    <header className={cn(props.className)}>
+    <header className={cn(className)}>
       <section className={cn('flex items-center gap-2', 'lg:hidden')}>
         <NavigationSheet
           side="left"

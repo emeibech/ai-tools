@@ -14,27 +14,13 @@ import { nanoid } from '@reduxjs/toolkit';
 import { cn, scrollToBottom } from '@/common/lib/utils';
 import useTextareaAutoresize from '@/common/hooks/useTextareaAutoresize';
 import useResizeListener from '@/common/hooks/useResizeListener';
-import { Name, ChatApiArgs } from './ChatInterface';
 import { getMessagesActions, getMessagesState } from './messagesSliceutils';
 import useChatApi from './useChatApi';
-
-export type Model = 'gpt-4' | '';
-
-function extractModel(text: string) {
-  const commandIndex = text.indexOf('use-gpt-4');
-  if (commandIndex === -1) return '';
-  return text.slice(commandIndex + 4, commandIndex + 9) as Model;
-}
-
-function cleanText(text: string) {
-  const commandIndex = text.indexOf('use-gpt-4');
-  if (commandIndex === -1) return text;
-  return text.replace('use-gpt-4', '').trim();
-}
-
-export interface ChatInterfaceFormProps {
-  name: Name;
-}
+import type {
+  ChatApiArgs,
+  ChatInterfaceFormProps,
+  Model,
+} from '@/types/features';
 
 export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
@@ -173,4 +159,16 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       </strong>
     </form>
   );
+}
+
+function extractModel(text: string) {
+  const commandIndex = text.indexOf('use-gpt-4');
+  if (commandIndex === -1) return '';
+  return text.slice(commandIndex + 4, commandIndex + 9) as Model;
+}
+
+function cleanText(text: string) {
+  const commandIndex = text.indexOf('use-gpt-4');
+  if (commandIndex === -1) return text;
+  return text.replace('use-gpt-4', '').trim();
 }

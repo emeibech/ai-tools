@@ -8,12 +8,13 @@ import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
 import useFormLogic from '@/common/hooks/useFormLogic';
 import {
-  Tool,
   getPromptsActions,
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
-import useApi, { ApiArgs } from '@/features/tools/useApi';
+import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
+import type { RouteProp } from '@/types/routes';
+import type { ApiArgs } from '@/types/features';
 
 const schema = {
   code: z
@@ -23,11 +24,7 @@ const schema = {
 };
 const defaultValues = { code: '' };
 
-export interface CodeAnalyzerFormProps {
-  route: Tool;
-}
-
-export default function CodeAnalyzerForm({ route }: CodeAnalyzerFormProps) {
+export default function CodeAnalyzerForm({ route }: RouteProp) {
   const codeRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);

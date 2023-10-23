@@ -1,9 +1,5 @@
-import { ReactNode } from 'react';
 import Code from './Code';
-
-export interface CodeHighlighterProps {
-  children: ReactNode;
-}
+import type { CodeHighlighterProps } from '@/types/features';
 
 export function CodeHighlighter({
   children,

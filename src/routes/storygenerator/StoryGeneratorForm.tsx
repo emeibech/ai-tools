@@ -8,13 +8,14 @@ import { Form, FormField } from '@/common/components/ui/form';
 import FormUnit from '@/features/formUnit/FormUnit';
 import useFormLogic from '@/common/hooks/useFormLogic';
 import { useRef, useState } from 'react';
+import useApi from '@/features/tools/useApi';
 import {
-  Tool,
   getPromptsActions,
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
-import useApi, { ApiArgs } from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
+import type { FormatStoryGeneratorPrompt, RouteProp } from '@/types/routes';
+import type { ApiArgs } from '@/types/features';
 
 const schema = {
   subject: z
@@ -37,25 +38,7 @@ const defaultValues = {
   context: '',
 };
 
-interface FormatStoryGeneratorPromptArgs {
-  subject: string;
-  style?: string;
-  context?: string;
-}
-
-function formatStoryGeneratorPrompt({
-  subject,
-  style,
-  context,
-}: FormatStoryGeneratorPromptArgs) {
-  return `Subject: ${subject}\nStyle: ${style}\nContext: ${context}`;
-}
-
-interface StoryGeneratorFormProps {
-  route: Tool;
-}
-
-export default function StoryGeneratorForm({ route }: StoryGeneratorFormProps) {
+export default function StoryGeneratorForm({ route }: RouteProp) {
   const subjectRef = useRef(null);
   const styleRef = useRef(null);
   const contextRef = useRef(null);
@@ -215,4 +198,12 @@ export default function StoryGeneratorForm({ route }: StoryGeneratorFormProps) {
       </form>
     </Form>
   );
+}
+
+function formatStoryGeneratorPrompt({
+  subject,
+  style,
+  context,
+}: FormatStoryGeneratorPrompt) {
+  return `Subject: ${subject}\nStyle: ${style}\nContext: ${context}`;
 }
