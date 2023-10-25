@@ -11,19 +11,19 @@ const reducers = {
 };
 
 export const codeAnalyzerResponseSlice = createSlice({
-  name: 'code analyzer response',
+  name: 'codeAnalyzerResponse',
   initialState,
   reducers,
 });
 
 export const toneChangerResponseSlice = createSlice({
-  name: 'tone changer response',
+  name: 'toneChangerResponse',
   initialState,
   reducers,
 });
 
 export const storyGeneratorResponseSlice = createSlice({
-  name: 'story generator response',
+  name: 'storyGeneratorResponse',
   initialState,
   reducers,
 });
@@ -44,19 +44,19 @@ export const {
 } = storyGeneratorResponseSlice.actions;
 
 export const codeAnalyzerResponse = (state: RootState) => {
-  return state.codeAnalyzerResponse;
+  return state.codeAnalyzerResponseSlice;
 };
 
 export const toneChangeResponse = (state: RootState) => {
-  return state.toneChangerResponse;
+  return state.toneChangerResponseSlice;
 };
 
 export const storyGeneratorResponse = (state: RootState) => {
-  return state.storyGeneratorResponse;
+  return state.storyGeneratorResponseSlice;
 };
 
 export default {
-  codeAnalyzerResponse: codeAnalyzerResponseSlice.reducer,
-  toneChangerResponse: toneChangerResponseSlice.reducer,
-  storyGeneratorResponse: storyGeneratorResponseSlice.reducer,
+  codeAnalyzerResponseSlice: codeAnalyzerResponseSlice.reducer,
+  toneChangerResponseSlice: toneChangerResponseSlice.reducer,
+  storyGeneratorResponseSlice: storyGeneratorResponseSlice.reducer,
 };

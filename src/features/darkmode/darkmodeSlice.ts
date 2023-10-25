@@ -7,7 +7,7 @@ const initialState: DarkmodeState = {
 };
 
 export const darkmodeSlice = createSlice({
-  name: 'darkmode toggler',
+  name: 'darkmodeToggler',
   initialState,
   reducers: {
     turnOnDarkmode: (state) => {

@@ -13,7 +13,7 @@ const initialState: ScrollPositions = {
 };
 
 export const scrollPositionsSlice = createSlice({
-  name: 'scroll positions',
+  name: 'scrollPositions',
   initialState,
   reducers: {
     setScrollPosition: (

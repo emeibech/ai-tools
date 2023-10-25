@@ -11,19 +11,19 @@ const reducers = {
 };
 
 export const codeAnalyzerPromptSlice = createSlice({
-  name: 'code analyzer prompt',
+  name: 'codeAnalyzerPrompt',
   initialState,
   reducers,
 });
 
 export const toneChangerPromptSlice = createSlice({
-  name: 'tone changer prompt',
+  name: 'toneChangerPrompt',
   initialState,
   reducers,
 });
 
 export const storyGeneratorPromptSlice = createSlice({
-  name: 'story generator prompt',
+  name: 'storyGeneratorPrompt',
   initialState,
   reducers,
 });
@@ -44,19 +44,19 @@ export const {
 } = storyGeneratorPromptSlice.actions;
 
 export const codeAnalyzerPrompt = (state: RootState) => {
-  return state.codeAnalyzerPrompt;
+  return state.codeAnalyzerPromptSlice;
 };
 
 export const toneChangePrompt = (state: RootState) => {
-  return state.toneChangerPrompt;
+  return state.toneChangerPromptSlice;
 };
 
 export const storyGeneratorPrompt = (state: RootState) => {
-  return state.storyGeneratorPrompt;
+  return state.storyGeneratorPromptSlice;
 };
 
 export default {
-  codeAnalyzerPrompt: codeAnalyzerPromptSlice.reducer,
-  toneChangerPrompt: toneChangerPromptSlice.reducer,
-  storyGeneratorPrompt: storyGeneratorPromptSlice.reducer,
+  codeAnalyzerPromptSlice: codeAnalyzerPromptSlice.reducer,
+  toneChangerPromptSlice: toneChangerPromptSlice.reducer,
+  storyGeneratorPromptSlice: storyGeneratorPromptSlice.reducer,
 };
