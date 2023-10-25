@@ -56,8 +56,8 @@ export default function Code({ code }: CodeProps) {
       </div>
 
       <Highlight
-        language="jsx"
-        theme={darkmode ? themes.vsDark : themes.nightOwlLight}
+        language="javascript"
+        theme={darkmode ? themes.vsDark : themes.github}
         code={codeBlock}
       >
         {({ style, tokens, getLineProps, getTokenProps }) => (
