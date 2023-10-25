@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react';
 import type { FieldState } from './hooks';
 
+// requestStatusSlices
+export type RequestStatus = 'idle' | 'requesting' | 'streaming';
+
 // useChatApi
 export type MessagesParam = {
   role: 'user' | 'assistant';
