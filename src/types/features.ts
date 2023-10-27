@@ -1,8 +1,33 @@
 import type { ReactNode } from 'react';
 import type { FieldState } from './hooks';
 
+// toolsResponsesSlice
+export interface ToolsResponsesSlice {
+  response: string;
+}
+
+// toolsPromptsSlice
+export interface ToolsPromptSlice {
+  prompt: string;
+}
+
+// darkmodeSlice
+export interface DarkmodeSlice {
+  darkmode: boolean;
+}
+
+// messagesSlice
+export interface MessagesSlice {
+  messages: Messages[];
+}
+
 // requestStatusSlices
 export type RequestStatus = 'idle' | 'requesting' | 'streaming';
+
+export interface RequestStatusSlice {
+  status: RequestStatus;
+}
+
 export interface RequestIndicatorProps {
   name: Name;
   hideStreamIndicator?: boolean;
@@ -80,11 +105,6 @@ export interface ChatMessageProps {
   renderCodeBlocks?: boolean;
   initialMessage?: boolean;
   requestIndicator?: boolean;
-}
-
-// DarkmodeSlice
-export interface DarkmodeState {
-  value: boolean;
 }
 
 // FormUnit

@@ -1,25 +1,34 @@
-import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
-import type { Messages } from '@/types/features';
+import type { Messages, MessagesSlice } from '@/types/features';
 
-const initialState: Messages[] = [];
+const initialState: MessagesSlice = { messages: [] };
 
 const reducers = {
-  messageAdded: (state: Messages[], action: PayloadAction<Messages>) => {
-    state.push(action.payload);
+  messageAdded: (state: MessagesSlice, action: PayloadAction<Messages>) => {
+    state.messages.push(action.payload);
   },
-  messageRemoved: (state: Messages[], action: PayloadAction<Messages>) => {
+  messageRemoved: (
+    state: MessagesSlice,
+    action: PayloadAction<{ id: string }>,
+  ) => {
     const { id } = action.payload;
-    const index = state.findIndex((message) => message.id === id);
+    const index = state.messages.findIndex((message) => message.id === id);
     if (index !== -1) {
-      state.splice(index, 1);
+      state.messages.splice(index, 1);
     }
   },
-  messageAppended: (state: Messages[], action: PayloadAction<Messages>) => {
+  messageAppended: (
+    state: MessagesSlice,
+    action: PayloadAction<{
+      id: string;
+      content: string;
+    }>,
+  ) => {
     const { id, content } = action.payload;
-    const index = state.findIndex((message) => message.id === id);
+    const index = state.messages.findIndex((message) => message.id === id);
     if (index !== -1) {
-      state[index].content += content;
+      state.messages[index].content += content;
     }
   },
 };
@@ -60,9 +69,12 @@ export const {
   messageAppended: generalAppended,
 } = generalMessagesSlice.actions;
 
-export const codingMessages = (state: RootState) => state.codingMessagesSlice;
-export const eli5Messages = (state: RootState) => state.eli5MessagesSlice;
-export const generalMessages = (state: RootState) => state.generalMessagesSlice;
+export const codingMessages = (state: RootState) =>
+  state.codingMessagesSlice.messages;
+export const eli5Messages = (state: RootState) =>
+  state.eli5MessagesSlice.messages;
+export const generalMessages = (state: RootState) =>
+  state.generalMessagesSlice.messages;
 
 export default {
   codingMessagesSlice: codingMessagesSlice.reducer,

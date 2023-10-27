@@ -7,7 +7,7 @@ import toolsPromptsReducer from '../features/tools/toolsPromptsSlices';
 import requestStatusReducer from '../features/requestStatus/requestStatusSlices';
 
 const rootReducer = combineReducers({
-  darkmode: darkmodeReducer,
+  darkmodeStatus: darkmodeReducer,
   scrollPositions: scrollPositionReducer,
   ...messagesReducer,
   ...toolsResponsesReducer,

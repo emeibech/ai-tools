@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
 import type { Route, ScrollPositions } from '@/types/features';
 
@@ -17,8 +17,8 @@ export const scrollPositionsSlice = createSlice({
   initialState,
   reducers: {
     setScrollPosition: (
-      state,
-      action: { payload: { route: Route; position: number } },
+      state: ScrollPositions,
+      action: PayloadAction<{ route: Route; position: number }>,
     ) => {
       const { route, position } = action.payload;
       state[route] = position;

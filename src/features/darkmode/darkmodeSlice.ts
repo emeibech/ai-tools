@@ -1,24 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
-import type { DarkmodeState } from '@/types/features';
+import type { DarkmodeSlice } from '@/types/features';
 
-const initialState: DarkmodeState = {
-  value: false,
+const initialState: DarkmodeSlice = {
+  darkmode: false,
 };
 
 export const darkmodeSlice = createSlice({
   name: 'darkmodeToggler',
   initialState,
   reducers: {
-    turnOnDarkmode: (state) => {
-      state.value = true;
+    turnOnDarkmode: (state: DarkmodeSlice) => {
+      state.darkmode = true;
     },
-    turnOffDarkmode: (state) => {
-      state.value = false;
+    turnOffDarkmode: (state: DarkmodeSlice) => {
+      state.darkmode = false;
     },
   },
 });
 
 export const { turnOnDarkmode, turnOffDarkmode } = darkmodeSlice.actions;
-export const darkModeStatus = (state: RootState) => state.darkmode.value;
+export const darkModeStatus = (state: RootState) =>
+  state.darkmodeStatus.darkmode;
 export default darkmodeSlice.reducer;

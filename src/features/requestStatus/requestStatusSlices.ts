@@ -1,12 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
-import type { RequestStatus } from '@/types/features';
+import type { RequestStatus, RequestStatusSlice } from '@/types/features';
 
-interface StateShape {
-  status: RequestStatus;
-}
-
-const initialState: StateShape = { status: 'idle' };
+const initialState: RequestStatusSlice = { status: 'idle' };
 
 const reducers = {
   statusChanged: (

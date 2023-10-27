@@ -1,12 +1,18 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
+import type { ToolsResponsesSlice } from '@/types/features';
 
-const initialState: string = '';
+const initialState: ToolsResponsesSlice = {
+  response: '',
+};
 
 const reducers = {
   responseReset: () => initialState,
-  responseAppended: (state: string, action: PayloadAction<string>) => {
-    return state + action.payload;
+  responseAppended: (
+    state: ToolsResponsesSlice,
+    action: PayloadAction<string>,
+  ) => {
+    state.response += action.payload;
   },
 };
 
@@ -44,15 +50,15 @@ export const {
 } = storyGeneratorResponseSlice.actions;
 
 export const codeAnalyzerResponse = (state: RootState) => {
-  return state.codeAnalyzerResponseSlice;
+  return state.codeAnalyzerResponseSlice.response;
 };
 
 export const toneChangeResponse = (state: RootState) => {
-  return state.toneChangerResponseSlice;
+  return state.toneChangerResponseSlice.response;
 };
 
 export const storyGeneratorResponse = (state: RootState) => {
-  return state.storyGeneratorResponseSlice;
+  return state.storyGeneratorResponseSlice.response;
 };
 
 export default {

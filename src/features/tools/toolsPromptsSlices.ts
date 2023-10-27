@@ -1,12 +1,15 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
+import type { ToolsPromptSlice } from '@/types/features';
 
-const initialState: string = '';
+const initialState: ToolsPromptSlice = {
+  prompt: '',
+};
 
 const reducers = {
   promptReset: () => initialState,
-  promptAppended: (state: string, action: PayloadAction<string>) => {
-    return state + action.payload;
+  promptAppended: (state: ToolsPromptSlice, action: PayloadAction<string>) => {
+    state.prompt += action.payload;
   },
 };
 
@@ -44,15 +47,15 @@ export const {
 } = storyGeneratorPromptSlice.actions;
 
 export const codeAnalyzerPrompt = (state: RootState) => {
-  return state.codeAnalyzerPromptSlice;
+  return state.codeAnalyzerPromptSlice.prompt;
 };
 
 export const toneChangePrompt = (state: RootState) => {
-  return state.toneChangerPromptSlice;
+  return state.toneChangerPromptSlice.prompt;
 };
 
 export const storyGeneratorPrompt = (state: RootState) => {
-  return state.storyGeneratorPromptSlice;
+  return state.storyGeneratorPromptSlice.prompt;
 };
 
 export default {
