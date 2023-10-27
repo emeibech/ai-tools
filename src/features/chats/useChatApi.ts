@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { handleCatchError } from '@/common/lib/utils';
 import { getMessagesActions } from '@/features/chats/messagesSliceutils';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import useAutoScroll from '@/common/hooks/useAutoScroll';
 import useGetScrollDir from '@/common/hooks/useGetScrollDir';
 import type {
@@ -10,14 +10,17 @@ import type {
   Messages,
   MessagesParam,
   Name,
-  Status,
   TrimMessages,
 } from '@/types/features';
+import {
+  getStatusActions,
+  getStatusState,
+} from '../requestStatus/requestStatusSlicesUtils';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
 export default function useChatApi(chatApiArgs: ChatApiArgs) {
-  const [status, setStatus] = useState<Status>('idle');
+  const status = useAppSelector(getStatusState(chatApiArgs.chatInterface));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
   const setChunkSentCount = useAutoScroll({
@@ -36,6 +39,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       submitCount,
     } = chatApiArgs;
     const { messageAppended } = getMessagesActions(chatInterface);
+    const statusChanged = getStatusActions(chatApiArgs.chatInterface);
     const tokenLimit = chatInterface === 'Coding Assistant' ? 15000 : 3000;
     const noIdsHistory = removeIds(chatHistory);
 
@@ -75,7 +79,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       try {
         const response = await fetch(url, requestOptions);
         const decoder = new TextDecoder();
-        setStatus('streaming');
+        dispatch(statusChanged('streaming'));
 
         if (!response.ok) {
           throw new Error(`${response.status}: ${response.statusText}`);
@@ -103,7 +107,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
           }
 
           setChunkSentCount(0);
-          setStatus('idle');
+          dispatch(statusChanged('idle'));
         }
       } catch (error) {
         handleCatchError(error);
@@ -113,7 +117,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     // This condition is so it doesn't run on first mount
     if (submitCount > 0) {
       setScrollDir('down');
-      setStatus('requesting');
+      dispatch(statusChanged('requesting'));
       streamData();
     }
   }, [dispatch, setChunkSentCount, setScrollDir, chatApiArgs]);

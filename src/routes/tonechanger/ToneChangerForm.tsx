@@ -14,7 +14,7 @@ import {
 } from '@/features/tools/toolsSlicesUtils';
 import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
-import type { FormatToneChangerPrompt, RouteProp } from '@/types/routes';
+import type { FormatToneChangerPrompt, ToolProp } from '@/types/routes';
 import { ApiArgs } from '@/types/features';
 
 const schema = {
@@ -33,7 +33,7 @@ const defaultValues = {
   message: '',
 };
 
-export default function ToneChangerForm({ route }: RouteProp) {
+export default function ToneChangerForm({ route, name }: ToolProp) {
   const toneRef = useRef(null);
   const messageRef = useRef(null);
   const dispatch = useAppDispatch();
@@ -42,6 +42,7 @@ export default function ToneChangerForm({ route }: RouteProp) {
 
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
+    name,
     prompt: '',
     submitCount: 0,
   });
@@ -88,14 +89,16 @@ export default function ToneChangerForm({ route }: RouteProp) {
 
     setApiArgs({
       route,
+      name,
       submitCount: apiArgs.submitCount + 1,
       prompt: formatToneChangerPrompt({
         tone: values.tone,
         message: values.message,
       }),
     });
-
-    scrollToBottom();
+    setTimeout(() => {
+      scrollToBottom();
+    }, 0);
   }
 
   return (

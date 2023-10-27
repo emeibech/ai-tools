@@ -13,7 +13,7 @@ import {
 } from '@/features/tools/toolsSlicesUtils';
 import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
-import type { RouteProp } from '@/types/routes';
+import type { ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
 
 const schema = {
@@ -24,12 +24,13 @@ const schema = {
 };
 const defaultValues = { code: '' };
 
-export default function CodeAnalyzerForm({ route }: RouteProp) {
+export default function CodeAnalyzerForm({ route, name }: ToolProp) {
   const codeRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
+    name,
     route,
     prompt: '',
     submitCount: 0,
@@ -62,6 +63,7 @@ export default function CodeAnalyzerForm({ route }: RouteProp) {
     dispatch(promptReset());
     dispatch(promptAppended(values.code));
     setApiArgs({
+      name,
       route,
       prompt: values.code,
       submitCount: apiArgs.submitCount + 1,

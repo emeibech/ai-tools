@@ -6,8 +6,8 @@ import {
   getPromptsState,
   getResponsesState,
 } from '@/features/tools/toolsSlicesUtils';
-import { CodeHighlighter } from '@/features/chats/CodeHighlighter';
 import Code from '@/features/chats/Code';
+import RequestIndicator from '@/features/requestStatus/RequestIndicator';
 
 export default function CodeAnalyzer() {
   const response = useAppSelector(getResponsesState('codeanalyzer'));
@@ -38,13 +38,14 @@ export default function CodeAnalyzer() {
         summary and a structured break down of the code.
       </p>
 
-      <CodeAnalyzerForm route="codeanalyzer" />
+      <CodeAnalyzerForm route="codeanalyzer" name="Code Analyzer" />
 
       <section className="max-w-[920px] mx-auto min-w-full">
         <article>{prompt !== '' && <Code code={`\n${prompt}`} />}</article>
 
         <article className="mt-8 whitespace-pre-wrap">
-          <CodeHighlighter>{response}</CodeHighlighter>
+          {response}
+          <RequestIndicator name="Code Analyzer" />
         </article>
       </section>
     </main>

@@ -7,6 +7,7 @@ import {
   getResponsesState,
 } from '@/features/tools/toolsSlicesUtils';
 import { Separator } from '@/common/components/ui/separator';
+import RequestIndicator from '@/features/requestStatus/RequestIndicator';
 
 export default function ToneChanger() {
   const response = useAppSelector(getResponsesState('tonechanger'));
@@ -40,7 +41,7 @@ export default function ToneChanger() {
         jumping-off points.
       </p>
 
-      <ToneChangerForm route="tonechanger" />
+      <ToneChangerForm route="tonechanger" name="Tone Changer" />
 
       <section className="max-w-[920px] mx-auto min-w-full">
         <article>
@@ -55,7 +56,10 @@ export default function ToneChanger() {
         </article>
 
         <article className="mt-8">
-          <p className="whitespace-pre-wrap">{response}</p>
+          <div className="whitespace-pre-wrap">
+            {response}
+            <RequestIndicator name="Tone Changer" />
+          </div>
         </article>
       </section>
     </main>

@@ -13,13 +13,14 @@ export default function ChatInterface({
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
 
-  const listMessages: JSX.Element[] = messages.map((message) => {
+  const listMessages: JSX.Element[] = messages.map((message, index) => {
     return (
       <ChatMessage
         name={name}
         key={message.id}
         id={message.id}
         renderCodeBlocks={renderCodeBlocks}
+        requestIndicator={index === messages.length - 1}
       >
         {message.content}
       </ChatMessage>

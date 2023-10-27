@@ -2,14 +2,18 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import type { RequestStatus } from '@/types/features';
 
-const initialState: RequestStatus = 'idle';
+interface StateShape {
+  status: RequestStatus;
+}
+
+const initialState: StateShape = { status: 'idle' };
 
 const reducers = {
   statusChanged: (
-    state: RequestStatus,
+    state: { status: RequestStatus },
     action: PayloadAction<RequestStatus>,
   ) => {
-    state = action.payload;
+    state.status = action.payload;
   },
 };
 
@@ -67,21 +71,21 @@ export const { statusChanged: generalAssistantStatusChanged } =
 export const { statusChanged: eli5StatusChanged } = eli5StatusSlice.actions;
 
 export const codeAnalyzerStatus = (state: RootState) =>
-  state.codeAnalyzerStatusSlice;
+  state.codeAnalyzerStatusSlice.status;
 
 export const toneChangerStatus = (state: RootState) =>
-  state.toneChangerStatusSlice;
+  state.toneChangerStatusSlice.status;
 
 export const storyGeneratorStatus = (state: RootState) =>
-  state.storyGeneratorStatusSlice;
+  state.storyGeneratorStatusSlice.status;
 
 export const codingAssistantStatus = (state: RootState) =>
-  state.codingAssistantStatusSlice;
+  state.codingAssistantStatusSlice.status;
 
-export const eli5Status = (state: RootState) => state.eli5StatusSlice;
+export const eli5Status = (state: RootState) => state.eli5StatusSlice.status;
 
 export const generalAssistantStatus = (state: RootState) =>
-  state.generalAssistantStatusSlice;
+  state.generalAssistantStatusSlice.status;
 
 export default {
   codeAnalyzerStatusSlice: codeAnalyzerStatusSlice.reducer,

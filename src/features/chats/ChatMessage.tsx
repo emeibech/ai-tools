@@ -12,10 +12,18 @@ import { useAppDispatch } from '@/app/hooks';
 import { CodeHighlighter } from './CodeHighlighter';
 import type { MouseEvent } from 'react';
 import type { ChatMessageProps } from '@/types/features';
+import RequestIndicator from '../requestStatus/RequestIndicator';
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
   (
-    { children, name, id, renderCodeBlocks = false, initialMessage = false },
+    {
+      children,
+      name,
+      id,
+      renderCodeBlocks = false,
+      initialMessage = false,
+      requestIndicator = false,
+    },
     ref,
   ) => {
     const dispatch = useAppDispatch();
@@ -46,9 +54,14 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
             )}
           >
             {renderCodeBlocks ? (
-              <CodeHighlighter>{children}</CodeHighlighter>
+              <CodeHighlighter name={requestIndicator ? name : undefined}>
+                {children}
+              </CodeHighlighter>
             ) : (
-              children
+              <>
+                {children}
+                {requestIndicator && <RequestIndicator name={name} />}
+              </>
             )}
           </div>
 

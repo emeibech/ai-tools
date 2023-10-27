@@ -14,7 +14,7 @@ import {
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
 import { useAppDispatch } from '@/app/hooks';
-import type { FormatStoryGeneratorPrompt, RouteProp } from '@/types/routes';
+import type { FormatStoryGeneratorPrompt, ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
 
 const schema = {
@@ -38,7 +38,7 @@ const defaultValues = {
   context: '',
 };
 
-export default function StoryGeneratorForm({ route }: RouteProp) {
+export default function StoryGeneratorForm({ route, name }: ToolProp) {
   const subjectRef = useRef(null);
   const styleRef = useRef(null);
   const contextRef = useRef(null);
@@ -47,6 +47,7 @@ export default function StoryGeneratorForm({ route }: RouteProp) {
   const { promptAppended, promptReset } = getPromptsActions(route);
 
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
+    name,
     route,
     prompt: '',
     submitCount: 0,
@@ -100,6 +101,7 @@ export default function StoryGeneratorForm({ route }: RouteProp) {
     );
 
     setApiArgs({
+      name,
       route,
       submitCount: apiArgs.submitCount + 1,
       prompt: formatStoryGeneratorPrompt({

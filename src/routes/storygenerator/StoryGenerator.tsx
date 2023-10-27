@@ -7,6 +7,7 @@ import {
 } from '@/features/tools/toolsSlicesUtils';
 import { useAppSelector } from '@/app/hooks';
 import { Separator } from '@/common/components/ui/separator';
+import RequestIndicator from '@/features/requestStatus/RequestIndicator';
 
 export default function StoryGenerator() {
   const response = useAppSelector(getResponsesState('storygenerator'));
@@ -40,7 +41,7 @@ export default function StoryGenerator() {
         you can also just use them as is.
       </p>
 
-      <StoryGeneratorForm route="storygenerator" />
+      <StoryGeneratorForm route="storygenerator" name="Story Generator" />
 
       <section className="max-w-[920px] mx-auto min-w-full">
         <article>
@@ -55,7 +56,10 @@ export default function StoryGenerator() {
         </article>
 
         <article className="mt-8">
-          <p className="whitespace-pre-wrap">{response}</p>
+          <div className="whitespace-pre-wrap">
+            {response}
+            <RequestIndicator name="Story Generator" />
+          </div>
         </article>
       </section>
     </main>
