@@ -19,6 +19,7 @@ import sql from 'react-syntax-highlighter/dist/esm/languages/prism/sql';
 import c from 'react-syntax-highlighter/dist/esm/languages/prism/c';
 import go from 'react-syntax-highlighter/dist/esm/languages/prism/go';
 import php from 'react-syntax-highlighter/dist/esm/languages/prism/php';
+import css from 'react-syntax-highlighter/dist/esm/languages/prism/css-extras';
 
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 SyntaxHighlighter.registerLanguage('python', python);
@@ -30,6 +31,7 @@ SyntaxHighlighter.registerLanguage('sql', sql);
 SyntaxHighlighter.registerLanguage('c', c);
 SyntaxHighlighter.registerLanguage('go', go);
 SyntaxHighlighter.registerLanguage('php', php);
+SyntaxHighlighter.registerLanguage('css', css);
 
 const supportedLanguages = [
   'jsx',
@@ -42,6 +44,7 @@ const supportedLanguages = [
   'c',
   'go',
   'php',
+  'css',
 ];
 
 export default function Code({ code }: CodeProps) {
@@ -86,7 +89,7 @@ export default function Code({ code }: CodeProps) {
       </div>
 
       <SyntaxHighlighter
-        language={isSupported(formattedLang) ? formattedLang : 'jsx'}
+        language={isSupported(formattedLang) ? formattedLang : ''}
         style={darkmode ? oneDark : oneLight}
       >
         {codeBlock}
