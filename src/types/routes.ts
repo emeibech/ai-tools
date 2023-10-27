@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
-import type { Tool } from './features';
+import type { Name, Tool } from './features';
 
 // Generic Tool form prop containing only route
-export interface RouteProp {
+export interface ToolProp {
   route: Tool;
+  name: Name;
 }
 
 // InfoCluster

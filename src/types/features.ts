@@ -3,6 +3,10 @@ import type { FieldState } from './hooks';
 
 // requestStatusSlices
 export type RequestStatus = 'idle' | 'requesting' | 'streaming';
+export interface RequestIndicatorProps {
+  name: Name;
+  hideStreamIndicator?: boolean;
+}
 
 // useChatApi
 export type MessagesParam = {
@@ -23,6 +27,7 @@ export interface GetModelParams {
 // CodeHighlighter
 export interface CodeHighlighterProps {
   children: ReactNode;
+  name?: Name;
 }
 
 // Code
@@ -74,6 +79,7 @@ export interface ChatMessageProps {
   id: string;
   renderCodeBlocks?: boolean;
   initialMessage?: boolean;
+  requestIndicator?: boolean;
 }
 
 // DarkmodeSlice
@@ -123,6 +129,7 @@ export type Status = 'idle' | 'requesting' | 'streaming';
 
 // useApi
 export interface ApiArgs {
+  name: Name;
   prompt: string;
   route: Tool;
   submitCount: number;
