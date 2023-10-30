@@ -1,6 +1,11 @@
 import type { ReactNode } from 'react';
 import type { FieldState } from './hooks';
 
+// currentRouteSlice
+export interface CurrentRouteState {
+  value: Route;
+}
+
 // toolsResponsesSlice
 export interface ToolsResponsesSlice {
   response: string;
@@ -13,7 +18,7 @@ export interface ToolsPromptSlice {
 
 // darkmodeSlice
 export interface DarkmodeSlice {
-  darkmode: boolean;
+  value: boolean;
 }
 
 // messagesSlice
