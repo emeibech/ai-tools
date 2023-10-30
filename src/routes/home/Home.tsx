@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main
       className={cn(
-        'mt-10 px-4 flex flex-col items-center gap-20',
+        'mt-16 px-4 flex flex-col items-center gap-20',
         'min-[320px]:p-4 lg:p-8 lg:mt-0',
         '2xl:p-12 2xl:gap-48',
       )}
