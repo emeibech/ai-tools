@@ -58,7 +58,7 @@ export default function Home() {
         )}
       >
         <InfoCluster className="place-self-end">
-          <h2 className={cn('font-medium')}>It's Free</h2>
+          <h2 className={cn('font-medium')}>It's Free!</h2>
           <p className={cn('text-card-foreground')}>
             The best feature of this app is that it's free. That is right. Free.
             But you can only use it like once a day maybe. I haven't decided
@@ -75,18 +75,36 @@ export default function Home() {
         </InfoCluster>
 
         <InfoCluster>
-          <h2 className={cn('font-medium')}>User-friendly</h2>
-          <p className={cn('text-card-foreground')}>
-            I strive to make this app as user-friendly as I can. Nevertheless,
-            if you find yourself having trouble or getting stuck or whatever,
-            I've laid out some tutorials to help you get the result you want.
+          <h2 className={cn('font-medium')}>Open Source</h2>
+          <p className="text-card-foreground">
+            If you think this app looks like shit and feels like shit that's
+            because it is. On the off chance that you happen to like it and
+            would like to create something similar to it, you can clone the repo
+            or fork it or whatever.
           </p>
           <a
-            href={'#'}
+            href={'https://github.com/emeibech/ai-tools'}
             target="_blank"
             className={cn('text-accent underline max-w-fit py-1')}
           >
-            Tutorial
+            GitHub
+          </a>
+        </InfoCluster>
+
+        <InfoCluster>
+          <h2 className={cn('font-medium')}>Mobile-friendly</h2>
+          <p className={cn('text-card-foreground')}>
+            This app works well in mobile devices even though I don't have the
+            resources to actually test it on various mobile devices except my
+            antiquated iPhone X. This mobile-first design is made easier by
+            tailwindcss.
+          </p>
+          <a
+            href={'https://tailwindcss.com/'}
+            target="_blank"
+            className={cn('text-accent underline max-w-fit py-1')}
+          >
+            Learn about tailwindcss
           </a>
         </InfoCluster>
 
@@ -98,28 +116,11 @@ export default function Home() {
             model AI that everybody in tech and their mother is talking about.
           </p>
           <a
-            href={'#'}
+            href={'https://openai.com/'}
             target="_blank"
             className={cn('text-accent underline max-w-fit py-1')}
           >
-            Learn more
-          </a>
-        </InfoCluster>
-
-        <InfoCluster>
-          <h2 className={cn('font-medium')}>Open Source</h2>
-          <p className="text-card-foreground">
-            If you think this app looks like shit and feels like shit that's
-            because it is. On the off chance that you happen to like it and
-            would like to create something similar to it, you can clone the repo
-            or fork it or whatever.
-          </p>
-          <a
-            href={'#'}
-            target="_blank"
-            className={cn('text-accent underline max-w-fit py-1')}
-          >
-            GitHub
+            Learn about OpenAI
           </a>
         </InfoCluster>
       </section>
