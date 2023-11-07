@@ -1,6 +1,13 @@
 import type { ReactNode } from 'react';
 import type { FieldState } from './hooks';
 
+// apiCallCounterSlice
+export interface ApiCallCounterSlice {
+  count: number;
+  timestamp: number | null;
+  maxCount: number;
+}
+
 // currentRouteSlice
 export interface CurrentRouteState {
   value: Route;
