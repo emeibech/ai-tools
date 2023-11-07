@@ -7,8 +7,12 @@ import SiteTitle from '../layout/header/SiteTitle';
 import Footer from '../layout/footer/Footer';
 import './App.css';
 import useDarkmodeToggler from '@/common/hooks/useDarkmodeToggler';
+import useSetLocalStorageData from '@/common/hooks/useSetLocalStorageData';
+import useSaveToLocalStorage from '@/common/hooks/useSaveToLocalStorage';
 
 export default function App({ children }: { children?: ReactNode }) {
+  useSetLocalStorageData();
+  useSaveToLocalStorage();
   useDarkmodeToggler();
 
   return (

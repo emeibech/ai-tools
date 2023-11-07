@@ -89,7 +89,7 @@ export default function Code({ code }: CodeProps) {
       </div>
 
       <SyntaxHighlighter
-        language={isSupported(formattedLang) ? formattedLang : ''}
+        language={isSupported(formattedLang) ? formattedLang : 'jsx'}
         style={darkmode ? oneDark : oneLight}
       >
         {codeBlock}

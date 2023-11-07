@@ -12,9 +12,14 @@ import {
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
 import useApi from '@/features/tools/useApi';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
+import {
+  apiCallCounter,
+  counterIncremented,
+  timestampCreated,
+} from '@/features/apiCallCounter/apiCallCounterSlice';
 
 const schema = {
   code: z
@@ -27,8 +32,9 @@ const defaultValues = { code: '' };
 export default function CodeAnalyzerForm({ route, name }: ToolProp) {
   const codeRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useAppDispatch();
-  const { responseReset } = getResponsesActions(route);
+  const { responseReset, responseAppended } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
+  const { maxCount, count } = useAppSelector(apiCallCounter);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     name,
     route,
@@ -62,12 +68,19 @@ export default function CodeAnalyzerForm({ route, name }: ToolProp) {
     dispatch(responseReset());
     dispatch(promptReset());
     dispatch(promptAppended(values.code));
-    setApiArgs({
-      name,
-      route,
-      prompt: values.code,
-      submitCount: apiArgs.submitCount + 1,
-    });
+
+    if (count >= maxCount) {
+      dispatch(responseAppended('Rate limit exceeded'));
+    } else {
+      dispatch(timestampCreated());
+      dispatch(counterIncremented());
+      setApiArgs({
+        name,
+        route,
+        prompt: values.code,
+        submitCount: apiArgs.submitCount + 1,
+      });
+    }
 
     scrollToBottom();
   }
