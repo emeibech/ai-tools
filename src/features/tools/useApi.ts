@@ -9,11 +9,13 @@ import {
   getStatusActions,
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
+import { rateLimiter } from '../rateLimiterSlice/rateLimiterSlice';
 
 export default function useApi(apiArgs: ApiArgs) {
   const status = useAppSelector(getStatusState(apiArgs.name));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
+  const { limitExceeded } = useAppSelector(rateLimiter);
   const setChunkSentCount = useAutoScroll({ status, scrollDir });
 
   useEffect(() => {
@@ -69,7 +71,12 @@ export default function useApi(apiArgs: ApiArgs) {
     if (submitCount > 0) {
       setScrollDir('down');
       dispatch(statusChanged('requesting'));
-      streamData();
+      if (limitExceeded) {
+        dispatch(statusChanged('idle'));
+        dispatch(responseAppended('Rate Limit Exceeded'));
+      } else {
+        streamData();
+      }
     }
-  }, [dispatch, setChunkSentCount, setScrollDir, apiArgs]);
+  }, [dispatch, setChunkSentCount, setScrollDir, apiArgs, limitExceeded]);
 }

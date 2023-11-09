@@ -13,14 +13,13 @@ import {
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
 import useApi from '@/features/tools/useApi';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useAppDispatch } from '@/app/hooks';
 import type { FormatToneChangerPrompt, ToolProp } from '@/types/routes';
 import { ApiArgs } from '@/types/features';
 import {
-  apiCallCounter,
-  counterIncremented,
-  timestampCreated,
-} from '@/features/apiCallCounter/apiCallCounterSlice';
+  remainingUsageDecremented,
+  rateLimitCalculated,
+} from '@/features/rateLimiterSlice/rateLimiterSlice';
 
 const schema = {
   tone: z
@@ -42,10 +41,8 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
   const toneRef = useRef(null);
   const messageRef = useRef(null);
   const dispatch = useAppDispatch();
-  const { responseReset, responseAppended } = getResponsesActions(route);
+  const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
-  const { maxCount, count } = useAppSelector(apiCallCounter);
-
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
     name,
@@ -93,21 +90,18 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
       ),
     );
 
-    if (count >= maxCount) {
-      dispatch(responseAppended('Rate limit exceeded'));
-    } else {
-      dispatch(timestampCreated());
-      dispatch(counterIncremented());
-      setApiArgs({
-        route,
-        name,
-        submitCount: apiArgs.submitCount + 1,
-        prompt: formatToneChangerPrompt({
-          tone: values.tone,
-          message: values.message,
-        }),
-      });
-    }
+    dispatch(rateLimitCalculated());
+    dispatch(remainingUsageDecremented());
+
+    setApiArgs({
+      route,
+      name,
+      submitCount: apiArgs.submitCount + 1,
+      prompt: formatToneChangerPrompt({
+        tone: values.tone,
+        message: values.message,
+      }),
+    });
 
     scrollToBottom();
   }

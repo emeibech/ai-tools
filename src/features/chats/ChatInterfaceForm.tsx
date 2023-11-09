@@ -22,10 +22,9 @@ import type {
   Model,
 } from '@/types/features';
 import {
-  apiCallCounter,
-  counterIncremented,
-  timestampCreated,
-} from '../apiCallCounter/apiCallCounterSlice';
+  remainingUsageDecremented,
+  rateLimitCalculated,
+} from '../rateLimiterSlice/rateLimiterSlice';
 
 export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
@@ -36,7 +35,6 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const [value, setValue] = useState<string>('');
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
-  const { maxCount, count } = useAppSelector(apiCallCounter);
   const [chatApiArgs, setChatApiArgs] = useState<ChatApiArgs>({
     chatInterface: name,
     chatHistory: [],
@@ -75,34 +73,24 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         }),
       );
 
-      if (count >= maxCount) {
-        dispatch(
-          messageAdded({
-            id: assistantId,
-            role: 'assistant',
-            content: 'Rate limit exceeded',
-          }),
-        );
-      } else {
-        dispatch(timestampCreated());
-        dispatch(counterIncremented());
-        dispatch(
-          messageAdded({
-            id: assistantId,
-            role: 'assistant',
-            content: '',
-          }),
-        );
+      dispatch(rateLimitCalculated());
+      dispatch(remainingUsageDecremented());
+      dispatch(
+        messageAdded({
+          id: assistantId,
+          role: 'assistant',
+          content: '',
+        }),
+      );
 
-        setChatApiArgs({
-          prompt,
-          chatInterface: name,
-          chatHistory: messages,
-          responseId: assistantId,
-          submitCount: chatApiArgs.submitCount + 1,
-          model: extractModel(value),
-        });
-      }
+      setChatApiArgs({
+        prompt,
+        chatInterface: name,
+        chatHistory: messages,
+        responseId: assistantId,
+        submitCount: chatApiArgs.submitCount + 1,
+        model: extractModel(value),
+      });
 
       scrollToBottom();
     }

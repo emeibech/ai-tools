@@ -6,40 +6,42 @@ import {
   turnOnDarkmode,
 } from '@/features/darkmode/darkmodeSlice';
 import {
-  counterSet,
+  remainingUsageSet,
   timestampSet,
-} from '@/features/apiCallCounter/apiCallCounterSlice';
+} from '@/features/rateLimiterSlice/rateLimiterSlice';
 
 export default function useSetLocalStorageData() {
   const darkmodeDefault = false;
-  const countDefault = 0;
+  const remainingUsageDefault = 5;
   const timestampDefault = null;
   const lsDarkmode = useRef<boolean>(darkmodeDefault);
-  const lsCount = useRef<number>(countDefault);
+  const lsRemainingUsage = useRef<number>(remainingUsageDefault);
   const lsTimestamp = useRef<number | null>(timestampDefault);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     console.log('useSetLocalStorageData');
-    function setDarkmode() {
+    function setLSData() {
       if (isLocalStorageAvailable()) {
         const darkmode = localStorage.getItem('darkmode');
-        const count = localStorage.getItem('count');
+        const remainingUsage = localStorage.getItem('remainingUsage');
         const timestamp = localStorage.getItem('timestamp');
         lsDarkmode.current = darkmode ? JSON.parse(darkmode) : darkmodeDefault;
-        lsCount.current = count ? JSON.parse(count) : countDefault;
+        lsRemainingUsage.current = remainingUsage
+          ? JSON.parse(remainingUsage)
+          : remainingUsageDefault;
         lsTimestamp.current = timestamp
           ? JSON.parse(timestamp)
           : timestampDefault;
       }
 
       dispatch(lsDarkmode.current ? turnOnDarkmode() : turnOffDarkmode());
-      dispatch(counterSet(lsCount.current));
+      dispatch(remainingUsageSet(lsRemainingUsage.current));
       dispatch(timestampSet(lsTimestamp.current));
     }
 
-    window.addEventListener('DOMContentLoaded', setDarkmode);
+    window.addEventListener('DOMContentLoaded', setLSData);
 
-    return () => window.removeEventListener('DOMContentLoaded', setDarkmode);
+    return () => window.removeEventListener('DOMContentLoaded', setLSData);
   }, [dispatch, darkmodeDefault]);
 }

@@ -13,14 +13,13 @@ import {
   getPromptsActions,
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useAppDispatch } from '@/app/hooks';
 import type { FormatStoryGeneratorPrompt, ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
 import {
-  apiCallCounter,
-  counterIncremented,
-  timestampCreated,
-} from '@/features/apiCallCounter/apiCallCounterSlice';
+  remainingUsageDecremented,
+  rateLimitCalculated,
+} from '@/features/rateLimiterSlice/rateLimiterSlice';
 
 const schema = {
   subject: z
@@ -48,10 +47,8 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
   const styleRef = useRef(null);
   const contextRef = useRef(null);
   const dispatch = useAppDispatch();
-  const { responseReset, responseAppended } = getResponsesActions(route);
+  const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
-  const { maxCount, count } = useAppSelector(apiCallCounter);
-
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     name,
     route,
@@ -106,22 +103,19 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
       ),
     );
 
-    if (count >= maxCount) {
-      dispatch(responseAppended('Rate limit exceeded'));
-    } else {
-      dispatch(timestampCreated());
-      dispatch(counterIncremented());
-      setApiArgs({
-        name,
-        route,
-        submitCount: apiArgs.submitCount + 1,
-        prompt: formatStoryGeneratorPrompt({
-          subject: values.subject,
-          style: values.style,
-          context: values.context,
-        }),
-      });
-    }
+    dispatch(rateLimitCalculated());
+    dispatch(remainingUsageDecremented());
+
+    setApiArgs({
+      name,
+      route,
+      submitCount: apiArgs.submitCount + 1,
+      prompt: formatStoryGeneratorPrompt({
+        subject: values.subject,
+        style: values.style,
+        context: values.context,
+      }),
+    });
 
     scrollToBottom();
   }

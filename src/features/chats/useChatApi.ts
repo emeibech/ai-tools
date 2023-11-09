@@ -16,6 +16,7 @@ import {
   getStatusActions,
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
+import { rateLimiter } from '../rateLimiterSlice/rateLimiterSlice';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
@@ -23,6 +24,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const status = useAppSelector(getStatusState(chatApiArgs.chatInterface));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
+  const { limitExceeded } = useAppSelector(rateLimiter);
   const setChunkSentCount = useAutoScroll({
     status,
     scrollDir,
@@ -118,9 +120,20 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     if (submitCount > 0) {
       setScrollDir('down');
       dispatch(statusChanged('requesting'));
-      streamData();
+
+      if (limitExceeded) {
+        dispatch(statusChanged('idle'));
+        dispatch(
+          messageAppended({
+            id: responseId,
+            content: 'Rate Limit Exceeded',
+          }),
+        );
+      } else {
+        streamData();
+      }
     }
-  }, [dispatch, setChunkSentCount, setScrollDir, chatApiArgs]);
+  }, [dispatch, setChunkSentCount, setScrollDir, chatApiArgs, limitExceeded]);
 }
 
 function getUrlParams(name: Name) {

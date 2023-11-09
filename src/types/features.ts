@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
 import type { FieldState } from './hooks';
 
-// apiCallCounterSlice
-export interface ApiCallCounterSlice {
-  count: number;
+// RateLimiter
+export interface RateLimiter {
+  remainingUsage: number;
   timestamp: number | null;
-  maxCount: number;
+  limitExceeded: boolean;
 }
 
 // currentRouteSlice
