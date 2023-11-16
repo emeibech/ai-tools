@@ -32,7 +32,7 @@ export const rateLimiterSlice = createSlice({
         state.timestamp = timeNow;
       }
 
-      if (state.timestamp && timeNow - state.timestamp >= 86400) {
+      if (state.timestamp && timeNow - state.timestamp >= 30) {
         state.remainingUsage = 5;
         state.timestamp = timeNow;
         state.limitExceeded = false;
