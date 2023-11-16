@@ -11,8 +11,8 @@ import useSetLocalStorageData from '@/common/hooks/useSetLocalStorageData';
 import useSaveToLocalStorage from '@/common/hooks/useSaveToLocalStorage';
 
 export default function App({ children }: { children?: ReactNode }) {
-  useSetLocalStorageData();
   useSaveToLocalStorage();
+  useSetLocalStorageData();
   useDarkmodeToggler();
 
   return (

@@ -40,8 +40,6 @@ export default function useSetLocalStorageData() {
       dispatch(timestampSet(lsTimestamp.current));
     }
 
-    window.addEventListener('DOMContentLoaded', setLSData);
-
-    return () => window.removeEventListener('DOMContentLoaded', setLSData);
+    setLSData();
   }, [dispatch, darkmodeDefault]);
 }
