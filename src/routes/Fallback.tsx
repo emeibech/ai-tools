@@ -20,11 +20,9 @@ export default function Fallback() {
         '2xl:p-12',
       )}
     >
-      <article className="flex flex-col items-center">
+      <article className="flex flex-col items-center animate-pulse">
         <Flower width={'100px'} height={'100px'} className="animate-spin" />
-        <h2 className="text-2xl sm:text-4xl font-bold animate-pulse">
-          We're moomin now...
-        </h2>
+        <h2 className="text-2xl sm:text-4xl font-bold">We're moomin now...</h2>
       </article>
     </aside>
   );
