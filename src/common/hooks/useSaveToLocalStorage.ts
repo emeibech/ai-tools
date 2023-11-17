@@ -11,22 +11,24 @@ when you do "npm run build." This means the initMount variable used to check
 for first mount has to change value depending on whether NODE_ENV in .env file is 
 set to production or development. */
 const productionMode = import.meta.env.VITE_NODE_ENV;
-const initMount = productionMode === 'production' ? 0 : 1;
+const initMount = productionMode === 'production' ? 1 : 2;
+console.log({ initMount });
 
 export default function useSaveToLocalStorage() {
   const darkmode = useAppSelector(darkModeStatus);
   const { remainingUsage, timestamp } = useAppSelector(rateLimiter);
 
-  /* Why mountCounter? To avoid global state from resetting to default, which
-  are defined in the slice. This ensures the effect saves to local storage only
-  after the initial render, ignoring the first one. */
+  /* Why mountCounter? Becase global state will reset to default on page reload. 
+  This ensures the effect saves to local storage only
+  after the initial render, ignoring the first one, and the second one too if 
+  NODE_ENV is set to development. */
   const mountCounter = useRef<number>(0);
 
   useEffect(() => {
     console.log('useSaveToLocalStorage');
 
     function saveToLocalStorage() {
-      if (isLocalStorageAvailable() && mountCounter.current > initMount) {
+      if (isLocalStorageAvailable() && mountCounter.current >= initMount) {
         localStorage.setItem('darkmode', darkmode.toString());
         localStorage.setItem('remainingUsage', remainingUsage.toString());
         localStorage.setItem(
