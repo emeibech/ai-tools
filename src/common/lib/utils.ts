@@ -40,13 +40,15 @@ export function scrollWindowTo({
   });
 }
 
-export function handleCatchError(error: unknown) {
+export function getCatchError(error: unknown) {
   if (error instanceof Error) {
-    throw error.message;
+    return error.message.includes('NetworkError')
+      ? 'Server is unavailable at the moment. Please try again later.'
+      : error.message;
   } else if (error && typeof error === 'object' && 'message' in error) {
-    throw error.message;
+    return `${error.message}`;
   } else {
-    throw error;
+    return `${error}`;
   }
 }
 
