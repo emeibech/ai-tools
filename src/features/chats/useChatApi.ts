@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { handleCatchError } from '@/common/lib/utils';
+import { getCatchError } from '@/common/lib/utils';
 import { getMessagesActions } from '@/features/chats/messagesSliceutils';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import useAutoScroll from '@/common/hooks/useAutoScroll';
@@ -84,7 +84,14 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
         dispatch(statusChanged('streaming'));
 
         if (!response.ok) {
-          throw new Error(`${response.status}: ${response.statusText}`);
+          dispatch(statusChanged('idle'));
+
+          dispatch(
+            messageAppended({
+              id: responseId,
+              content: `${response.status}: ${response.statusText}`,
+            }),
+          );
         }
 
         if (response.body) {
@@ -109,10 +116,16 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
           }
 
           setChunkSentCount(0);
-          dispatch(statusChanged('idle'));
         }
       } catch (error) {
-        handleCatchError(error);
+        dispatch(
+          messageAppended({
+            id: responseId,
+            content: `Error: ${getCatchError(error)}`,
+          }),
+        );
+      } finally {
+        dispatch(statusChanged('idle'));
       }
     }
 

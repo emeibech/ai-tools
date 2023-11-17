@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { useEffect } from 'react';
 import useGetScrollDir from '@/common/hooks/useGetScrollDir';
 import useAutoScroll from '@/common/hooks/useAutoScroll';
-import { handleCatchError } from '@/common/lib/utils';
+import { getCatchError } from '@/common/lib/utils';
 import { getResponsesActions } from '@/features/tools/toolsSlicesUtils';
 import type { ApiArgs } from '@/types/features';
 import {
@@ -41,7 +41,11 @@ export default function useApi(apiArgs: ApiArgs) {
         dispatch(statusChanged('streaming'));
 
         if (!response.ok) {
-          throw new Error(`${response.status}: ${response.statusText}`);
+          dispatch(statusChanged('idle'));
+
+          dispatch(
+            responseAppended(`${response.status}: ${response.statusText}`),
+          );
         }
 
         if (response.body) {
@@ -60,11 +64,11 @@ export default function useApi(apiArgs: ApiArgs) {
           }
 
           setChunkSentCount(0);
-          dispatch(statusChanged('idle'));
         }
       } catch (error) {
-        console.log('catch error');
-        handleCatchError(error);
+        dispatch(responseAppended(`Error: ${getCatchError(error)}`));
+      } finally {
+        dispatch(statusChanged('idle'));
       }
     }
 
