@@ -12,7 +12,6 @@ for first mount has to change value depending on whether NODE_ENV in .env file i
 set to production or development. */
 const productionMode = import.meta.env.VITE_NODE_ENV;
 const initMount = productionMode === 'production' ? 1 : 2;
-console.log({ initMount });
 
 export default function useSaveToLocalStorage() {
   const darkmode = useAppSelector(darkModeStatus);
