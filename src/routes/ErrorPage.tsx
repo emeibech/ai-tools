@@ -20,7 +20,7 @@ export default function ErrorPage() {
 
   return (
     <App>
-      <div className={cn('flex flex-col gap-y-2 max-w-max', 'mx-auto p-4')}>
+      <div className={cn('flex flex-col gap-y-2 max-w-[920px]', 'mx-auto p-4')}>
         <h2 className="text-2xl sm:text-3xl font-medium mt-40">
           OwO, what's this?
         </h2>
