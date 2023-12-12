@@ -36,7 +36,7 @@ export default function Router() {
           path: 'codeanalyzer',
           element: (
             <Suspense fallback={<Fallback />}>
-              <CodeAnalyzer />,
+              <CodeAnalyzer />
             </Suspense>
           ),
         },

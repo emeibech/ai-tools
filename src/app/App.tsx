@@ -9,10 +9,10 @@ import './App.css';
 import useDarkmodeToggler from '@/common/hooks/useDarkmodeToggler';
 import useSetLocalStorageData from '@/common/hooks/useSetLocalStorageData';
 import useSaveToLocalStorage from '@/common/hooks/useSaveToLocalStorage';
-import useInitialLoad from '@/common/hooks/useInitialLoad';
+// import useInitialLoad from '@/common/hooks/useInitialLoad';
 
 export default function App({ children }: { children?: ReactNode }) {
-  useInitialLoad();
+  // useInitialLoad();
   useSaveToLocalStorage();
   useSetLocalStorageData();
   useDarkmodeToggler();

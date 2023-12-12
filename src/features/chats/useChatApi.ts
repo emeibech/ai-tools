@@ -68,13 +68,14 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       });
 
     const url = `${baseUrl}${getUrlParams(chatInterface)}${modelParam}`;
+    const body = { userContent: trimmedMessages };
 
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(trimmedMessages),
+      body: JSON.stringify(body),
     };
 
     async function streamData() {
@@ -89,7 +90,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
           dispatch(
             messageAppended({
               id: responseId,
-              content: `${response.status}: ${response.statusText}`,
+              content: `${response.status}: ${response.statusText}. `,
             }),
           );
         }
@@ -150,9 +151,9 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
 }
 
 function getUrlParams(name: Name) {
-  if (name === 'Coding Assistant') return '/codingassistant?model=';
-  if (name === 'General Assistant') return '/generalassistant';
-  if (name === "Explain Like I'm 5") return '/eli5';
+  if (name === 'Coding Assistant') return '/ai/codingassistant?model=';
+  if (name === 'General Assistant') return '/ai/generalassistant';
+  if (name === "Explain Like I'm 5") return '/ai/eli5';
   return '';
 }
 

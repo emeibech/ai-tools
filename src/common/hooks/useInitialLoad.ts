@@ -14,7 +14,7 @@ export default function useInitialLoad() {
 
     if (mountCounter.current >= initMount) {
       try {
-        fetch(`${baseUrl}/checkid`, options);
+        fetch(`${baseUrl}/ai/checkid`, options);
       } catch (error) {
         console.log(`Error: ${error}`);
         throw error;

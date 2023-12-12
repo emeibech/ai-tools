@@ -24,8 +24,11 @@ export default function useApi(apiArgs: ApiArgs) {
     const { responseAppended } = getResponsesActions(route);
     const statusChanged = getStatusActions(name);
     const baseUrl = import.meta.env.VITE_AI_URL;
-    const url = `${baseUrl}/${route}`;
-    const body = [{ role: 'user', content: prompt }];
+    const url = `${baseUrl}/ai/${route}`;
+    const body = {
+      userContent: [{ role: 'user', content: prompt }],
+    };
+
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -44,7 +47,7 @@ export default function useApi(apiArgs: ApiArgs) {
           dispatch(statusChanged('idle'));
 
           dispatch(
-            responseAppended(`${response.status}: ${response.statusText}`),
+            responseAppended(`${response.status}: ${response.statusText}. `),
           );
         }
 
