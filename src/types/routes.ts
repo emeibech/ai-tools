@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Name, Tool } from './features';
+import type { Control, UseFormReturn } from 'react-hook-form';
 
 // Generic Tool form prop containing only route
 export interface ToolProp {
@@ -26,4 +27,15 @@ export interface FormatStoryGeneratorPrompt {
 export interface FormatToneChangerPrompt {
   tone: string;
   message: string;
+}
+
+// DatePickerParams
+export interface DatePickerParams {
+  control:
+    | Control<{
+        [x: string]: string;
+      }>
+    | undefined;
+  label: string;
+  form: UseFormReturn;
 }

@@ -28,6 +28,7 @@ export type ScrollDirection = 'up' | 'down';
 export interface UseLabelAnimationProps {
   isDirty: boolean;
   isInvalid: boolean;
+  initialPosition?: number;
 }
 
 export type FieldState =
