@@ -3,6 +3,8 @@ import App from '@/app/App';
 import ErrorPage from './ErrorPage';
 import { lazy, Suspense } from 'react';
 import Fallback from './Fallback';
+import Login from './login/Login';
+import Signup from './signup/Signup';
 
 export default function Router() {
   const Home = lazy(() => import('./home/Home'));
@@ -77,6 +79,23 @@ export default function Router() {
           element: (
             <Suspense fallback={<Fallback />}>
               <GeneralAssistant />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'login',
+          element: (
+            <Suspense fallback={<Fallback />}>
+              <Login />
+            </Suspense>
+          ),
+        },
+
+        {
+          path: 'signup',
+          element: (
+            <Suspense fallback={<Fallback />}>
+              <Signup />
             </Suspense>
           ),
         },
