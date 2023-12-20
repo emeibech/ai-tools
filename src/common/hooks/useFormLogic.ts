@@ -11,7 +11,8 @@ export default function useFormLogic({
   refs,
   resetLabelState,
 }: UseFormLogicArgs) {
-  const FormSchema = z.object(schema);
+  const FormSchema = getFormSchema(schema);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues,
@@ -41,4 +42,55 @@ export default function useFormLogic({
     getFieldState,
     getValidationStyles,
   };
+}
+
+const nameRegex = /^[a-zA-ZÀ-ÿ\s]*$/;
+
+function getFormSchema(schema: { [key: string]: z.ZodString }) {
+  if (schema.confirm) {
+    /* These are custom validations for the sign up form.
+      Only the sign up form has the confirm schema so this should work.
+    */
+    return z
+      .object(schema)
+      .required({ firstname: true })
+      .refine((schema) => nameRegex.test(schema.firstname), {
+        message: 'First name name must only contain letters.',
+        path: ['firstname'],
+      })
+      .refine((schema) => nameRegex.test(schema.lastname), {
+        message: 'Last name must only contain letters.',
+        path: ['lastname'],
+      })
+      .refine((data) => data.password === data.confirm, {
+        message: "Passwords don't match",
+        path: ['confirm'],
+      })
+      .refine(
+        (data) => {
+          const { year, month, day } = data;
+          const birthDate = new Date(`${year}-${month}-${day}`);
+          const epoch = birthDate.getTime();
+          console.log({
+            epoch,
+            birthDate,
+            returnVal: !isOlderThanMinAge(epoch, 13),
+          });
+
+          return isNaN(epoch) ? true : !isOlderThanMinAge(epoch, 13);
+        },
+        {
+          message: 'Required age is 13, buddy boy.',
+          path: ['year'],
+        },
+      );
+  }
+
+  return z.object(schema);
+}
+
+function isOlderThanMinAge(epoch: number, minAge: number) {
+  const currentDate = new Date().getTime();
+  const birthDate = currentDate - minAge * 365.25 * 24 * 60 * 60 * 1000;
+  return epoch >= birthDate;
 }
