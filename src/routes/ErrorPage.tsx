@@ -5,19 +5,6 @@ import { cn } from '@/common/lib/utils';
 export default function ErrorPage() {
   const error = useRouteError();
 
-  function errorMessage(error: unknown): string {
-    if (isRouteErrorResponse(error)) {
-      return `${error.status} ${error.statusText}`;
-    } else if (error instanceof Error) {
-      return error.message;
-    } else if (typeof error === 'string') {
-      return error;
-    } else {
-      console.error(error);
-      return 'Unknown error';
-    }
-  }
-
   return (
     <App>
       <div className={cn('flex flex-col gap-y-2 max-w-[920px]', 'mx-auto p-4')}>
@@ -36,4 +23,17 @@ export default function ErrorPage() {
       </div>
     </App>
   );
+}
+
+function errorMessage(error: unknown): string {
+  if (isRouteErrorResponse(error)) {
+    return `${error.status} ${error.statusText}`;
+  } else if (error instanceof Error) {
+    return error.message;
+  } else if (typeof error === 'string') {
+    return error;
+  } else {
+    console.error(error);
+    return 'Unknown error';
+  }
 }
