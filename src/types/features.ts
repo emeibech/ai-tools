@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { FieldState } from './hooks';
+import type { UserStatus, FieldState } from './hooks';
 
 // RateLimiter
 export interface RateLimiter {
@@ -165,4 +165,10 @@ export interface ApiArgs {
   prompt: string;
   route: Tool;
   submitCount: number;
+}
+
+// userSlice
+export interface Client {
+  userStatus: UserStatus;
+  act: string | null;
 }

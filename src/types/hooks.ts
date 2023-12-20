@@ -31,9 +31,13 @@ export interface UseLabelAnimationProps {
   initialPosition?: number;
 }
 
+// useLabelAnimation
 export type FieldState =
   | 'default'
   | 'focusedValid'
   | 'focusedInvalid'
   | 'blurredValid'
   | 'blurredInvalid';
+
+// useSetLocalStorageData
+export type UserStatus = 'guest' | 'user';

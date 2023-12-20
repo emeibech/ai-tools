@@ -48,12 +48,9 @@ const nameRegex = /^[a-zA-ZÀ-ÿ\s]*$/;
 
 function getFormSchema(schema: { [key: string]: z.ZodString }) {
   if (schema.confirm) {
-    /* These are custom validations for the sign up form.
-      Only the sign up form has the confirm schema so this should work.
-    */
+    // These are custom validations for the sign up form.
     return z
       .object(schema)
-      .required({ firstname: true })
       .refine((schema) => nameRegex.test(schema.firstname), {
         message: 'First name name must only contain letters.',
         path: ['firstname'],
