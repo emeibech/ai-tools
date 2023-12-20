@@ -1,20 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { FieldState, UseLabelAnimationProps } from '@/types/hooks';
 
-const labelPositions = [
-  'translate-y-0',
-  'translate-y-1',
-  'translate-y-2',
-  'translate-y-3',
-  'translate-y-4',
-  'translate-y-5',
-  'translate-y-6',
-  'translate-y-7',
-  'translate-y-8',
-  'translate-y-9',
-  'translate-y-10',
-];
-
 /**
  * Abstracts the animation of a label. This hook makes it possible to pick and choose
  * which label you want to animate. The animation includes going up, down, or remain
@@ -23,7 +9,6 @@ const labelPositions = [
 export default function useLabelAnimation({
   isDirty,
   isInvalid,
-  initialPosition = 5,
 }: UseLabelAnimationProps) {
   const [fieldState, setFieldState] = useState<FieldState>('default');
 
@@ -68,7 +53,7 @@ export default function useLabelAnimation({
       case 'blurredValid':
         return 'translate-y-0 -translate-x-1 scale-90 text-muted-foreground transition-transform pb-0.5';
       default:
-        return `${labelPositions[initialPosition]} text-muted-foreground transition-transform`;
+        return 'translate-y-5 text-muted-foreground transition-transform';
     }
   };
 

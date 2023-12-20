@@ -11,8 +11,7 @@ export default function useFormLogic({
   refs,
   resetLabelState,
 }: UseFormLogicArgs) {
-  const FormSchema = getFormSchema(schema);
-
+  const FormSchema = z.object(schema);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues,
@@ -42,15 +41,4 @@ export default function useFormLogic({
     getFieldState,
     getValidationStyles,
   };
-}
-
-function getFormSchema(schema: { [key: string]: z.ZodString }) {
-  if (schema.confirm) {
-    return z.object(schema).refine((data) => data.password === data.confirm, {
-      message: "Passwords don't match",
-      path: ['confirm'],
-    });
-  }
-
-  return z.object(schema);
 }
