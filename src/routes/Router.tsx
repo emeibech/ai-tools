@@ -6,6 +6,8 @@ import Fallback from './Fallback';
 import { useAppSelector } from '@/app/hooks';
 import { clientStatus } from '@/features/client/clientSlice';
 import Home from './home/Home';
+import Login from './login/Login';
+import LoginSuccessful from './login/LoginSuccessful';
 
 export default function Router() {
   const CodeAnalyzer = lazy(() => import('./codeanalyzer/CodeAnalyzer'));
@@ -13,8 +15,6 @@ export default function Router() {
   const StoryGenerator = lazy(() => import('./storygenerator/StoryGenerator'));
   const Eli5 = lazy(() => import('./eli5/Eli5'));
   const Signup = lazy(() => import('./signup/Signup'));
-  const Login = lazy(() => import('./login/Login'));
-  const LoginSuccessful = lazy(() => import('./login/LoginSuccessful'));
   const CodingAssistant = lazy(
     () => import('./codingassistant/CodingAssistant'),
   );
@@ -85,11 +85,7 @@ export default function Router() {
         },
         {
           path: 'login',
-          element: (
-            <Suspense fallback={<Fallback />}>
-              {userStatus === 'guest' ? <Login /> : <LoginSuccessful />}
-            </Suspense>
-          ),
+          element: userStatus === 'guest' ? <Login /> : <LoginSuccessful />,
         },
 
         {
