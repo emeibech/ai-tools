@@ -101,7 +101,6 @@ export default function LoginForm({ className }: { className?: string }) {
         onSubmit={form.handleSubmit(handleSubmit)}
         className={cn('flex flex-col gap-6 relative', className)}
       >
-        <p className="text-destructive text-sm absolute -top-4">{errorMsg}</p>
         <FormField
           name="email"
           control={form.control}
@@ -138,12 +137,16 @@ export default function LoginForm({ className }: { className?: string }) {
           )}
         />
 
+        <p className="text-destructive text-sm absolute bottom-14 self-center">
+          {errorMsg}
+        </p>
+
         <Button
           type="submit"
           size={'custom'}
           disabled={reqStatus === 'requesting' ? true : false}
           className={cn(
-            'py-3 px-8 mt-2 text-md',
+            'py-3 px-8 mt-4 text-md',
             'justify-self-end',
             'transition duration-300',
             'max-w-[420px]',

@@ -2,6 +2,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/common/components/ui/tabs';
 import LoginForm from './LoginForm';
 import { TabsContent } from '@radix-ui/react-tabs';
 import { cn } from '@/common/lib/utils';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   return (
@@ -29,6 +30,14 @@ export default function Login() {
               <LoginForm />
             </TabsContent>
           </section>
+
+          <article className="text-center mt-4">
+            <span>Need an account? </span>
+            <Link to={'/signup'} className="text-accent hover:underline">
+              Sign up
+            </Link>
+            .
+          </article>
         </Tabs>
       </section>
     </main>
