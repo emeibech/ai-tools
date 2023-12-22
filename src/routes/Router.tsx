@@ -5,9 +5,9 @@ import { lazy, Suspense } from 'react';
 import Fallback from './Fallback';
 import { useAppSelector } from '@/app/hooks';
 import { clientStatus } from '@/features/client/clientSlice';
+import Home from './home/Home';
 
 export default function Router() {
-  const Home = lazy(() => import('./home/Home'));
   const CodeAnalyzer = lazy(() => import('./codeanalyzer/CodeAnalyzer'));
   const ToneChanger = lazy(() => import('./tonechanger/ToneChanger'));
   const StoryGenerator = lazy(() => import('./storygenerator/StoryGenerator'));
@@ -33,11 +33,7 @@ export default function Router() {
       children: [
         {
           path: '/',
-          element: (
-            <Suspense fallback={<Fallback />}>
-              <Home />
-            </Suspense>
-          ),
+          element: <Home />,
         },
         {
           path: 'codeanalyzer',
