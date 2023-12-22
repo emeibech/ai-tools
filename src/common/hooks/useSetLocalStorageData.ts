@@ -23,6 +23,7 @@ export default function useSetLocalStorageData() {
         const darkmode = localStorage.getItem('darkmode');
         const clientStatus = localStorage.getItem('clientStatus');
         lsDarkmode.current = darkmode ? JSON.parse(darkmode) : darkmodeDefault;
+
         lsClientStatus.current = clientStatus
           ? JSON.parse(clientStatus)
           : clientStatusDefault;

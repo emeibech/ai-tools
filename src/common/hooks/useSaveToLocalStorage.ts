@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { isLocalStorageAvailable } from '../lib/utils';
 import { useAppSelector } from '@/app/hooks';
 import { darkModeStatus } from '@/features/darkmode/darkmodeSlice';
-import { clientStaus } from '@/features/client/clientSlice';
+import { clientStatus } from '@/features/client/clientSlice';
 
 /* During development, React enforces what's called StrictMode, 
 a feature that will render components twice on first mount 
@@ -15,7 +15,7 @@ const initMount = productionMode === 'production' ? 1 : 2;
 
 export default function useSaveToLocalStorage() {
   const darkmode = useAppSelector(darkModeStatus);
-  const clientStatus = useAppSelector(clientStaus);
+  const client = useAppSelector(clientStatus);
 
   /* Why mountCounter? Becase global state will reset to default on page reload. 
   This ensures the effect saves to local storage only
@@ -29,11 +29,11 @@ export default function useSaveToLocalStorage() {
     function saveToLocalStorage() {
       if (isLocalStorageAvailable() && mountCounter.current >= initMount) {
         localStorage.setItem('darkmode', darkmode.toString());
-        localStorage.setItem('clientStatus', JSON.stringify(clientStatus));
+        localStorage.setItem('clientStatus', JSON.stringify(client));
       }
     }
 
     saveToLocalStorage();
     mountCounter.current += 1;
-  }, [darkmode, clientStatus]);
+  }, [darkmode, client]);
 }

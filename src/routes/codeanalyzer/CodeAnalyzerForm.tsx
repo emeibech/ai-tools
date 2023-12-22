@@ -15,10 +15,6 @@ import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 import type { ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
-import {
-  remainingUsageDecremented,
-  rateLimitCalculated,
-} from '@/features/rateLimiterSlice/rateLimiterSlice';
 
 const schema = {
   code: z
@@ -66,9 +62,6 @@ export default function CodeAnalyzerForm({ route, name }: ToolProp) {
     dispatch(responseReset());
     dispatch(promptReset());
     dispatch(promptAppended(values.code));
-
-    dispatch(rateLimitCalculated());
-    dispatch(remainingUsageDecremented());
 
     setApiArgs({
       name,

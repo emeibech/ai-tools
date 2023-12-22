@@ -9,13 +9,13 @@ import {
   getStatusActions,
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
-import { rateLimiter } from '../rateLimiterSlice/rateLimiterSlice';
+import { clientStatus } from '@/features/client/clientSlice';
 
 export default function useApi(apiArgs: ApiArgs) {
   const status = useAppSelector(getStatusState(apiArgs.name));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
-  const { limitExceeded } = useAppSelector(rateLimiter);
+  const { userStatus, act } = useAppSelector(clientStatus);
   const setChunkSentCount = useAutoScroll({ status, scrollDir });
 
   useEffect(() => {
@@ -27,6 +27,7 @@ export default function useApi(apiArgs: ApiArgs) {
     const url = `${baseUrl}/ai/${route}`;
     const body = {
       userContent: [{ role: 'user', content: prompt }],
+      act,
     };
 
     const requestOptions = {
@@ -78,12 +79,11 @@ export default function useApi(apiArgs: ApiArgs) {
     if (submitCount > 0) {
       setScrollDir('down');
       dispatch(statusChanged('requesting'));
-      if (limitExceeded) {
+      if (userStatus === 'guest') {
         dispatch(statusChanged('idle'));
-        dispatch(responseAppended('Rate Limit Exceeded'));
-      } else {
-        streamData();
+        return;
       }
+      streamData();
     }
-  }, [dispatch, setChunkSentCount, setScrollDir, apiArgs, limitExceeded]);
+  }, [dispatch, setChunkSentCount, setScrollDir, apiArgs, userStatus, act]);
 }

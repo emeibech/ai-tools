@@ -16,10 +16,6 @@ import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 import type { FormatToneChangerPrompt, ToolProp } from '@/types/routes';
 import { ApiArgs } from '@/types/features';
-import {
-  remainingUsageDecremented,
-  rateLimitCalculated,
-} from '@/features/rateLimiterSlice/rateLimiterSlice';
 
 const schema = {
   tone: z
@@ -89,9 +85,6 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
         }),
       ),
     );
-
-    dispatch(rateLimitCalculated());
-    dispatch(remainingUsageDecremented());
 
     setApiArgs({
       route,

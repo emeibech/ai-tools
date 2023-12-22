@@ -3,8 +3,8 @@ import App from '@/app/App';
 import ErrorPage from './ErrorPage';
 import { lazy, Suspense } from 'react';
 import Fallback from './Fallback';
-import Login from './login/Login';
-import Signup from './signup/Signup';
+import { useAppSelector } from '@/app/hooks';
+import { clientStatus } from '@/features/client/clientSlice';
 
 export default function Router() {
   const Home = lazy(() => import('./home/Home'));
@@ -12,6 +12,9 @@ export default function Router() {
   const ToneChanger = lazy(() => import('./tonechanger/ToneChanger'));
   const StoryGenerator = lazy(() => import('./storygenerator/StoryGenerator'));
   const Eli5 = lazy(() => import('./eli5/Eli5'));
+  const Signup = lazy(() => import('./signup/Signup'));
+  const Login = lazy(() => import('./login/Login'));
+  const LoginSuccessful = lazy(() => import('./login/LoginSuccessful'));
   const CodingAssistant = lazy(
     () => import('./codingassistant/CodingAssistant'),
   );
@@ -19,6 +22,8 @@ export default function Router() {
   const GeneralAssistant = lazy(
     () => import('./generalassistant/GeneralAssistant'),
   );
+
+  const { userStatus } = useAppSelector(clientStatus);
 
   const router = createBrowserRouter([
     {
@@ -86,7 +91,7 @@ export default function Router() {
           path: 'login',
           element: (
             <Suspense fallback={<Fallback />}>
-              <Login />
+              {userStatus === 'guest' ? <Login /> : <LoginSuccessful />}
             </Suspense>
           ),
         },
@@ -95,7 +100,7 @@ export default function Router() {
           path: 'signup',
           element: (
             <Suspense fallback={<Fallback />}>
-              <Signup />
+              {userStatus === 'guest' ? <Signup /> : <LoginSuccessful />}
             </Suspense>
           ),
         },

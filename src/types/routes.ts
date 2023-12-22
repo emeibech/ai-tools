@@ -29,7 +29,7 @@ export interface FormatToneChangerPrompt {
   message: string;
 }
 
-// DatePickerParams
+// BirthDatePicker
 export interface DatePickerParams {
   control:
     | Control<{
@@ -40,7 +40,6 @@ export interface DatePickerParams {
   form: UseFormReturn;
 }
 
-// SelectedMonth
 export type SelectedMonth =
   | '01'
   | '02'
@@ -55,3 +54,7 @@ export type SelectedMonth =
   | '11'
   | '12'
   | '';
+
+// LoginForm
+
+export type ReqStatus = 'idle' | 'requesting' | 'error' | 'success';

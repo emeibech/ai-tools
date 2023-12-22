@@ -4,10 +4,12 @@ import llm from './imgs/llm.jpg';
 import InfoCluster from './components/InfoCluster';
 import FAQs from './components/FAQs';
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
-import { Button } from '@/common/components/ui/button';
-import { Link } from 'react-router-dom';
+import { useAppSelector } from '@/app/hooks';
+import { clientStatus } from '@/features/client/clientSlice';
+import GuestButtons from '@/common/components/GuestButtons';
 
 export default function Home() {
+  const { userStatus } = useAppSelector(clientStatus);
   useSetScrollPosition('home');
   return (
     <main
@@ -41,15 +43,7 @@ export default function Home() {
             dopamine now.
           </h3>
 
-          <div className="flex gap-6 mt-4 justify-center 2xl:justify-start">
-            <Link to={'/login'}>
-              <Button className="px-8 h-8 xl:h-10">Login</Button>
-            </Link>
-
-            <Link to={'/signup'}>
-              <Button className="px-8 h-8 xl:h-10">Sign up</Button>
-            </Link>
-          </div>
+          {userStatus === 'guest' && <GuestButtons />}
         </section>
         <img
           height={'240px'}

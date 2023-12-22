@@ -21,10 +21,6 @@ import type {
   ChatInterfaceFormProps,
   Model,
 } from '@/types/features';
-import {
-  remainingUsageDecremented,
-  rateLimitCalculated,
-} from '../rateLimiterSlice/rateLimiterSlice';
 
 export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
@@ -73,8 +69,6 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         }),
       );
 
-      dispatch(rateLimitCalculated());
-      dispatch(remainingUsageDecremented());
       dispatch(
         messageAdded({
           id: assistantId,

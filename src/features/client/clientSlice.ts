@@ -21,5 +21,5 @@ export const clientSlice = createSlice({
 });
 
 export const { clientStatusReset, clientStatusSet } = clientSlice.actions;
-export const clientStaus = (state: RootState) => state.clientStatus;
+export const clientStatus = (state: RootState) => state.clientStatus;
 export default clientSlice.reducer;

@@ -6,8 +6,12 @@ import useFormLogic from '@/common/hooks/useFormLogic';
 import useLabelAnimation from '@/common/hooks/useLabelAnimation';
 import { cn } from '@/common/lib/utils';
 import FormUnit from '@/features/formUnit/FormUnit';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { useAppDispatch } from '@/app/hooks';
+import { clientStatusSet } from '@/features/client/clientSlice';
+import type { ReqStatus } from '@/types/routes';
 
+const baseUrl = import.meta.env.VITE_AI_URL;
 const schema = {
   email: z
     .string()
@@ -26,6 +30,9 @@ const defaultValues = {
 export default function LoginForm({ className }: { className?: string }) {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const dispatch = useAppDispatch();
+  const [reqStatus, setReqStatus] = useState<ReqStatus>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const { form, FormSchema, getFieldState, getValidationStyles } = useFormLogic(
     {
@@ -54,8 +61,36 @@ export default function LoginForm({ className }: { className?: string }) {
     passwordLabel.resetState();
   }
 
-  function handleSubmit(values: z.infer<typeof FormSchema>) {
+  async function handleSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
+    try {
+      const { email, password } = values;
+      const body = { email, password };
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      };
+
+      setReqStatus('requesting');
+
+      const response = await fetch(`${baseUrl}/auth/login`, requestOptions);
+      const data = await response.json();
+      if (!response.ok) {
+        setErrorMsg(data.message);
+        setReqStatus('idle');
+        setTimeout(() => {
+          setErrorMsg('');
+        }, 5000);
+        return;
+      }
+      setReqStatus('success');
+      dispatch(clientStatusSet({ userStatus: 'user', act: data.act }));
+    } catch (error) {
+      console.log('An error occured during submit: ', error);
+      setReqStatus('idle');
+    }
   }
 
   return (
@@ -64,8 +99,9 @@ export default function LoginForm({ className }: { className?: string }) {
         action="http://localhost:3000/login"
         method="post"
         onSubmit={form.handleSubmit(handleSubmit)}
-        className={cn('flex flex-col gap-6', className)}
+        className={cn('flex flex-col gap-6 relative', className)}
       >
+        <p className="text-destructive text-sm absolute -top-4">{errorMsg}</p>
         <FormField
           name="email"
           control={form.control}
@@ -105,6 +141,7 @@ export default function LoginForm({ className }: { className?: string }) {
         <Button
           type="submit"
           size={'custom'}
+          disabled={reqStatus === 'requesting' ? true : false}
           className={cn(
             'py-3 px-8 mt-2 text-md',
             'justify-self-end',
@@ -112,9 +149,20 @@ export default function LoginForm({ className }: { className?: string }) {
             'max-w-[420px]',
           )}
         >
-          Log in
+          {getLoginBtnText(reqStatus)}
         </Button>
       </form>
     </Form>
   );
+}
+
+function getLoginBtnText(reqStatus: ReqStatus) {
+  const btnTexts = {
+    idle: 'Log in',
+    requesting: 'Logging in...',
+    error: 'Log in',
+    success: 'Login successful!',
+  };
+
+  return btnTexts[reqStatus];
 }

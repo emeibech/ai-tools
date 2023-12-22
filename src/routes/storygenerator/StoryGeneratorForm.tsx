@@ -16,10 +16,6 @@ import {
 import { useAppDispatch } from '@/app/hooks';
 import type { FormatStoryGeneratorPrompt, ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
-import {
-  remainingUsageDecremented,
-  rateLimitCalculated,
-} from '@/features/rateLimiterSlice/rateLimiterSlice';
 
 const schema = {
   subject: z
@@ -102,9 +98,6 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
         }),
       ),
     );
-
-    dispatch(rateLimitCalculated());
-    dispatch(remainingUsageDecremented());
 
     setApiArgs({
       name,
