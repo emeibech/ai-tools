@@ -17,6 +17,7 @@ import {
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
 import { clientStatus } from '@/features/client/clientSlice';
+import { useNavigate } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
@@ -25,6 +26,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
   const { userStatus, act } = useAppSelector(clientStatus);
+  const navigate = useNavigate();
   const setChunkSentCount = useAutoScroll({
     status,
     scrollDir,
@@ -41,7 +43,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       submitCount,
     } = chatApiArgs;
     const { messageAppended } = getMessagesActions(chatInterface);
-    const statusChanged = getStatusActions(chatApiArgs.chatInterface);
+    const statusChanged = getStatusActions(chatInterface);
     const tokenLimit = chatInterface === 'Coding Assistant' ? 15000 : 3000;
     const noIdsHistory = removeIds(chatHistory);
 
@@ -84,6 +86,25 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
         const decoder = new TextDecoder();
         dispatch(statusChanged('streaming'));
 
+        if (response.status === 401) {
+          dispatch(statusChanged('idle'));
+          navigate('/login');
+          return;
+        }
+
+        if (response.status === 429) {
+          const data = await response.json();
+          dispatch(statusChanged('idle'));
+          dispatch(
+            messageAppended({
+              id: responseId,
+              content: data.message,
+            }),
+          );
+
+          return;
+        }
+
         if (!response.ok) {
           dispatch(statusChanged('idle'));
 
@@ -93,6 +114,8 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
               content: `${response.status}: ${response.statusText}. `,
             }),
           );
+
+          return;
         }
 
         if (response.body) {
@@ -134,15 +157,17 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     if (submitCount > 0) {
       setScrollDir('down');
       dispatch(statusChanged('requesting'));
-
-      if (userStatus === 'guest') {
-        dispatch(statusChanged('idle'));
-        return;
-      }
-
       streamData();
     }
-  }, [dispatch, setChunkSentCount, setScrollDir, chatApiArgs, userStatus, act]);
+  }, [
+    dispatch,
+    setChunkSentCount,
+    setScrollDir,
+    navigate,
+    chatApiArgs,
+    userStatus,
+    act,
+  ]);
 }
 
 function getUrlParams(name: Name) {

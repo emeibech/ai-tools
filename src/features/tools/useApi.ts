@@ -10,6 +10,7 @@ import {
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
 import { clientStatus } from '@/features/client/clientSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function useApi(apiArgs: ApiArgs) {
   const status = useAppSelector(getStatusState(apiArgs.name));
@@ -17,6 +18,7 @@ export default function useApi(apiArgs: ApiArgs) {
   const { scrollDir, setScrollDir } = useGetScrollDir();
   const { userStatus, act } = useAppSelector(clientStatus);
   const setChunkSentCount = useAutoScroll({ status, scrollDir });
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log('useApi effect');
@@ -44,12 +46,28 @@ export default function useApi(apiArgs: ApiArgs) {
         const decoder = new TextDecoder();
         dispatch(statusChanged('streaming'));
 
+        if (response.status === 401) {
+          dispatch(statusChanged('idle'));
+          navigate('/login');
+          return;
+        }
+
+        if (response.status === 429) {
+          const data = await response.json();
+          dispatch(statusChanged('idle'));
+          dispatch(responseAppended(data.message));
+
+          return;
+        }
+
         if (!response.ok) {
           dispatch(statusChanged('idle'));
 
           dispatch(
             responseAppended(`${response.status}: ${response.statusText}. `),
           );
+
+          return;
         }
 
         if (response.body) {
@@ -79,11 +97,15 @@ export default function useApi(apiArgs: ApiArgs) {
     if (submitCount > 0) {
       setScrollDir('down');
       dispatch(statusChanged('requesting'));
-      if (userStatus === 'guest') {
-        dispatch(statusChanged('idle'));
-        return;
-      }
       streamData();
     }
-  }, [dispatch, setChunkSentCount, setScrollDir, apiArgs, userStatus, act]);
+  }, [
+    dispatch,
+    setChunkSentCount,
+    setScrollDir,
+    navigate,
+    apiArgs,
+    userStatus,
+    act,
+  ]);
 }
