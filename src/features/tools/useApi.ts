@@ -9,7 +9,7 @@ import {
   getStatusActions,
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
-import { clientStatus } from '@/features/client/clientSlice';
+import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function useApi(apiArgs: ApiArgs) {
@@ -48,6 +48,7 @@ export default function useApi(apiArgs: ApiArgs) {
 
         if (response.status === 401) {
           dispatch(statusChanged('idle'));
+          dispatch(clientStatusReset());
           navigate('/login');
           return;
         }
