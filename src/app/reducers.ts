@@ -7,12 +7,14 @@ import toolsPromptsReducer from '../features/tools/toolsPromptsSlices';
 import requestStatusReducer from '../features/requestStatus/requestStatusSlices';
 import currentRouteReducer from '../features/currentRoute/currentRouteSlice';
 import clientStatusReducer from '../features/client/clientSlice';
+import retryRequestReducer from '../features/retryRequest/retryRequestSlice';
 
 const rootReducer = combineReducers({
   darkmodeStatus: darkmodeReducer,
   scrollPositions: scrollPositionReducer,
   currentRoute: currentRouteReducer,
   clientStatus: clientStatusReducer,
+  retryRequestStatus: retryRequestReducer,
   ...messagesReducer,
   ...toolsResponsesReducer,
   ...toolsPromptsReducer,

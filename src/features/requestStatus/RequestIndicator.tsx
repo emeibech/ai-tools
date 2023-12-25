@@ -1,16 +1,32 @@
-import { getStatusState } from './requestStatusSlicesUtils';
-import { useAppSelector } from '@/app/hooks';
-import type { RequestIndicatorProps, Status } from '@/types/features';
+import { getStatusActions, getStatusState } from './requestStatusSlicesUtils';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { Button } from '@/common/components/ui/button';
+import type { RequestIndicatorProps, RequestStatus } from '@/types/features';
+import { MouseEvent, MouseEventHandler } from 'react';
+import { retryValueIncremented } from '../retryRequest/retryRequestSlice';
 
 export default function RequestIndicator({
   name,
   hideStreamIndicator = false,
 }: RequestIndicatorProps) {
+  const dispatch = useAppDispatch();
   const requestStatus = useAppSelector(getStatusState(name));
-  return <>{renderStatus(requestStatus, hideStreamIndicator)}</>;
+
+  function handleClick(event: MouseEvent) {
+    event.preventDefault();
+    const statusChanged = getStatusActions(name);
+    dispatch(statusChanged('idle'));
+    dispatch(retryValueIncremented());
+  }
+
+  return <>{renderStatus(requestStatus, hideStreamIndicator, handleClick)}</>;
 }
 
-function renderStatus(status: Status, hideStreamIndicator: boolean) {
+function renderStatus(
+  status: RequestStatus,
+  hideStreamIndicator: boolean,
+  onClick: MouseEventHandler<HTMLButtonElement>,
+) {
   if (status === 'idle') return null;
   if (status === 'requesting') {
     return (
@@ -25,6 +41,16 @@ function renderStatus(status: Status, hideStreamIndicator: boolean) {
       <span className="bg-foreground ml-2 text-xs rounded-full animate-ping">
         .....
       </span>
+    );
+  }
+
+  if (status === 'error') {
+    return (
+      <div className="min-w-full flex pr-6">
+        <Button variant={'outline'} className="m-auto" onClick={onClick}>
+          Retry request
+        </Button>
+      </div>
     );
   }
 }

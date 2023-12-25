@@ -34,7 +34,7 @@ export interface MessagesSlice {
 }
 
 // requestStatusSlices
-export type RequestStatus = 'idle' | 'requesting' | 'streaming';
+export type RequestStatus = 'idle' | 'requesting' | 'streaming' | 'error';
 
 export interface RequestStatusSlice {
   status: RequestStatus;
@@ -156,9 +156,6 @@ export type Route =
 // toolsSlicesUtils
 export type Tool = 'codeanalyzer' | 'tonechanger' | 'storygenerator';
 
-// useChatApi
-export type Status = 'idle' | 'requesting' | 'streaming';
-
 // useApi
 export interface ApiArgs {
   name: Name;
@@ -171,4 +168,9 @@ export interface ApiArgs {
 export interface Client {
   userStatus: UserStatus;
   act: string | null;
+}
+
+// retryRequestSlice
+export interface RetryRequest {
+  value: number;
 }
