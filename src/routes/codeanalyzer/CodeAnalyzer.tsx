@@ -45,7 +45,7 @@ export default function CodeAnalyzer() {
 
           <CodeAnalyzerForm route="codeanalyzer" name="Code Analyzer" />
 
-          <section className="max-w-[920px] mx-auto min-w-full">
+          <section className="min-w-full mx-auto max-w-[70vw]">
             <article>{prompt !== '' && <Code code={`\n${prompt}`} />}</article>
 
             <article className="mt-8 whitespace-pre-wrap">
