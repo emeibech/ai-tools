@@ -19,7 +19,6 @@ import {
 import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/common/components/ui/use-toast';
-import { retryRequestStatus } from '../retryRequest/retryRequestSlice';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
@@ -30,7 +29,6 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const { userStatus, act } = useAppSelector(clientStatus);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const retry = useAppSelector(retryRequestStatus);
 
   const setChunkSentCount = useAutoScroll({
     status,
@@ -39,16 +37,9 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
 
   useEffect(() => {
     console.log('useChatApi Effect');
-    const {
-      chatInterface,
-      prompt,
-      chatHistory,
-      model,
-      responseId,
-      submitCount,
-    } = chatApiArgs;
+    const { chatInterface, prompt, chatHistory, model, responseId } =
+      chatApiArgs;
     const { messageAppended } = getMessagesActions(chatInterface);
-    // const { messageRemoved } = getMessagesActions(chatApiArgs.chatInterface);
     const statusChanged = getStatusActions(chatInterface);
     const tokenLimit = chatInterface === 'Coding Assistant' ? 15000 : 3000;
     const noIdsHistory = removeIds(chatHistory);
@@ -154,9 +145,8 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     }
 
     // This condition is so it doesn't run on first mount
-    if (submitCount > 0 || retry > 0) {
+    if (status === 'requesting') {
       setScrollDir('down');
-      dispatch(statusChanged('requesting'));
       streamData();
     }
   }, [
@@ -168,7 +158,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     chatApiArgs,
     userStatus,
     act,
-    retry,
+    status,
   ]);
 }
 

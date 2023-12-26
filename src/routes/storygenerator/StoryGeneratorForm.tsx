@@ -16,6 +16,7 @@ import {
 import { useAppDispatch } from '@/app/hooks';
 import type { FormatStoryGeneratorPrompt, ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
+import { getStatusActions } from '@/features/requestStatus/requestStatusSlicesUtils';
 
 const schema = {
   subject: z
@@ -45,11 +46,11 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
+  const statusChanged = getStatusActions(name);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     name,
     route,
     prompt: '',
-    submitCount: 0,
   });
 
   useApi(apiArgs);
@@ -99,10 +100,11 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
       ),
     );
 
+    dispatch(statusChanged('requesting'));
+
     setApiArgs({
       name,
       route,
-      submitCount: apiArgs.submitCount + 1,
       prompt: formatStoryGeneratorPrompt({
         subject: values.subject,
         style: values.style,

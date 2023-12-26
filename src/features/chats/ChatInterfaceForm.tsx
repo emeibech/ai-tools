@@ -21,6 +21,7 @@ import type {
   ChatInterfaceFormProps,
   Model,
 } from '@/types/features';
+import { getStatusActions } from '../requestStatus/requestStatusSlicesUtils';
 
 export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
@@ -31,12 +32,12 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const [value, setValue] = useState<string>('');
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
+  const statusChanged = getStatusActions(name);
   const [chatApiArgs, setChatApiArgs] = useState<ChatApiArgs>({
     chatInterface: name,
     chatHistory: [],
     responseId: '',
     prompt: '',
-    submitCount: 0,
     model: '',
   });
 
@@ -77,12 +78,13 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         }),
       );
 
+      dispatch(statusChanged('requesting'));
+
       setChatApiArgs({
         prompt,
         chatInterface: name,
         chatHistory: messages,
         responseId: assistantId,
-        submitCount: chatApiArgs.submitCount + 1,
         model: extractModel(value),
       });
 

@@ -15,6 +15,7 @@ import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 import type { ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
+import { getStatusActions } from '@/features/requestStatus/requestStatusSlicesUtils';
 
 const schema = {
   code: z
@@ -29,11 +30,11 @@ export default function CodeAnalyzerForm({ route, name }: ToolProp) {
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
+  const statusChanged = getStatusActions(name);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     name,
     route,
     prompt: '',
-    submitCount: 0,
   });
 
   useApi(apiArgs);
@@ -62,12 +63,12 @@ export default function CodeAnalyzerForm({ route, name }: ToolProp) {
     dispatch(responseReset());
     dispatch(promptReset());
     dispatch(promptAppended(values.code));
+    dispatch(statusChanged('requesting'));
 
     setApiArgs({
       name,
       route,
       prompt: values.code,
-      submitCount: apiArgs.submitCount + 1,
     });
 
     scrollToBottom();

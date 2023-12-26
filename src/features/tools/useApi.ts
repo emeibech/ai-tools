@@ -11,6 +11,7 @@ import {
 } from '../requestStatus/requestStatusSlicesUtils';
 import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/common/components/ui/use-toast';
 
 export default function useApi(apiArgs: ApiArgs) {
   const status = useAppSelector(getStatusState(apiArgs.name));
@@ -18,11 +19,12 @@ export default function useApi(apiArgs: ApiArgs) {
   const { scrollDir, setScrollDir } = useGetScrollDir();
   const { userStatus, act } = useAppSelector(clientStatus);
   const setChunkSentCount = useAutoScroll({ status, scrollDir });
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log('useApi effect');
-    const { route, name, prompt, submitCount } = apiArgs;
+    const { route, name, prompt } = apiArgs;
     const { responseAppended } = getResponsesActions(route);
     const statusChanged = getStatusActions(name);
     const baseUrl = import.meta.env.VITE_AI_URL;
@@ -55,18 +57,19 @@ export default function useApi(apiArgs: ApiArgs) {
 
         if (response.status === 429) {
           const data = await response.json();
-          dispatch(statusChanged('idle'));
-          dispatch(responseAppended(data.message));
+          toast({ title: 'Error', description: data.message });
+          dispatch(statusChanged('error'));
 
           return;
         }
 
         if (!response.ok) {
-          dispatch(statusChanged('idle'));
+          toast({
+            title: 'Error',
+            description: `${response.status}: ${response.statusText}. `,
+          });
 
-          dispatch(
-            responseAppended(`${response.status}: ${response.statusText}. `),
-          );
+          dispatch(statusChanged('error'));
 
           return;
         }
@@ -88,16 +91,16 @@ export default function useApi(apiArgs: ApiArgs) {
 
           setChunkSentCount(0);
         }
-      } catch (error) {
-        dispatch(responseAppended(`Error: ${getCatchError(error)}`));
-      } finally {
+
         dispatch(statusChanged('idle'));
+      } catch (error) {
+        toast({ title: 'Error', description: getCatchError(error) });
+        dispatch(statusChanged('error'));
       }
     }
 
-    if (submitCount > 0) {
+    if (status === 'requesting') {
       setScrollDir('down');
-      dispatch(statusChanged('requesting'));
       streamData();
     }
   }, [
@@ -105,8 +108,10 @@ export default function useApi(apiArgs: ApiArgs) {
     setChunkSentCount,
     setScrollDir,
     navigate,
+    toast,
     apiArgs,
     userStatus,
     act,
+    status,
   ]);
 }

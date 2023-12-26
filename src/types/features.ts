@@ -90,7 +90,6 @@ export interface ChatApiArgs {
   chatHistory: Messages[];
   responseId: string;
   prompt: string;
-  submitCount: number;
   model: Model;
 }
 
@@ -161,7 +160,6 @@ export interface ApiArgs {
   name: Name;
   prompt: string;
   route: Tool;
-  submitCount: number;
 }
 
 // userSlice

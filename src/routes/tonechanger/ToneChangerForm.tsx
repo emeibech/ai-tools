@@ -16,6 +16,7 @@ import useApi from '@/features/tools/useApi';
 import { useAppDispatch } from '@/app/hooks';
 import type { FormatToneChangerPrompt, ToolProp } from '@/types/routes';
 import { ApiArgs } from '@/types/features';
+import { getStatusActions } from '@/features/requestStatus/requestStatusSlicesUtils';
 
 const schema = {
   tone: z
@@ -39,11 +40,11 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
   const dispatch = useAppDispatch();
   const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
+  const statusChanged = getStatusActions(name);
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
     name,
     prompt: '',
-    submitCount: 0,
   });
 
   useApi(apiArgs);
@@ -86,10 +87,11 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
       ),
     );
 
+    dispatch(statusChanged('requesting'));
+
     setApiArgs({
       route,
       name,
-      submitCount: apiArgs.submitCount + 1,
       prompt: formatToneChangerPrompt({
         tone: values.tone,
         message: values.message,

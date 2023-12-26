@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { Button } from '@/common/components/ui/button';
 import type { RequestIndicatorProps, RequestStatus } from '@/types/features';
 import { MouseEvent, MouseEventHandler } from 'react';
-import { retryValueIncremented } from '../retryRequest/retryRequestSlice';
 
 export default function RequestIndicator({
   name,
@@ -15,8 +14,7 @@ export default function RequestIndicator({
   function handleClick(event: MouseEvent) {
     event.preventDefault();
     const statusChanged = getStatusActions(name);
-    dispatch(statusChanged('idle'));
-    dispatch(retryValueIncremented());
+    dispatch(statusChanged('requesting'));
   }
 
   return <>{renderStatus(requestStatus, hideStreamIndicator, handleClick)}</>;
