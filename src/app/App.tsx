@@ -9,6 +9,8 @@ import './App.css';
 import useDarkmodeToggler from '@/common/hooks/useDarkmodeToggler';
 import useSetLocalStorageData from '@/common/hooks/useSetLocalStorageData';
 import useSaveToLocalStorage from '@/common/hooks/useSaveToLocalStorage';
+import Logout from '@/features/client/Logout';
+import { Toaster } from '@/common/components/ui/toaster';
 // import useInitialLoad from '@/common/hooks/useInitialLoad';
 
 export default function App({ children }: { children?: ReactNode }) {
@@ -47,12 +49,20 @@ export default function App({ children }: { children?: ReactNode }) {
         >
           <SiteTitle />
           <Nav />
+          <Logout />
           <Footer />
         </div>
       </section>
 
       <Outlet />
       {children}
+      <Toaster
+        duration={3000}
+        className={cn(
+          'text-destructive-foreground bg-destructive',
+          'opacity-95',
+        )}
+      />
     </div>
   );
 }

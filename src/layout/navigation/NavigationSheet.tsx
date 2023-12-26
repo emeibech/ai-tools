@@ -11,6 +11,7 @@ import {
   SheetTrigger,
 } from '@/common/components/ui/sheet';
 import type { NavigationSheetProps } from '@/types/layout';
+import Logout from '../../features/client/Logout';
 
 export default function NavigationSheet({
   side,
@@ -34,6 +35,7 @@ export default function NavigationSheet({
           <SiteTitle setIsOpen={setIsOpen} />
         </SheetHeader>
         <Nav setIsOpen={setIsOpen} />
+        <Logout />
         <Footer />
       </SheetContent>
     </Sheet>

@@ -62,7 +62,7 @@ export default function Nav({ setIsOpen }: NavProps) {
             className={cn(
               selectedRoute === route ? 'bg-secondary' : '',
               'px-4 py-2 rounded text-sm',
-              'hover:bg-secondary',
+              'hover:bg-secondary active:bg-secondary',
             )}
             to={formatPath(item)}
           >
@@ -76,7 +76,7 @@ export default function Nav({ setIsOpen }: NavProps) {
   }
 
   return (
-    <nav className={cn('flex flex-col gap-8', 'lg:px-6')}>
+    <nav className={cn('flex flex-col gap-8 px-0 lg:px-6')}>
       <div className="flex flex-col gap-1">
         <h3 className="text-sm font-semibold text-muted-foreground px-4">
           Tools

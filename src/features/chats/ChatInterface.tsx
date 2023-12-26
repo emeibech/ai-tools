@@ -5,7 +5,6 @@ import ChatInterfaceForm from './ChatInterfaceForm';
 import { useAppSelector } from '@/app/hooks';
 import { getMessagesState } from './messagesSliceutils';
 import type { ChatInterfaceProps } from '@/types/features';
-import { Toaster } from '@/common/components/ui/toaster';
 
 export default function ChatInterface({
   name,
@@ -41,14 +40,6 @@ export default function ChatInterface({
       </section>
 
       <ChatInterfaceForm name={name} />
-
-      <Toaster
-        duration={3000}
-        className={cn(
-          'text-destructive-foreground bg-destructive',
-          'opacity-95',
-        )}
-      />
     </section>
   );
 }
