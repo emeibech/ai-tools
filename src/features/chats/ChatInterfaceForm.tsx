@@ -21,7 +21,10 @@ import type {
   ChatInterfaceFormProps,
   Model,
 } from '@/types/features';
-import { getStatusActions } from '../requestStatus/requestStatusSlicesUtils';
+import {
+  getStatusActions,
+  getStatusState,
+} from '../requestStatus/requestStatusSlicesUtils';
 
 export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
@@ -33,6 +36,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
   const statusChanged = getStatusActions(name);
+  const requestStatus = useAppSelector(getStatusState(name));
   const [chatApiArgs, setChatApiArgs] = useState<ChatApiArgs>({
     chatInterface: name,
     chatHistory: [],
@@ -131,6 +135,9 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
           data-name="textarea"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          disabled={
+            requestStatus === 'requesting' || requestStatus === 'streaming'
+          }
         />
       </div>
 

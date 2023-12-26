@@ -13,10 +13,13 @@ import {
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
 import useApi from '@/features/tools/useApi';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { FormatToneChangerPrompt, ToolProp } from '@/types/routes';
 import { ApiArgs } from '@/types/features';
-import { getStatusActions } from '@/features/requestStatus/requestStatusSlicesUtils';
+import {
+  getStatusActions,
+  getStatusState,
+} from '@/features/requestStatus/requestStatusSlicesUtils';
 
 const schema = {
   tone: z
@@ -41,6 +44,7 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
   const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
   const statusChanged = getStatusActions(name);
+  const requestStatus = useAppSelector(getStatusState(name));
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     route,
     name,
@@ -120,6 +124,10 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
                   'max-w-[460px]',
                 )}
                 ref={toneRef}
+                disabled={
+                  requestStatus === 'requesting' ||
+                  requestStatus === 'streaming'
+                }
               />
             </FormUnit>
           )}
@@ -138,6 +146,10 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
                 cols={100}
                 rows={10}
                 ref={messageRef}
+                disabled={
+                  requestStatus === 'requesting' ||
+                  requestStatus === 'streaming'
+                }
               />
             </FormUnit>
           )}
@@ -150,6 +162,9 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
             'justify-self-end max-w-max',
             'transition duration-300',
           )}
+          disabled={
+            requestStatus === 'requesting' || requestStatus === 'streaming'
+          }
         >
           Change Tone
         </Button>

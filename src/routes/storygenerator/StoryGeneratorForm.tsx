@@ -13,10 +13,13 @@ import {
   getPromptsActions,
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { FormatStoryGeneratorPrompt, ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
-import { getStatusActions } from '@/features/requestStatus/requestStatusSlicesUtils';
+import {
+  getStatusActions,
+  getStatusState,
+} from '@/features/requestStatus/requestStatusSlicesUtils';
 
 const schema = {
   subject: z
@@ -47,6 +50,7 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
   const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
   const statusChanged = getStatusActions(name);
+  const requestStatus = useAppSelector(getStatusState(name));
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     name,
     route,
@@ -138,6 +142,10 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
                   'max-w-[420px]',
                 )}
                 ref={subjectRef}
+                disabled={
+                  requestStatus === 'requesting' ||
+                  requestStatus === 'streaming'
+                }
               />
             </FormUnit>
           )}
@@ -160,6 +168,10 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
                   'max-w-[420px]',
                 )}
                 ref={styleRef}
+                disabled={
+                  requestStatus === 'requesting' ||
+                  requestStatus === 'streaming'
+                }
               />
             </FormUnit>
           )}
@@ -183,6 +195,10 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
                 cols={100}
                 rows={5}
                 ref={contextRef}
+                disabled={
+                  requestStatus === 'requesting' ||
+                  requestStatus === 'streaming'
+                }
               />
             </FormUnit>
           )}
@@ -195,6 +211,9 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
             'justify-self-end max-w-max',
             'transition duration-300',
           )}
+          disabled={
+            requestStatus === 'requesting' || requestStatus === 'streaming'
+          }
         >
           Generate Story
         </Button>

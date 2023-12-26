@@ -8,11 +8,12 @@ import friend from './imgs/friend.png';
 import { Separator } from '@/common/components/ui/separator';
 import { AvatarFallback } from '@/common/components/ui/avatar';
 import { getMessagesActions } from './messagesSliceutils';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { CodeHighlighter } from './CodeHighlighter';
 import type { MouseEvent } from 'react';
 import type { ChatMessageProps } from '@/types/features';
 import RequestIndicator from '../requestStatus/RequestIndicator';
+import { getStatusState } from '../requestStatus/requestStatusSlicesUtils';
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
   (
@@ -28,6 +29,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
   ) => {
     const dispatch = useAppDispatch();
     const { messageRemoved } = getMessagesActions(name);
+    const requestStatus = useAppSelector(getStatusState(name));
 
     function handleClick(event: MouseEvent<HTMLButtonElement>) {
       const id = event.currentTarget.id;
@@ -81,6 +83,10 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
                   'text-muted-foreground opacity-75',
                   'hover:text-destructive active:text-destructive',
                 )}
+                disabled={
+                  requestStatus === 'requesting' ||
+                  requestStatus === 'streaming'
+                }
               >
                 <MinusCircle width="16px" height="16px" />
               </Button>

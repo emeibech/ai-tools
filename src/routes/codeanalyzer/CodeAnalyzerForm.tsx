@@ -12,10 +12,13 @@ import {
   getResponsesActions,
 } from '@/features/tools/toolsSlicesUtils';
 import useApi from '@/features/tools/useApi';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { ToolProp } from '@/types/routes';
 import type { ApiArgs } from '@/types/features';
-import { getStatusActions } from '@/features/requestStatus/requestStatusSlicesUtils';
+import {
+  getStatusActions,
+  getStatusState,
+} from '@/features/requestStatus/requestStatusSlicesUtils';
 
 const schema = {
   code: z
@@ -31,6 +34,7 @@ export default function CodeAnalyzerForm({ route, name }: ToolProp) {
   const { responseReset } = getResponsesActions(route);
   const { promptAppended, promptReset } = getPromptsActions(route);
   const statusChanged = getStatusActions(name);
+  const requestStatus = useAppSelector(getStatusState(name));
   const [apiArgs, setApiArgs] = useState<ApiArgs>({
     name,
     route,
@@ -94,6 +98,10 @@ export default function CodeAnalyzerForm({ route, name }: ToolProp) {
                 cols={100}
                 rows={10}
                 ref={codeRef}
+                disabled={
+                  requestStatus === 'requesting' ||
+                  requestStatus === 'streaming'
+                }
               />
             </FormUnit>
           )}
@@ -106,6 +114,9 @@ export default function CodeAnalyzerForm({ route, name }: ToolProp) {
             'justify-self-end max-w-max',
             'transition duration-300',
           )}
+          disabled={
+            requestStatus === 'requesting' || requestStatus === 'streaming'
+          }
         >
           Analyze Code
         </Button>
