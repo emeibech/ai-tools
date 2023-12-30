@@ -44,7 +44,8 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
           className={cn(
             'min-h-[120px] min-w-full py-6',
             'grid grid-cols-[32px_1fr]',
-            'min-[360px]:grid-cols-[40px_1fr_16px]',
+            'min-[360px]:grid-cols-[32px_1fr_16px]',
+            'min-[420px]:grid-cols-[40px_1fr_16px]',
           )}
         >
           {displayAvatar(id)}
@@ -52,7 +53,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
           <div
             className={cn(
               'px-2 py-4 text-sm overflow-auto whitespace-pre-wrap',
-              'min-[400px]:text-base sm:px-6',
+              'min-[420px]:text-base sm:px-6',
             )}
           >
             {renderCodeBlocks ? (
@@ -116,8 +117,9 @@ function displayAvatar(id: string) {
         />
         <AvatarFallback
           className={cn(
-            'bg-accent rounded-full w-10 h-10',
+            'bg-accent rounded-full w-8 h-8',
             'text-sm font-medium text-background',
+            'min-[420px]:w-10 min-[420px]:h-10',
           )}
         >
           User
@@ -135,8 +137,9 @@ function displayAvatar(id: string) {
       />
       <AvatarFallback
         className={cn(
-          'bg-accent rounded-full w-10 h-10',
+          'bg-accent rounded-full w-8 h-8',
           'text-sm font-medium text-background',
+          'min-[420px]:w-10 min-[420px]:h-10',
         )}
       >
         AI
