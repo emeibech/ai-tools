@@ -23,15 +23,14 @@ export default function App({ children }: { children?: ReactNode }) {
     <div
       className={cn(
         'bg-background text-foreground',
-        'lg:grid lg:grid-cols-[260px_1fr_80px]',
+        'lg:grid lg:grid-cols-[260px_1fr]',
       )}
     >
       <Header
         className={cn(
-          'col-start-3 row-start-1 row-span-3 bg-background',
+          'col-start-2 bg-background',
           'fixed top-0 z-20 min-w-full',
           'grid grid-cols-2',
-          'lg:justify-end lg:static',
         )}
       />
 
