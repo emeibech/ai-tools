@@ -7,6 +7,7 @@ import toolsPromptsReducer from '../features/tools/toolsPromptsSlices';
 import requestStatusReducer from '../features/requestStatus/requestStatusSlices';
 import currentRouteReducer from '../features/currentRoute/currentRouteSlice';
 import clientStatusReducer from '../features/client/clientSlice';
+import conversationsReducer from '../features/conversations/conversationsSlice';
 
 const rootReducer = combineReducers({
   darkmodeStatus: darkmodeReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   ...toolsResponsesReducer,
   ...toolsPromptsReducer,
   ...requestStatusReducer,
+  ...conversationsReducer,
 });
 
 export default rootReducer;
