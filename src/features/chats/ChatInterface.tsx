@@ -5,6 +5,8 @@ import ChatInterfaceForm from './ChatInterfaceForm';
 import { useAppSelector } from '@/app/hooks';
 import { getMessagesState } from './messagesSliceutils';
 import type { ChatInterfaceProps } from '@/types/features';
+import useFetchConversations from '../conversations/useFetchConversations';
+import useQueueManager from '../conversations/useQueueManager';
 
 export default function ChatInterface({
   name,
@@ -14,11 +16,14 @@ export default function ChatInterface({
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
 
+  useFetchConversations(name);
+  useQueueManager(name);
   const listMessages: JSX.Element[] = useMemo(
     () =>
       messages.map((message, index) => {
         return (
           <ChatMessage
+            dbid={message.dbid}
             name={name}
             key={message.id}
             id={message.id}
@@ -33,13 +38,15 @@ export default function ChatInterface({
   );
 
   return (
-    <section className="relative max-w-[1280px]">
-      <section className={cn('min-h-[85vh] max-w-[90ch] mx-auto')}>
-        {children}
-        {listMessages}
-      </section>
+    <section className={cn('relative max-w-[1280px]')}>
+      <div>
+        <div className={cn('min-h-[85vh] max-w-[90ch] mx-auto')}>
+          {children}
+          {listMessages}
+        </div>
 
-      <ChatInterfaceForm name={name} />
+        <ChatInterfaceForm name={name} />
+      </div>
     </section>
   );
 }

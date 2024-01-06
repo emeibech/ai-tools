@@ -21,6 +21,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
       children,
       name,
       id,
+      dbid = undefined,
       renderCodeBlocks = false,
       initialMessage = false,
       requestIndicator = false,
@@ -40,6 +41,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
       <>
         <article
           id={id}
+          data-dbid={dbid}
           ref={ref}
           className={cn(
             'min-h-[120px] min-w-full py-6',
@@ -56,11 +58,13 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
               'min-[420px]:text-base sm:px-6',
             )}
           >
-            {renderCodeBlocks ? (
+            {renderCodeBlocks && (
               <CodeHighlighter name={requestIndicator ? name : undefined}>
                 {children}
               </CodeHighlighter>
-            ) : (
+            )}
+
+            {!renderCodeBlocks && (
               <>
                 {children}
                 {requestIndicator && <RequestIndicator name={name} />}

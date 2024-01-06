@@ -1,17 +1,9 @@
 import { useEffect } from 'react';
-import { getCatchError } from '@/common/lib/utils';
+import { getCatchError, removeIds } from '@/common/lib/utils';
 import { getMessagesActions } from '@/features/chats/messagesSliceutils';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import useAutoScroll from '@/common/hooks/useAutoScroll';
 import useGetScrollDir from '@/common/hooks/useGetScrollDir';
-import type {
-  ChatApiArgs,
-  GetModelParams,
-  Messages,
-  MessagesParam,
-  Name,
-  TrimMessages,
-} from '@/types/features';
 import {
   getStatusActions,
   getStatusState,
@@ -19,6 +11,14 @@ import {
 import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/common/components/ui/use-toast';
+import { getConversationsActions } from '../conversations/conversationsSliceUtils';
+import type {
+  ChatApiArgs,
+  GetModelParams,
+  MessagesParam,
+  Name,
+  TrimMessages,
+} from '@/types/features';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
@@ -37,10 +37,11 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
 
   useEffect(() => {
     console.log('useChatApi Effect');
-    const { chatInterface, prompt, chatHistory, model, responseId } =
+    const { chatInterface, prompt, chatHistory, model, assistantId, userId } =
       chatApiArgs;
     const { messageAppended } = getMessagesActions(chatInterface);
     const statusChanged = getStatusActions(chatInterface);
+    const { msgPushedToAddQ } = getConversationsActions(chatInterface);
     const tokenLimit = chatInterface === 'Coding Assistant' ? 15000 : 3000;
     const noIdsHistory = removeIds(chatHistory);
 
@@ -67,12 +68,13 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       });
 
     const url = `${baseUrl}${getUrlParams(chatInterface)}${modelParam}`;
-    const body = { userContent: trimmedMessages, act };
+    const body = { userContent: trimmedMessages };
 
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: act ?? '',
       },
       body: JSON.stringify(body),
     };
@@ -121,7 +123,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
             } else {
               dispatch(
                 messageAppended({
-                  id: responseId,
+                  id: assistantId,
                   content: decoder.decode(value),
                 }),
               );
@@ -134,6 +136,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
         }
 
         dispatch(statusChanged('idle'));
+        dispatch(msgPushedToAddQ([userId, assistantId]));
       } catch (error) {
         toast({
           title: 'Error',
@@ -198,9 +201,4 @@ function getModel({ chatInterface, tokenEstimate }: GetModelParams) {
   }
 
   return '';
-}
-
-function removeIds(messages: Messages[]) {
-  const noIds = messages.map(({ role, content }) => ({ role, content }));
-  return noIds;
 }

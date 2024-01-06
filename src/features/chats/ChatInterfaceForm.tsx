@@ -25,22 +25,27 @@ import {
   getStatusActions,
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
+import { MessageSquarePlusIcon, MessagesSquareIcon } from 'lucide-react';
+import ConversationsSheet from '../conversations/ConversationsSheet';
+import { getConversationsActions } from '../conversations/conversationsSliceUtils';
 
 export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const darkmode = useAppSelector(darkModeStatus);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const textarea = useTextareaAutoresize(textareaRef);
   const dispatch = useAppDispatch();
-  const { messageAdded } = getMessagesActions(name);
+  const { messageAdded, messagesReset } = getMessagesActions(name);
   const [value, setValue] = useState<string>('');
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
   const statusChanged = getStatusActions(name);
   const requestStatus = useAppSelector(getStatusState(name));
+  const { activeConversationSet } = getConversationsActions(name);
   const [chatApiArgs, setChatApiArgs] = useState<ChatApiArgs>({
     chatInterface: name,
     chatHistory: [],
-    responseId: '',
+    assistantId: '',
+    userId: '',
     prompt: '',
     model: '',
   });
@@ -85,10 +90,11 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       dispatch(statusChanged('requesting'));
 
       setChatApiArgs({
+        userId,
+        assistantId,
         prompt,
         chatInterface: name,
         chatHistory: messages,
-        responseId: assistantId,
         model: extractModel(value),
       });
 
@@ -132,6 +138,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
           rows={1}
           value={value}
           ref={textareaRef}
+          placeholder={name}
           data-name="textarea"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
@@ -157,15 +164,42 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         </Button>
       </div>
 
-      <strong
-        className={cn(
-          'col-span-2 py-2',
-          'text-center tracking-wide italic',
-          'sm:text-lg sm:py-4',
-        )}
-      >
-        {name}
-      </strong>
+      <div className={cn('grid grid-cols-2', 'py-2 col-span-2 gap-2 mt-1')}>
+        <div className="grid grid-cols-2 gap-1 col-span-2">
+          <Button
+            variant={'ghost'}
+            className="min-h-full flex gap-2 px-1"
+            onClick={() => {
+              dispatch(messagesReset());
+              dispatch(activeConversationSet(null));
+            }}
+          >
+            <span
+              className={cn(
+                'min-w-full flex justify-center gap-2',
+                'items-center',
+              )}
+            >
+              <p className="text-sm sm:text-base">New chat</p>
+              <MessageSquarePlusIcon height="20px" width="20px" />
+            </span>
+          </Button>
+
+          <ConversationsSheet name={name} side="right">
+            <Button variant={'ghost'} className="min-h-full flex gap-2 px-1">
+              <span
+                className={cn(
+                  'min-w-full flex justify-center gap-2',
+                  'items-center',
+                )}
+              >
+                <p className="text-sm sm:text-base">Conversations</p>
+                <MessagesSquareIcon height="20px" width="20px" />
+              </span>
+            </Button>
+          </ConversationsSheet>
+        </div>
+      </div>
     </form>
   );
 }

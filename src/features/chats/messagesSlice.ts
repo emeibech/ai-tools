@@ -1,11 +1,15 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
-import type { Messages, MessagesSlice } from '@/types/features';
+import type { Message, MessagesSlice } from '@/types/features';
 
 const initialState: MessagesSlice = { messages: [] };
 
 const reducers = {
-  messageAdded: (state: MessagesSlice, action: PayloadAction<Messages>) => {
+  messagesReset: () => initialState,
+  messagesSet: (state: MessagesSlice, action: PayloadAction<Message[]>) => {
+    state.messages = action.payload;
+  },
+  messageAdded: (state: MessagesSlice, action: PayloadAction<Message>) => {
     state.messages.push(action.payload);
   },
   messageRemoved: (
@@ -31,6 +35,14 @@ const reducers = {
       state.messages[index].content += content;
     }
   },
+  dbidAdded: (
+    state: MessagesSlice,
+    action: PayloadAction<{ id: string; dbid: number }>,
+  ) => {
+    const { id, dbid } = action.payload;
+    const messageIndex = state.messages.findIndex((item) => item.id === id);
+    state.messages[messageIndex].dbid = dbid;
+  },
 };
 
 export const codingMessagesSlice = createSlice({
@@ -55,18 +67,27 @@ export const {
   messageAdded: codingAdded,
   messageRemoved: codingRemoved,
   messageAppended: codingAppended,
+  dbidAdded: codingDbidAdded,
+  messagesSet: codingMessagesSet,
+  messagesReset: codingMessagesReset,
 } = codingMessagesSlice.actions;
 
 export const {
   messageAdded: eli5Added,
   messageRemoved: eli5Removed,
   messageAppended: eli5Appended,
+  dbidAdded: eli5DbidAdded,
+  messagesSet: eli5MessagesSet,
+  messagesReset: eli5MessagesReset,
 } = eli5MessagesSlice.actions;
 
 export const {
   messageAdded: generalAdded,
   messageRemoved: generalRemoved,
   messageAppended: generalAppended,
+  dbidAdded: generalDbidAdded,
+  messagesSet: generalMessagesSet,
+  messagesReset: generalMessagesReset,
 } = generalMessagesSlice.actions;
 
 export const codingMessages = (state: RootState) =>
