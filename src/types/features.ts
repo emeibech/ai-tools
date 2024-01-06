@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 import type { UserStatus, FieldState } from './hooks';
 
 // RateLimiter
@@ -30,7 +30,7 @@ export interface DarkmodeSlice {
 
 // messagesSlice
 export interface MessagesSlice {
-  messages: Messages[];
+  messages: Message[];
 }
 
 // requestStatusSlices
@@ -73,8 +73,9 @@ export interface CodeProps {
 }
 
 // ChatInterface
-export interface Messages {
+export interface Message {
   id: string;
+  dbid?: number | undefined;
   role: 'assistant' | 'user';
   content: string;
 }
@@ -87,8 +88,9 @@ export interface ChatInterfaceProps {
 
 export interface ChatApiArgs {
   chatInterface: Name;
-  chatHistory: Messages[];
-  responseId: string;
+  chatHistory: Message[];
+  assistantId: string;
+  userId: string;
   prompt: string;
   model: Model;
 }
@@ -113,6 +115,7 @@ export interface ChatMessageProps {
   name: Name;
   children: ReactNode;
   id: string;
+  dbid: number | undefined;
   renderCodeBlocks?: boolean;
   initialMessage?: boolean;
   requestIndicator?: boolean;
@@ -171,4 +174,41 @@ export interface Client {
 // retryRequestSlice
 export interface RetryRequest {
   value: number;
+}
+
+// Conversations
+export interface Conversation {
+  id: number;
+  title: string;
+  timestamp: string;
+}
+
+// ConversationsSheet
+export interface ConversationsProps {
+  name: Name;
+  setIsOpen: Dispatch<React.SetStateAction<boolean>>;
+}
+
+// conversationsSlice
+export interface ConversationsSlice {
+  conversations: Conversation[];
+  activeConversation: number | null;
+  deleteMsgQ: number[];
+  addMsgQ: string[];
+}
+
+// ConversationsSheet
+export interface ConversationsSheet {
+  name: Name;
+  side?: 'top' | 'bottom' | 'left' | 'right' | undefined;
+  className?: string;
+  children: ReactNode;
+}
+
+// ConversationForm
+export interface ConversationForm {
+  title: string;
+  name: Name;
+  id: number;
+  setCurrentlyEditing: Dispatch<React.SetStateAction<number | null>>;
 }
