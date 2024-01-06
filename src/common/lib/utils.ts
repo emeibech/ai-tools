@@ -1,6 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import type { Message } from '@/types/features';
 
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
@@ -61,4 +62,9 @@ export function isLocalStorageAvailable() {
   } catch (e) {
     return false;
   }
+}
+
+export function removeIds(messages: Message[]) {
+  const noIds = messages.map(({ role, content }) => ({ role, content }));
+  return noIds;
 }
