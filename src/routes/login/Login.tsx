@@ -1,44 +1,43 @@
-import { Tabs, TabsList, TabsTrigger } from '@/common/components/ui/tabs';
 import LoginForm from './LoginForm';
-import { TabsContent } from '@radix-ui/react-tabs';
-import { cn } from '@/common/lib/utils';
-import { Link } from 'react-router-dom';
+import { Button } from '@/common/components/ui/button';
+import { useAuth0 } from '@auth0/auth0-react';
+import useLoginWithGoogle from './useLoginWithGoogle';
+import { Separator } from '@/common/components/ui/separator';
+import Fallback from '../Fallback';
 
 export default function Login() {
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+
+  const { reqStatus } = useLoginWithGoogle();
+
   return (
     <main className="grid place-items-center mt-32 2xl:mt-60">
-      <section>
-        <Tabs
-          className={cn('min-w-[300px] max-w-[600px]', 'p-4 sm:min-w-[420px]')}
-          defaultValue="password"
-        >
-          <TabsList className="grid grid-cols-2">
-            <TabsTrigger value="passwordless">Sign in with Email</TabsTrigger>
-            <TabsTrigger value="password">Sign in to account</TabsTrigger>
-          </TabsList>
-          <section className="py-4 px-2 rounded-md">
-            <TabsContent value="passwordless" className="flex flex-col gap-8">
-              <p className="text-muted-foreground">
-                Enter your email and check your inbox for the OTP.
-              </p>
-            </TabsContent>
-            <TabsContent value="password" className="flex flex-col gap-8">
-              <p className="text-muted-foreground">
-                Enter your email and password to sign in.
-              </p>
+      <section className="min-w-[300px] max-w-[600px] p-4 sm:min-w-[420px]">
+        {(!isAuthenticated || reqStatus === 'error') && !isLoading && (
+          <>
+            <p className="text-muted-foreground mb-4">
+              Enter your email and password.
+            </p>
 
-              <LoginForm />
-            </TabsContent>
-          </section>
+            <LoginForm />
 
-          <article className="text-center mt-4">
-            <span>Need an account? </span>
-            <Link to={'/signup'} className="text-accent hover:underline">
-              Sign up
-            </Link>
-            .
-          </article>
-        </Tabs>
+            <Separator className="mt-8" />
+
+            <section className="flex flex-col items-center mt-12 gap-4">
+              <p className="text-xl">OR</p>
+              <Button
+                onClick={async () => await loginWithRedirect()}
+                className="py-3 min-w-full text-base h-auto"
+              >
+                Log in using your Google account
+              </Button>
+            </section>
+          </>
+        )}
+
+        {isAuthenticated && reqStatus === 'idle' && <Fallback />}
+        {isAuthenticated && reqStatus === 'requesting' && <Fallback />}
+        {isLoading && <Fallback />}
       </section>
     </main>
   );

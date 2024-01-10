@@ -4,12 +4,14 @@ import { Form, FormField } from '@/common/components/ui/form';
 import { Input } from '@/common/components/ui/input';
 import useFormLogic from '@/common/hooks/useFormLogic';
 import useLabelAnimation from '@/common/hooks/useLabelAnimation';
-import { cn } from '@/common/lib/utils';
+import { cn, getCatchError } from '@/common/lib/utils';
 import FormUnit from '@/features/formUnit/FormUnit';
 import { useRef, useState } from 'react';
 import { useAppDispatch } from '@/app/hooks';
 import { clientStatusSet } from '@/features/client/clientSlice';
 import type { ReqStatus } from '@/types/routes';
+import { useToast } from '@/common/components/ui/use-toast';
+import { Link } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 const schema = {
@@ -33,6 +35,7 @@ export default function LoginForm({ className }: { className?: string }) {
   const dispatch = useAppDispatch();
   const [reqStatus, setReqStatus] = useState<ReqStatus>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const { toast } = useToast();
 
   const { form, FormSchema, getFieldState, getValidationStyles } = useFormLogic(
     {
@@ -88,7 +91,7 @@ export default function LoginForm({ className }: { className?: string }) {
       setReqStatus('success');
       dispatch(clientStatusSet({ userStatus: 'user', act: data.act }));
     } catch (error) {
-      console.log('An error occured during submit: ', error);
+      toast({ title: 'Error', description: getCatchError(error) });
       setReqStatus('idle');
     }
   }
@@ -149,19 +152,27 @@ export default function LoginForm({ className }: { className?: string }) {
             'py-3 px-8 mt-4 text-md',
             'justify-self-end',
             'transition duration-300',
-            'max-w-[420px]',
+            'max-w-full',
           )}
         >
           {getLoginBtnText(reqStatus)}
         </Button>
       </form>
+
+      <article className="text-center mt-4">
+        <span>Need an account? </span>
+        <Link to={'/signup'} className="text-accent hover:underline">
+          Sign up
+        </Link>
+        .
+      </article>
     </Form>
   );
 }
 
 function getLoginBtnText(reqStatus: ReqStatus) {
   const btnTexts = {
-    idle: 'Log in',
+    idle: 'Log in to account',
     requesting: 'Logging in...',
     error: 'Log in',
     success: 'Login successful!',
