@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { Button } from '@/common/components/ui/button';
-import { useToast } from '@/common/components/ui/use-toast';
-import { cn, getCatchError } from '@/common/lib/utils';
+import { cn } from '@/common/lib/utils';
 import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 import { LogOutIcon } from 'lucide-react';
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +12,9 @@ const baseUrl = import.meta.env.VITE_AI_URL;
 export default function Logout() {
   const { userStatus } = useAppSelector(clientStatus);
   const { act } = useAppSelector(clientStatus);
-  const { toast } = useToast();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { isAuthenticated, logout } = useAuth0();
 
   const requestOptions = {
     method: 'POST',
@@ -26,32 +26,18 @@ export default function Logout() {
 
   const url = `${baseUrl}/auth/logout`;
 
-  async function handleClick(event: MouseEvent) {
+  function handleClick(event: MouseEvent) {
     event.preventDefault();
+    dispatch(clientStatusReset());
+    fetch(url, requestOptions);
 
-    try {
-      const response = await fetch(url, requestOptions);
-
-      if (!response.ok) {
-        const data = await response.json();
-        toast({
-          title: 'Error',
-          description: data.message,
-        });
-
-        return;
-      }
-
-      dispatch(clientStatusReset());
+    if (isAuthenticated) {
+      logout();
+    } else {
       navigate('/');
-    } catch (error) {
-      console.log(48, getCatchError(error));
-      toast({
-        title: 'Error',
-        description: 'An error occured while logging out.',
-      });
     }
   }
+
   return (
     <>
       {userStatus === 'user' && (
