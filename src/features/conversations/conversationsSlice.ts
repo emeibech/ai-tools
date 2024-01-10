@@ -3,14 +3,57 @@ import type { Conversation, ConversationsSlice } from '@/types/features';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: ConversationsSlice = {
-  conversations: [{ id: 1, title: 'Sup', timestamp: 'timestamp' }],
+  conversations: [
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Sup', timestamp: 'timestamp' },
+    { id: 1, title: 'Last', timestamp: 'timestamp' },
+  ],
   activeConversation: null,
-  deleteMsgQ: [],
+  msgsFetchStatus: 'idle',
   addMsgQ: [],
 };
 
 const reducers = {
   stateReset: () => initialState,
+  msgsFetchStatusSet: (
+    state: ConversationsSlice,
+    action: PayloadAction<'fetching' | 'idle'>,
+  ) => {
+    state.msgsFetchStatus = action.payload;
+  },
   msgPushedToAddQ: (
     state: ConversationsSlice,
     action: PayloadAction<string[]>,
@@ -19,15 +62,6 @@ const reducers = {
   },
   addQCleared: (state: ConversationsSlice) => {
     state.addMsgQ = initialState.addMsgQ;
-  },
-  msgPushedToDeleteQ: (
-    state: ConversationsSlice,
-    action: PayloadAction<number[]>,
-  ) => {
-    state.deleteMsgQ = [...state.deleteMsgQ, ...action.payload];
-  },
-  deleteQCleared: (state: ConversationsSlice) => {
-    state.deleteMsgQ = initialState.deleteMsgQ;
   },
   activeConversationSet: (
     state: ConversationsSlice,
@@ -51,7 +85,11 @@ const reducers = {
     state: ConversationsSlice,
     action: PayloadAction<number>,
   ) => {
-    state.conversations.splice(action.payload, 1);
+    const index = state.conversations.findIndex(
+      (item) => item.id === action.payload,
+    );
+
+    state.conversations.splice(index, 1);
   },
   titleChanged: (
     state: ConversationsSlice,
@@ -84,40 +122,37 @@ const eli5ConversationsSlice = createSlice({
 export const {
   stateReset: caConversationsReset,
   msgPushedToAddQ: caMsgPushedToAddQ,
-  msgPushedToDeleteQ: caMsgPushedToDeleteQ,
   activeConversationSet: caActiveConversationSet,
   conversationsSet: caConversationsSet,
   conversationRemoved: caConversationRemoved,
   titleChanged: caTitleChanged,
   addQCleared: caAddQCleared,
-  deleteQCleared: caDeleteQCleared,
   conversationAdded: caConversationAdded,
+  msgsFetchStatusSet: caMsgsFetchStatusSet,
 } = caConversationsSlice.actions;
 
 export const {
   stateReset: gaConversationsReset,
   msgPushedToAddQ: gaMsgPushedToAddQ,
-  msgPushedToDeleteQ: gaMsgPushedToDeleteQ,
   activeConversationSet: gaActiveConversationSet,
   conversationsSet: gaConversationsSet,
   conversationRemoved: gaConversationRemoved,
   titleChanged: gaTitleChanged,
   addQCleared: gaAddQCleared,
-  deleteQCleared: gaDeleteQCleared,
   conversationAdded: gaConversationAdded,
+  msgsFetchStatusSet: gaMsgsFetchStatusSet,
 } = gaConversationsSlice.actions;
 
 export const {
   stateReset: eli5ConversationsReset,
   msgPushedToAddQ: eli5MsgPushedToAddQ,
-  msgPushedToDeleteQ: eli5MsgPushedToDeleteQ,
   activeConversationSet: eli5ActiveConversationSet,
   conversationsSet: eli5ConversationsSet,
   conversationRemoved: eli5ConversationRemoved,
   titleChanged: eli5TitleChanged,
   addQCleared: eli5AddQCleared,
-  deleteQCleared: eli5DeleteQCleared,
   conversationAdded: eli5ConversationAdded,
+  msgsFetchStatusSet: eli5MsgsFetchStatusSet,
 } = eli5ConversationsSlice.actions;
 
 export const caConversations = (state: RootState) => state.caConversationsSlice;

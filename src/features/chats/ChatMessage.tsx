@@ -14,6 +14,9 @@ import type { MouseEvent } from 'react';
 import type { ChatMessageProps } from '@/types/features';
 import RequestIndicator from '../requestStatus/RequestIndicator';
 import { getStatusState } from '../requestStatus/requestStatusSlicesUtils';
+import { clientStatus } from '../client/clientSlice';
+
+const baseUrl = import.meta.env.VITE_AI_URL;
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
   (
@@ -31,10 +34,19 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
     const dispatch = useAppDispatch();
     const { messageRemoved } = getMessagesActions(name);
     const requestStatus = useAppSelector(getStatusState(name));
+    const { act } = useAppSelector(clientStatus);
 
     function handleClick(event: MouseEvent<HTMLButtonElement>) {
       const id = event.currentTarget.id;
+      const dbid = event.currentTarget.getAttribute('data-dbid');
       dispatch(messageRemoved({ id }));
+      console.log(dbid);
+      if (dbid) {
+        fetch(`${baseUrl}/ai/conversations/messages/${dbid}`, {
+          method: 'DELETE',
+          headers: { Authorization: act || '' },
+        });
+      }
     }
 
     return (
@@ -80,6 +92,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
           >
             {!initialMessage && (
               <Button
+                data-dbid={dbid}
                 onClick={handleClick}
                 id={id}
                 variant={'custom'}

@@ -22,7 +22,7 @@ export default function useQueueManager(name: Name) {
   const dispatch = useAppDispatch();
   const client = useAppSelector(clientStatus);
   const { toast } = useToast();
-  const { addMsgQ, deleteMsgQ, activeConversation } = useAppSelector(
+  const { addMsgQ, activeConversation } = useAppSelector(
     getConversationsState(name),
   );
 
@@ -144,7 +144,6 @@ export default function useQueueManager(name: Name) {
     name,
     addMsgQ,
     msgsToBePushed,
-    deleteMsgQ,
     activeConversation,
     client,
   ]);

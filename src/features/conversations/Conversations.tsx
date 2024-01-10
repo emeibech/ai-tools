@@ -25,13 +25,14 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   const { toast } = useToast();
 
   const list = useMemo(() => {
-    async function handleClick(id: number) {
+    const { activeConversationSet, conversationRemoved } =
+      getConversationsActions(name);
+    const { messagesSet } = getMessagesActions(name);
+
+    async function handleClickTitle(id: number) {
       setIsOpen(false);
 
       try {
-        const { activeConversationSet } = getConversationsActions(name);
-        const { messagesSet } = getMessagesActions(name);
-
         const requestOptions = {
           method: 'GET',
           headers: {
@@ -74,6 +75,22 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
       }
     }
 
+    function handleClickDelete(id: number) {
+      const { messagesReset } = getMessagesActions(name);
+      dispatch(conversationRemoved(id));
+      fetch(`${baseUrl}/ai/conversations/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: act ?? '',
+        },
+      });
+
+      if (activeConversation === id) {
+        dispatch(activeConversationSet(null));
+        dispatch(messagesReset());
+      }
+    }
+
     function generateListJsx() {
       if (conversations.length === 0) return;
       const keys = generateKeys(conversations);
@@ -86,7 +103,7 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
                 <Button
                   className="py-0 justify-start px-1"
                   variant={'custom'}
-                  onClick={() => handleClick(item.id)}
+                  onClick={() => handleClickTitle(item.id)}
                 >
                   <p
                     className={cn(
@@ -122,7 +139,11 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
                 >
                   <Edit3Icon height="16px" />
                 </Button>
-                <Button className="h-4 px-0" variant={'custom'}>
+                <Button
+                  className="h-4 px-0"
+                  variant={'custom'}
+                  onClick={() => handleClickDelete(item.id)}
+                >
                   <X height="18px" />
                 </Button>
               </div>

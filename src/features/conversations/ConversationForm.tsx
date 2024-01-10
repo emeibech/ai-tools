@@ -2,9 +2,12 @@ import { Input } from '@/common/components/ui/input';
 import { FormEvent, useRef } from 'react';
 import { getConversationsActions } from './conversationsSliceUtils';
 import type { ConversationForm } from '@/types/features';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { Button } from '@/common/components/ui/button';
 import { CheckIcon } from 'lucide-react';
+import { clientStatus } from '../client/clientSlice';
+
+const baseUrl = import.meta.env.VITE_AI_URL;
 
 export default function ConversationForm({
   title,
@@ -15,20 +18,23 @@ export default function ConversationForm({
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { titleChanged } = getConversationsActions(name);
+  const { act } = useAppSelector(clientStatus);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(inputRef.current?.value);
-
     const newTitle = inputRef.current?.value || '';
 
-    // do a patch request to change title in backend here
+    fetch(`${baseUrl}/ai/conversations/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: act ?? '',
+      },
+      body: JSON.stringify({ title: newTitle }),
+    });
 
-    // on succeed, run this
     dispatch(titleChanged({ id, newTitle }));
     setCurrentlyEditing(null);
-
-    // on fail, render error
   }
 
   return (
