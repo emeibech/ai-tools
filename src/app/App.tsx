@@ -11,10 +11,8 @@ import useSetLocalStorageData from '@/common/hooks/useSetLocalStorageData';
 import useSaveToLocalStorage from '@/common/hooks/useSaveToLocalStorage';
 import Logout from '@/features/client/Logout';
 import { Toaster } from '@/common/components/ui/toaster';
-// import useInitialLoad from '@/common/hooks/useInitialLoad';
 
 export default function App({ children }: { children?: ReactNode }) {
-  // useInitialLoad();
   useSaveToLocalStorage();
   useSetLocalStorageData();
   useDarkmodeToggler();
@@ -23,7 +21,7 @@ export default function App({ children }: { children?: ReactNode }) {
     <div
       className={cn(
         'bg-background text-foreground',
-        'lg:grid lg:grid-cols-[260px_1fr]',
+        'lg:grid lg:grid-cols-[260px_1fr] 2xl:grid-cols-[260px_1fr_88px]',
       )}
     >
       <Header
@@ -43,7 +41,7 @@ export default function App({ children }: { children?: ReactNode }) {
         <div
           className={cn(
             'lg:fixed lg:min-w-[260px] min-h-screen',
-            'grid grid-flow-row grid-rows-[1fr_6fr_1fr] py-4',
+            'grid grid-flow-row grid-rows-[1fr_6fr_1fr_32px] py-4',
           )}
         >
           <SiteTitle />

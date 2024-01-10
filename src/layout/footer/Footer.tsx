@@ -6,7 +6,7 @@ export default function Footer({ className }: ClassName) {
     <footer
       className={cn(
         className,
-        'text-xs text-muted-foreground text-center',
+        'text-xs text-muted-foreground text-center row-start-4',
         'self-end',
       )}
     >
