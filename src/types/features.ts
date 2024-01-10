@@ -193,8 +193,8 @@ export interface ConversationsProps {
 export interface ConversationsSlice {
   conversations: Conversation[];
   activeConversation: number | null;
-  deleteMsgQ: number[];
   addMsgQ: string[];
+  msgsFetchStatus: 'fetching' | 'idle';
 }
 
 // ConversationsSheet

@@ -138,7 +138,6 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
           rows={1}
           value={value}
           ref={textareaRef}
-          placeholder={name}
           data-name="textarea"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
@@ -185,7 +184,11 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
             </span>
           </Button>
 
-          <ConversationsSheet name={name} side="right">
+          <ConversationsSheet
+            name={name}
+            side="right"
+            className="sm:px-8 overflow-y-auto"
+          >
             <Button variant={'ghost'} className="min-h-full flex gap-2 px-1">
               <span
                 className={cn(

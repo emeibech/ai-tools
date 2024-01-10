@@ -10,8 +10,8 @@ to help catch potential bugs. StrictMode gets removed in the production build
 when you do "npm run build." This means the initMount variable used to check 
 for first mount has to change value depending on whether NODE_ENV in .env file is 
 set to production or development. */
-const productionMode = import.meta.env.VITE_NODE_ENV;
-const initMount = productionMode === 'production' ? 1 : 2;
+const applicationMode = import.meta.env.VITE_NODE_ENV;
+const initMount = applicationMode === 'production' ? 1 : 2;
 
 export default function useSaveToLocalStorage() {
   const darkmode = useAppSelector(darkModeStatus);
