@@ -27,7 +27,9 @@ export default function useFetchConversations(name: Name) {
       const { conversationsSet } = getConversationsActions(name);
       try {
         const response = await fetch(
-          `${baseUrl}/ai/conversations?chatinterface=${getChatInterface(name)}`,
+          `${baseUrl}/ai/conversations?chatinterface=${getChatInterface(
+            name,
+          )}&page=1&length=15`,
           requestOptions,
         );
 

@@ -13,16 +13,21 @@ import { clientStatus } from '../client/clientSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { getMessagesActions } from '../chats/messagesSliceutils';
 import type { ConversationsProps, Message } from '@/types/features';
+import { getChatInterface } from './utils';
+import { ReqStatus } from '@/types/routes';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
 export default function Conversations({ name, setIsOpen }: ConversationsProps) {
+  const dispatch = useAppDispatch();
+  const { toast } = useToast();
   const { conversations } = useAppSelector(getConversationsState(name));
   const [currentlyEditing, setCurrentlyEditing] = useState<number | null>(null);
   const { act } = useAppSelector(clientStatus);
   const { activeConversation } = useAppSelector(getConversationsState(name));
-  const dispatch = useAppDispatch();
-  const { toast } = useToast();
+  const [page, setPage] = useState<number>(2);
+  const [reqStatus, setReqStatus] = useState<ReqStatus>('idle');
+  const [end, setEnd] = useState<boolean>(false);
 
   const list = useMemo(() => {
     const { activeConversationSet, conversationRemoved } =
@@ -167,15 +172,91 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
     activeConversation,
   ]);
 
+  async function handleClickLoadMore() {
+    try {
+      const { conversationAdded } = getConversationsActions(name);
+
+      setReqStatus('requesting');
+
+      const response = await fetch(
+        `${baseUrl}/ai/conversations?chatinterface=${getChatInterface(
+          name,
+        )}&page=${page}&length=15`,
+        { headers: { Authorization: act || '' } },
+      );
+
+      if (!response.ok) {
+        setReqStatus('error');
+        toast({
+          title: 'Error',
+          description: response.statusText,
+        });
+      }
+
+      const { conversationData, end } = await response.json();
+
+      if (end) setEnd(true);
+
+      dispatch(conversationAdded(conversationData));
+      setPage((prev) => prev++);
+      setReqStatus('success');
+    } catch (error) {
+      setReqStatus('error');
+      toast({
+        title: 'Error',
+        description: 'An error occured while fetching conversations.',
+      });
+    }
+  }
+
+  function renderLoadMore() {
+    return reqStatus !== 'requesting' && !end && conversations.length >= 15;
+  }
+
   return (
-    <section>
-      <ul className="grid gap-2">
+    <section className="mt-4">
+      <ul className="grid gap-[10px]">
         {conversations.length === 0 && (
           <p className="text-center text-sm sm:text-base">Wow, such empty.</p>
         )}
 
         {conversations.length !== 0 && list}
       </ul>
+
+      <div className="text-center mt-6">
+        {renderLoadMore() && (
+          <Button
+            variant={'link'}
+            className="h-auto py-1"
+            onClick={handleClickLoadMore}
+          >
+            <strong className="font-medium text-sm">Load more</strong>
+          </Button>
+        )}
+
+        {reqStatus === 'requesting' && (
+          <span className="flex gap-1 justify-center">
+            <div
+              className={cn(
+                'h-2 w-2 rounded-full bg-foreground',
+                'animate-bounce',
+              )}
+            ></div>
+            <div
+              className={cn(
+                'h-2 w-2 rounded-full bg-foreground',
+                'animate-bounce delay-150',
+              )}
+            ></div>
+            <div
+              className={cn(
+                'h-2 w-2 rounded-full bg-foreground',
+                'animate-bounce delay-300',
+              )}
+            ></div>
+          </span>
+        )}
+      </div>
     </section>
   );
 }
