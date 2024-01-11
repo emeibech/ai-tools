@@ -7,6 +7,7 @@ import {
 import type { ConversationsSheet } from '@/types/features';
 import Conversations from './Conversations';
 import { useState } from 'react';
+import { Separator } from '@/common/components/ui/separator';
 
 export default function ConversationsSheet({
   name,
@@ -28,9 +29,10 @@ export default function ConversationsSheet({
         onFocus={(event) => event.currentTarget.blur()}
       >
         <SheetHeader>
-          <h3 className="text-lg sm:text-2xl font-medium py-4 mb-4">
+          <h3 className="text-lg sm:text-2xl font-medium my-4 py-4">
             Conversations
           </h3>
+          <Separator decorative />
         </SheetHeader>
         <Conversations name={name} setIsOpen={setIsOpen} />
       </SheetContent>
