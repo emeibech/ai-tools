@@ -61,7 +61,7 @@ export default function Nav({ setIsOpen }: NavProps) {
           <Link
             className={cn(
               selectedRoute === route ? 'bg-secondary' : '',
-              'px-4 py-2 rounded text-sm',
+              'px-4 py-2 rounded text-base',
               'hover:bg-secondary active:bg-secondary',
             )}
             to={formatPath(item)}

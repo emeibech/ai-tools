@@ -37,7 +37,7 @@ export default function ToneChanger() {
             Tone Changer
           </h2>
 
-          <p>
+          <p className="text-lg">
             Tone Changer rewrites your message in whatever tone you want. Aside
             from regular tones (e.g., friendly, sad, professional), you can also
             put a certain type of person (e.g., lawyer, medieval knight) in the

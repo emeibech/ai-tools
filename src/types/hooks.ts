@@ -1,10 +1,10 @@
 import * as z from 'zod';
 import type { RefObject } from 'react';
-import type { Status } from './features';
+import type { RequestStatus } from './features';
 
 // useAutoScroll
 export interface AutoScrollArgs {
-  status: Status;
+  status: RequestStatus;
   scrollDir: ScrollDirection;
 }
 

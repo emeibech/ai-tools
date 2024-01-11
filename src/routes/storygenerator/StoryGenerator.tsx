@@ -37,7 +37,7 @@ export default function StoryGenerator() {
             Story Generator
           </h2>
 
-          <p>
+          <p className="text-lg">
             Need less-than-mediocre stories in a pinch? Say no more. Story
             Generator coughs up basic but coherent stories that sounds good
             enough as you're reading them until you realize that the content is

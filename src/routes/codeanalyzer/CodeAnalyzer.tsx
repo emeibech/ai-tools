@@ -36,7 +36,7 @@ export default function CodeAnalyzer() {
             Code Analyzer
           </h2>
 
-          <p>
+          <p className="text-lg">
             Code Analyzer helps you understand complex snippets of code or
             not-so-complex-but-hard-to-read ones written by noobs like me. Input
             the code in the box, submit, and you will get a response giving you

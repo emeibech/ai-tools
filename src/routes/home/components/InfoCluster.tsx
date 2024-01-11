@@ -12,7 +12,7 @@ export default function InfoCluster({
       className={cn(
         `${className}`,
         'flex flex-col mx-auto max-w-[640px] gap-2',
-        '2xl:min-h-[180px]',
+        '2xl:min-h-[180px] text-lg',
       )}
       aria-label={ariaLabel}
       role={role}

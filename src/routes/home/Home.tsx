@@ -35,7 +35,7 @@ export default function Home() {
           >
             Make Your Life Easier with emeibech AI.
           </h2>
-          <h3 className="max-w-[640px] text-lg">
+          <h3 className="max-w-[640px] text-xl">
             A collection of AI-powered tools that help you finish tasks faster
             the Flash on cocaine so you can get back to doing things that really
             matter, like scrolling mindlessly on your phone. Offload most of the

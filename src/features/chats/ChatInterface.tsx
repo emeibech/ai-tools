@@ -40,7 +40,7 @@ export default function ChatInterface({
   return (
     <section className={cn('relative max-w-[1280px]')}>
       <div>
-        <div className={cn('min-h-[85vh] max-w-[90ch] mx-auto')}>
+        <div className={cn('min-h-[85vh] max-w-[824px] mx-auto')}>
           {children}
           {listMessages}
         </div>

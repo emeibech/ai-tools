@@ -115,7 +115,7 @@ export interface ChatMessageProps {
   name: Name;
   children: ReactNode;
   id: string;
-  dbid: number | undefined;
+  dbid?: number | undefined;
   renderCodeBlocks?: boolean;
   initialMessage?: boolean;
   requestIndicator?: boolean;

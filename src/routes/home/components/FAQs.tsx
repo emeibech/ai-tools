@@ -11,30 +11,30 @@ export default function FAQs({ className }: ClassName) {
   return (
     <Accordion type="multiple" className={cn(className, 'w-full')}>
       <AccordionItem value="faq-1">
-        <AccordionTrigger className="text-left text-lg">
+        <AccordionTrigger className="text-left text-xl">
           Who exactly are asking these "Frequently Asked Questions?"
         </AccordionTrigger>
-        <AccordionContent className="text-card-foreground text-base">
+        <AccordionContent className="text-card-foreground text-lg">
           The people in my head. They're really loud sometimes. And they want
           answers!
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem value="faq-2">
-        <AccordionTrigger className="text-left text-lg">
+        <AccordionTrigger className="text-left text-xl">
           What is the point of this app?
         </AccordionTrigger>
-        <AccordionContent className="text-card-foreground text-base">
+        <AccordionContent className="text-card-foreground text-lg">
           To apply what I learned in web development so far and to see what I
           can do with OpenAI API.
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem value="faq-3">
-        <AccordionTrigger className="text-left text-lg">
+        <AccordionTrigger className="text-left text-xl">
           How helpful are these "AI tools?"
         </AccordionTrigger>
-        <AccordionContent className="text-card-foreground text-base">
+        <AccordionContent className="text-card-foreground text-lg">
           It depends on what you need them for and how you use them. Right now
           they can answer queries accurately most of the time, meaning not all
           the time. They can write code correctly most of the time if the prompt
@@ -46,10 +46,10 @@ export default function FAQs({ className }: ClassName) {
       </AccordionItem>
 
       <AccordionItem value="faq-4">
-        <AccordionTrigger className="text-left text-lg">
+        <AccordionTrigger className="text-left text-xl">
           Why should I use these tools? Why not just use ChatGPT?
         </AccordionTrigger>
-        <AccordionContent className="text-card-foreground text-base">
+        <AccordionContent className="text-card-foreground text-lg">
           The OpenAI API allows developers to tinker with various settings that
           are not available when just using ChatGPT. The ones I tinker with the
           most are temperature and system content. Temperature gives developers
@@ -62,10 +62,10 @@ export default function FAQs({ className }: ClassName) {
       </AccordionItem>
 
       <AccordionItem value="faq-5">
-        <AccordionTrigger className="text-left text-lg">
+        <AccordionTrigger className="text-left text-xl">
           What is a large language model?
         </AccordionTrigger>
-        <AccordionContent className="text-card-foreground text-base">
+        <AccordionContent className="text-card-foreground text-lg">
           A large language model is a type of artificial intelligence (AI) model
           that is trained on a massive amount of text data. It is designed to
           generate human-like text responses or perform various natural language

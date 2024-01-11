@@ -1,3 +1,10 @@
 #root {
   margin: 0 auto;
+  font-family: outfit;
+}
+
+@font-face {
+  font-family: outfit;
+  src: url('../common/fonts/outfit.ttf');
+  font-display: swap;
 }
