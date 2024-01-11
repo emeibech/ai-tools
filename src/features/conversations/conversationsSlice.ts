@@ -3,44 +3,7 @@ import type { Conversation, ConversationsSlice } from '@/types/features';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: ConversationsSlice = {
-  conversations: [
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Sup', timestamp: 'timestamp' },
-    { id: 1, title: 'Last', timestamp: 'timestamp' },
-  ],
+  conversations: [],
   activeConversation: null,
   msgsFetchStatus: 'idle',
   addMsgQ: [],
@@ -69,6 +32,17 @@ const reducers = {
   ) => {
     state.activeConversation = action.payload;
   },
+  conversationMovedToTop: (
+    state: ConversationsSlice,
+    action: PayloadAction<number>,
+  ) => {
+    const index = state.conversations.findIndex(
+      (item) => item.id === action.payload,
+    );
+
+    const [deleted] = state.conversations.splice(index, 1);
+    state.conversations.unshift(deleted);
+  },
   conversationsSet: (
     state: ConversationsSlice,
     action: PayloadAction<Conversation[]>,
@@ -77,9 +51,11 @@ const reducers = {
   },
   conversationAdded: (
     state: ConversationsSlice,
-    action: PayloadAction<{ id: number; title: string; timestamp: string }>,
+    action: PayloadAction<
+      { id: number; title: string; last_updated: number }[]
+    >,
   ) => {
-    state.conversations.unshift(action.payload);
+    state.conversations = [...state.conversations, ...action.payload];
   },
   conversationRemoved: (
     state: ConversationsSlice,
@@ -129,6 +105,7 @@ export const {
   addQCleared: caAddQCleared,
   conversationAdded: caConversationAdded,
   msgsFetchStatusSet: caMsgsFetchStatusSet,
+  conversationMovedToTop: caConversationMovedToTop,
 } = caConversationsSlice.actions;
 
 export const {
@@ -141,6 +118,7 @@ export const {
   addQCleared: gaAddQCleared,
   conversationAdded: gaConversationAdded,
   msgsFetchStatusSet: gaMsgsFetchStatusSet,
+  conversationMovedToTop: gaConversationMovedToTop,
 } = gaConversationsSlice.actions;
 
 export const {
@@ -153,6 +131,7 @@ export const {
   addQCleared: eli5AddQCleared,
   conversationAdded: eli5ConversationAdded,
   msgsFetchStatusSet: eli5MsgsFetchStatusSet,
+  conversationMovedToTop: eli5ConversationMovedToTop,
 } = eli5ConversationsSlice.actions;
 
 export const caConversations = (state: RootState) => state.caConversationsSlice;

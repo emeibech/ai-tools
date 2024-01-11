@@ -36,8 +36,12 @@ export default function useQueueManager(name: Name) {
   useEffect(() => {
     const date = new Date();
     const { dbidAdded } = getMessagesActions(name);
-    const { addQCleared, activeConversationSet, conversationAdded } =
-      getConversationsActions(name);
+    const {
+      addQCleared,
+      activeConversationSet,
+      conversationAdded,
+      conversationMovedToTop,
+    } = getConversationsActions(name);
 
     async function pushToDb() {
       try {
@@ -85,7 +89,7 @@ export default function useQueueManager(name: Name) {
 
             const { conversation } = await response.json();
             conversationId = conversation.id;
-            dispatch(conversationAdded(conversation));
+            dispatch(conversationAdded([conversation]));
             dispatch(activeConversationSet(conversation.id));
           } catch (error) {
             toast({
@@ -95,8 +99,9 @@ export default function useQueueManager(name: Name) {
           }
         }
 
-        const body = { messages: msgsToBePushed };
+        dispatch(conversationMovedToTop(Number(conversationId)));
 
+        const body = { messages: msgsToBePushed };
         const requestOptions = {
           method: 'POST',
           headers: {
@@ -112,12 +117,21 @@ export default function useQueueManager(name: Name) {
         );
 
         if (!response.ok)
-          console.log(`${response.status}: ${response.statusText}`);
+          toast({ title: 'Error', description: response.statusText });
 
         const { ids } = await response.json();
 
         ids.forEach((dbid: number, index: number) => {
           dispatch(dbidAdded({ id: addMsgQ[index], dbid }));
+        });
+
+        fetch(`${baseUrl}/ai/conversations/${conversationId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: client.act ?? '',
+          },
+          body: JSON.stringify({ lastUpdated: Date.now() }),
         });
       } catch (error) {
         toast({

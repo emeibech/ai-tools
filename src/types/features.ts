@@ -180,7 +180,7 @@ export interface RetryRequest {
 export interface Conversation {
   id: number;
   title: string;
-  timestamp: string;
+  last_updated: number;
 }
 
 // ConversationsSheet

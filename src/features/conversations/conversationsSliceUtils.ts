@@ -9,6 +9,7 @@ import {
   caAddQCleared,
   caConversationAdded,
   caMsgsFetchStatusSet,
+  caConversationMovedToTop,
   gaActiveConversationSet,
   gaConversationRemoved,
   gaConversations,
@@ -19,6 +20,7 @@ import {
   gaAddQCleared,
   gaConversationAdded,
   gaMsgsFetchStatusSet,
+  gaConversationMovedToTop,
   eli5ActiveConversationSet,
   eli5ConversationRemoved,
   eli5Conversations,
@@ -29,6 +31,7 @@ import {
   eli5AddQCleared,
   eli5ConversationAdded,
   eli5MsgsFetchStatusSet,
+  eli5ConversationMovedToTop,
 } from './conversationsSlice';
 import type { Name } from '@/types/features';
 
@@ -50,6 +53,7 @@ export function getConversationsActions(name: Name) {
       addQCleared: caAddQCleared,
       conversationAdded: caConversationAdded,
       msgsFetchStatusSet: caMsgsFetchStatusSet,
+      conversationMovedToTop: caConversationMovedToTop,
     };
 
   if (name === 'General Assistant')
@@ -63,6 +67,7 @@ export function getConversationsActions(name: Name) {
       addQCleared: gaAddQCleared,
       conversationAdded: gaConversationAdded,
       msgsFetchStatusSet: gaMsgsFetchStatusSet,
+      conversationMovedToTop: gaConversationMovedToTop,
     };
 
   return {
@@ -75,5 +80,6 @@ export function getConversationsActions(name: Name) {
     addQCleared: eli5AddQCleared,
     conversationAdded: eli5ConversationAdded,
     msgsFetchStatusSet: eli5MsgsFetchStatusSet,
+    conversationMovedToTop: eli5ConversationMovedToTop,
   };
 }
