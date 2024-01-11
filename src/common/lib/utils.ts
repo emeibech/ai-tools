@@ -53,17 +53,6 @@ export function getCatchError(error: unknown) {
   }
 }
 
-export function isLocalStorageAvailable() {
-  try {
-    const testKey = 'test';
-    localStorage.setItem(testKey, testKey);
-    localStorage.removeItem(testKey);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
 export function removeIds(messages: Message[]) {
   const noIds = messages.map(({ role, content }) => ({ role, content }));
   return noIds;

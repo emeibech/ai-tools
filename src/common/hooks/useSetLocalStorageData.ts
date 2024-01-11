@@ -1,38 +1,37 @@
-import { useEffect, useRef } from 'react';
-import { isLocalStorageAvailable } from '../lib/utils';
+import { useEffect } from 'react';
 import { useAppDispatch } from '@/app/hooks';
 import {
   turnOffDarkmode,
   turnOnDarkmode,
 } from '@/features/darkmode/darkmodeSlice';
+import ls from 'localstorage-slim';
 import { clientStatusSet } from '@/features/client/clientSlice';
 import type { Client } from '@/types/features';
 
-const darkmodeDefault = false;
-const clientStatusDefault: Client = { userStatus: 'guest', act: null };
-
 export default function useSetLocalStorageData() {
-  const lsDarkmode = useRef<boolean>(darkmodeDefault);
-  const lsClientStatus = useRef<Client>(clientStatusDefault);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     console.log('useSetLocalStorageData');
-    function setLSData() {
-      if (isLocalStorageAvailable()) {
-        const darkmode = localStorage.getItem('darkmode');
-        const clientStatus = localStorage.getItem('clientStatus');
-        lsDarkmode.current = darkmode ? JSON.parse(darkmode) : darkmodeDefault;
 
-        lsClientStatus.current = clientStatus
-          ? JSON.parse(clientStatus)
-          : clientStatusDefault;
-      }
-
-      dispatch(lsDarkmode.current ? turnOnDarkmode() : turnOffDarkmode());
-      dispatch(clientStatusSet(lsClientStatus.current));
+    function instanceOfClient(object: unknown): object is Client {
+      return (
+        typeof object === 'object' &&
+        object !== null &&
+        'userStatus' in object &&
+        'act' in object
+      );
     }
 
-    setLSData();
+    const darkmode = ls.get('darkmode');
+    const clientStatus = ls.get('clientStatus');
+
+    if (darkmode !== null && typeof darkmode === 'boolean') {
+      dispatch(darkmode ? turnOnDarkmode() : turnOffDarkmode());
+    }
+
+    if (instanceOfClient(clientStatus)) {
+      dispatch(clientStatusSet(clientStatus));
+    }
   }, [dispatch]);
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { isLocalStorageAvailable } from '../lib/utils';
+import ls from 'localstorage-slim';
 import { useAppSelector } from '@/app/hooks';
 import { darkModeStatus } from '@/features/darkmode/darkmodeSlice';
 import { clientStatus } from '@/features/client/clientSlice';
@@ -12,6 +12,7 @@ for first mount has to change value depending on whether NODE_ENV in .env file i
 set to production or development. */
 const applicationMode = import.meta.env.VITE_NODE_ENV;
 const initMount = applicationMode === 'production' ? 1 : 2;
+ls.config.encrypt = true;
 
 export default function useSaveToLocalStorage() {
   const darkmode = useAppSelector(darkModeStatus);
@@ -24,16 +25,12 @@ export default function useSaveToLocalStorage() {
   const mountCounter = useRef<number>(0);
 
   useEffect(() => {
-    console.log('useSaveToLocalStorage');
-
-    function saveToLocalStorage() {
-      if (isLocalStorageAvailable() && mountCounter.current >= initMount) {
-        localStorage.setItem('darkmode', darkmode.toString());
-        localStorage.setItem('clientStatus', JSON.stringify(client));
-      }
+    if (mountCounter.current >= initMount) {
+      console.log('useSaveToLocalStorage');
+      ls.set('darkmode', darkmode);
+      ls.set('clientStatus', client);
     }
 
-    saveToLocalStorage();
     mountCounter.current += 1;
   }, [darkmode, client]);
 }
