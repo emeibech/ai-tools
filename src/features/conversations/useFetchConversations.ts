@@ -6,6 +6,7 @@ import { getConversationsActions } from './conversationsSliceUtils';
 import { getCatchError } from '@/common/lib/utils';
 import { clientStatus } from '../client/clientSlice';
 import { getChatInterface } from './utils';
+import { getLoadMoreState } from './loadMoreSliceUtils';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
@@ -14,6 +15,7 @@ export default function useFetchConversations(name: Name) {
   const { toast } = useToast();
   const dispatch = useAppDispatch();
   const client = useAppSelector(clientStatus);
+  const { lastConversation } = useAppSelector(getLoadMoreState(name));
 
   useEffect(() => {
     const requestOptions = {
@@ -53,8 +55,8 @@ export default function useFetchConversations(name: Name) {
       }
     }
 
-    if (client.userStatus === 'user') {
+    if (!lastConversation) {
       fetchConversations();
     }
-  }, [dispatch, toast, name, client]);
+  }, [dispatch, toast, name, client, lastConversation]);
 }

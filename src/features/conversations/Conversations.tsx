@@ -15,6 +15,7 @@ import { getMessagesActions } from '../chats/messagesSliceutils';
 import type { ConversationsProps, Message } from '@/types/features';
 import { getChatInterface } from './utils';
 import { ReqStatus } from '@/types/routes';
+import { getLoadMoreActions, getLoadMoreState } from './loadMoreSliceUtils';
 
 const baseUrl = import.meta.env.VITE_AI_URL;
 
@@ -25,9 +26,8 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   const [currentlyEditing, setCurrentlyEditing] = useState<number | null>(null);
   const { act } = useAppSelector(clientStatus);
   const { activeConversation } = useAppSelector(getConversationsState(name));
-  const [page, setPage] = useState<number>(2);
   const [reqStatus, setReqStatus] = useState<ReqStatus>('idle');
-  const [end, setEnd] = useState<boolean>(false);
+  const { nextPage, lastConversation } = useAppSelector(getLoadMoreState(name));
 
   const list = useMemo(() => {
     const { activeConversationSet, conversationRemoved } =
@@ -175,13 +175,15 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   async function handleClickLoadMore() {
     try {
       const { conversationAdded } = getConversationsActions(name);
+      const { nextPageIncremented, lastConveresationSet } =
+        getLoadMoreActions(name);
 
       setReqStatus('requesting');
 
       const response = await fetch(
         `${baseUrl}/ai/conversations?chatinterface=${getChatInterface(
           name,
-        )}&page=${page}&length=15`,
+        )}&page=${nextPage}&length=15`,
         { headers: { Authorization: act || '' } },
       );
 
@@ -195,10 +197,10 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
 
       const { conversationData, end } = await response.json();
 
-      if (end) setEnd(true);
+      if (end) dispatch(lastConveresationSet(true));
 
       dispatch(conversationAdded(conversationData));
-      setPage((prev) => prev++);
+      dispatch(nextPageIncremented());
       setReqStatus('success');
     } catch (error) {
       setReqStatus('error');
@@ -210,7 +212,11 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   }
 
   function renderLoadMore() {
-    return reqStatus !== 'requesting' && !end && conversations.length >= 15;
+    return (
+      reqStatus !== 'requesting' &&
+      !lastConversation &&
+      conversations.length >= 15
+    );
   }
 
   return (

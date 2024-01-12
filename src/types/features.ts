@@ -212,3 +212,9 @@ export interface ConversationForm {
   id: number;
   setCurrentlyEditing: Dispatch<React.SetStateAction<number | null>>;
 }
+
+// loadMoreSlice
+export interface LoadMoreSlice {
+  nextPage: number;
+  lastConversation: boolean;
+}
