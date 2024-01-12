@@ -28,7 +28,10 @@ export default function CodingAssistant() {
               name="General Assistant"
               initialMessage={true}
             >
-              <p>I'm essentially ChatGPT but with a different skin.</p>
+              <p>
+                Oh hi! I'm a general assistant. Think of me as ChatGPT because
+                that's exactly what I am.
+              </p>
 
               <p className="mt-4">How can I assist you today?</p>
             </ChatMessage>

@@ -10,7 +10,7 @@ export default function Footer({ className }: ClassName) {
         'self-end',
       )}
     >
-      <article>Copyright © 2023 emeibech AI.</article>
+      <article>Copyright © 2024 emeibech AI.</article>
       <article>All rights reserved.</article>
     </footer>
   );

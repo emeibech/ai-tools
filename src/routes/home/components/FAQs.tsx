@@ -15,8 +15,7 @@ export default function FAQs({ className }: ClassName) {
           Who exactly are asking these "Frequently Asked Questions?"
         </AccordionTrigger>
         <AccordionContent className="text-card-foreground text-lg">
-          The people in my head. They're really loud sometimes. And they want
-          answers!
+          The people in my head. They're really loud, and they demand answers!
         </AccordionContent>
       </AccordionItem>
 
@@ -50,14 +49,13 @@ export default function FAQs({ className }: ClassName) {
           Why should I use these tools? Why not just use ChatGPT?
         </AccordionTrigger>
         <AccordionContent className="text-card-foreground text-lg">
-          The OpenAI API allows developers to tinker with various settings that
-          are not available when just using ChatGPT. The ones I tinker with the
-          most are temperature and system content. Temperature gives developers
-          control over how deterministic or unpredictable the response is going
-          to be, while the system content allows us to give specific
-          instructions on exactlty how the AI should respond. Moreover, the free
-          tier of ChatGPT uses an older model that is more likely to provide
-          erroneous response.
+          The OpenAI API allows developers to tinker with various settings and
+          parameters to better control the AI's responses, allowing optimization
+          for a specific category of queries or tasks. For you, this means you
+          don't have to write long queries or prompts to get the response that
+          you want. But if you're confident with your AI prompting skill and
+          would rather use ChatGPT, then go use ChatGPT. I don't really care.
+          This app is really more for me than the for the general public.
         </AccordionContent>
       </AccordionItem>
 
