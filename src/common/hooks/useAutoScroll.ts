@@ -6,7 +6,6 @@ export default function useAutoScroll({ status, scrollDir }: AutoScrollArgs) {
   const [chunkSentCount, setChunkSentCount] = useState(0);
 
   useEffect(() => {
-    console.log('autoScroll effect');
     const isScrolling = chunkSentCount > 0;
 
     if (status === 'streaming' && scrollDir === 'down' && isScrolling) {

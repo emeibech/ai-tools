@@ -79,7 +79,6 @@ export default function ToneChangerForm({ route, name }: ToolProp) {
   }
 
   function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
     dispatch(promptReset());
     dispatch(responseReset());
     dispatch(

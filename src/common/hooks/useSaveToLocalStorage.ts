@@ -8,8 +8,8 @@ import { clientStatus } from '@/features/client/clientSlice';
 a feature that will render components twice on first mount 
 to help catch potential bugs. StrictMode gets removed in the production build 
 when you do "npm run build." This means the initMount variable used to check 
-for first mount has to change value depending on whether NODE_ENV in .env file is 
-set to production or development. */
+for first mount has to change value depending on whether NODE_ENV in the 
+.env.local file is set to production or development. */
 const applicationMode = import.meta.env.VITE_NODE_ENV;
 const initMount = applicationMode === 'production' ? 1 : 2;
 ls.config.encrypt = true;
@@ -18,7 +18,7 @@ export default function useSaveToLocalStorage() {
   const darkmode = useAppSelector(darkModeStatus);
   const client = useAppSelector(clientStatus);
 
-  /* Why mountCounter? Becase global state will reset to default on page reload. 
+  /* Why mountCounter? Becase global states will reset to default on page reload. 
   This ensures the effect saves to local storage only
   after the initial render, ignoring the first one, and the second one, too, if 
   NODE_ENV is set to development. */
@@ -26,7 +26,6 @@ export default function useSaveToLocalStorage() {
 
   useEffect(() => {
     if (mountCounter.current >= initMount) {
-      console.log('useSaveToLocalStorage');
       ls.set('darkmode', darkmode);
       ls.set('clientStatus', client);
     }

@@ -17,7 +17,6 @@ import { getCatchError } from '@/common/lib/utils';
 const baseUrl = import.meta.env.VITE_AI_URL;
 
 export default function useQueueManager(name: Name) {
-  console.log('useQueueManager');
   const messages = useAppSelector(getMessagesState(name));
   const dispatch = useAppDispatch();
   const client = useAppSelector(clientStatus);

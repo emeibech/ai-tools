@@ -40,7 +40,7 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
       const id = event.currentTarget.id;
       const dbid = event.currentTarget.getAttribute('data-dbid');
       dispatch(messageRemoved({ id }));
-      console.log(dbid);
+
       if (dbid) {
         fetch(`${baseUrl}/ai/conversations/messages/${dbid}`, {
           method: 'DELETE',

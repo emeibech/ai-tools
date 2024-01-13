@@ -68,11 +68,6 @@ function getFormSchema(schema: { [key: string]: z.ZodString }) {
           const { year, month, day } = data;
           const birthDate = new Date(`${year}-${month}-${day}`);
           const epoch = birthDate.getTime();
-          console.log({
-            epoch,
-            birthDate,
-            returnVal: !isOlderThanMinAge(epoch, 13),
-          });
 
           return isNaN(epoch) ? true : !isOlderThanMinAge(epoch, 13);
         },

@@ -65,7 +65,6 @@ export default function LoginForm({ className }: { className?: string }) {
   }
 
   async function handleSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
     try {
       const { email, password } = values;
       const body = { email, password };

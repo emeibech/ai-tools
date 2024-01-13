@@ -11,12 +11,6 @@ export function generateKeys(list: unknown[]): string[] {
   return list.map(() => nanoid());
 }
 
-export function convertEntitiesToCharacters(html: string): string | null {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-  return doc.documentElement.textContent;
-}
-
 export function scrollToBottom(behavior: ScrollBehavior = 'smooth'): void {
   requestAnimationFrame(() => {
     window.scrollTo({

@@ -26,6 +26,7 @@ function renderStatus(
   onClick: MouseEventHandler<HTMLButtonElement>,
 ) {
   if (status === 'idle') return null;
+
   if (status === 'requesting') {
     return (
       <article className="flex items-center gap-2">
@@ -34,6 +35,7 @@ function renderStatus(
       </article>
     );
   }
+
   if (status === 'streaming' && !hideStreamIndicator) {
     return (
       <span className="bg-foreground ml-2 text-xs rounded-full animate-ping">

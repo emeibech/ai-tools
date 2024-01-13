@@ -36,7 +36,6 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
   });
 
   useEffect(() => {
-    console.log('useChatApi Effect');
     const { chatInterface, prompt, chatHistory, model, assistantId, userId } =
       chatApiArgs;
     const { messageAppended } = getMessagesActions(chatInterface);

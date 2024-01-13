@@ -11,7 +11,6 @@ import { getLoadMoreState } from './loadMoreSliceUtils';
 const baseUrl = import.meta.env.VITE_AI_URL;
 
 export default function useFetchConversations(name: Name) {
-  console.log('useFetchConversations');
   const { toast } = useToast();
   const dispatch = useAppDispatch();
   const client = useAppSelector(clientStatus);
@@ -47,7 +46,6 @@ export default function useFetchConversations(name: Name) {
         const { conversationData } = await response.json();
         dispatch(conversationsSet(conversationData));
       } catch (error) {
-        console.log(error);
         toast({
           title: 'Error',
           description: getCatchError(error),

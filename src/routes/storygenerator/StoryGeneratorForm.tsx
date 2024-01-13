@@ -91,7 +91,6 @@ export default function StoryGeneratorForm({ route, name }: ToolProp) {
   }
 
   function handleSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
     dispatch(responseReset());
     dispatch(promptReset());
     dispatch(

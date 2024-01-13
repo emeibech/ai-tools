@@ -9,7 +9,6 @@ export default function useSetScrollPosition(route: Route) {
   useEffect(() => {
     function handleScroll() {
       dispatch(setScrollPosition({ route, position: window.scrollY }));
-      console.log('setScrollPosition effect');
     }
 
     window.addEventListener('scroll', handleScroll);

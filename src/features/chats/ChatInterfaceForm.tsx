@@ -66,7 +66,6 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
     if (value.length > 0) {
       setValue('');
       textarea.resetTextareaHeight();
-      console.log('submitted');
 
       const userId = `user-${nanoid()}`;
       const assistantId = `assistant-${nanoid()}`;

@@ -23,7 +23,6 @@ export default function useApi(apiArgs: ApiArgs) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('useApi effect');
     const { route, name, prompt } = apiArgs;
     const { responseAppended } = getResponsesActions(route);
     const statusChanged = getStatusActions(name);

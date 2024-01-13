@@ -9,14 +9,12 @@ export default function useResizeListener(callback: () => void | unknown) {
 
   useEffect(() => {
     function handleResize() {
-      console.log('resized');
       callbackRef.current();
     }
 
     window.addEventListener('resize', handleResize);
 
     return () => {
-      console.log('useResizeListener cleanup');
       window.removeEventListener('resize', handleResize);
     };
   }, []);

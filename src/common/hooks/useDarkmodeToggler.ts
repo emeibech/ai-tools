@@ -6,7 +6,6 @@ export default function useDarkmodeToggler() {
   const darkmode = useAppSelector(darkModeStatus);
 
   useEffect(() => {
-    console.log('darkmode toggler');
     if (darkmode) {
       document.body.classList.add('dark');
     } else {

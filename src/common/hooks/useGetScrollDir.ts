@@ -5,8 +5,6 @@ export default function useGetScrollDir() {
   const [scrollDir, setScrollDir] = useState<ScrollDirection>('down');
 
   useEffect(() => {
-    console.log('useGetScrollDirection Effect');
-
     let prevScrollPos = window.scrollY;
 
     const handleScroll = () => {
@@ -23,7 +21,6 @@ export default function useGetScrollDir() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      console.log('getScrollRemoved');
     };
   }, []);
 

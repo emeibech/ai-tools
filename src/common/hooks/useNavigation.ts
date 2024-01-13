@@ -9,7 +9,6 @@ export default function useNavigation() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log('useNavigation effect');
     dispatch(setCurrentRoute({ route: location.pathname.slice(1) as Route }));
   }, [dispatch, location.pathname]);
 }

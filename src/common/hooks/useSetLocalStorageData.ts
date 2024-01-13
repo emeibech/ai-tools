@@ -12,8 +12,6 @@ export default function useSetLocalStorageData() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log('useSetLocalStorageData');
-
     function instanceOfClient(object: unknown): object is Client {
       return (
         typeof object === 'object' &&
