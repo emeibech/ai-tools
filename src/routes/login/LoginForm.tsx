@@ -173,7 +173,7 @@ function getLoginBtnText(reqStatus: ReqStatus) {
   const btnTexts = {
     idle: 'Log in to account',
     requesting: 'Logging in...',
-    error: 'Log in',
+    error: 'Log in to account',
     success: 'Login successful!',
   };
 
