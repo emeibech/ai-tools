@@ -1,6 +1,5 @@
 import { cn } from '@/common/lib/utils';
 import botImg from './imgs/bot.png';
-import llm from './imgs/llm.jpg';
 import InfoCluster from './components/InfoCluster';
 import FAQs from './components/FAQs';
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
@@ -14,6 +13,8 @@ import {
 } from '@/common/components/ui/popover';
 import { Button } from '@/common/components/ui/button';
 
+const chatbotLink = import.meta.env.VITE_CHATBOT_LINK;
+
 export default function Home() {
   const { userStatus } = useAppSelector(clientStatus);
   useSetScrollPosition('home');
@@ -22,7 +23,7 @@ export default function Home() {
       className={cn(
         'mt-16 px-4 flex flex-col items-center gap-20',
         'min-[320px]:p-4 lg:p-8 lg:mt-0',
-        '2xl:p-12 2xl:gap-48',
+        '2xl:p-12 2xl:gap-40',
       )}
     >
       <section
@@ -98,14 +99,16 @@ export default function Home() {
           <h2 className={cn('font-medium')}>Open Source</h2>
           <p className="text-card-foreground">
             If you think this app looks like shit and feels like shit that's
-            because it is. On the off chance that you happen to like it and
-            would like to create something similar to it, you can clone the repo
-            or fork it or whatever.
+            probably because it is. If you happen to like it and would like to
+            create something similar to it, you can clone the repo or fork it or
+            whatever.
           </p>
           <a
             href={'https://github.com/emeibech/ai-tools'}
             target="_blank"
-            className={cn('text-accent underline max-w-fit py-1')}
+            className={cn(
+              'text-accent underline max-w-fit py-1 visited:text-purple-400',
+            )}
           >
             GitHub
           </a>
@@ -122,7 +125,9 @@ export default function Home() {
           <a
             href={'https://tailwindcss.com/'}
             target="_blank"
-            className={cn('text-accent underline max-w-fit py-1')}
+            className={cn(
+              'text-accent underline max-w-fit py-1 visited:text-purple-400',
+            )}
           >
             Learn about tailwindcss
           </a>
@@ -138,7 +143,9 @@ export default function Home() {
           <a
             href={'https://openai.com/'}
             target="_blank"
-            className={cn('text-accent underline max-w-fit py-1')}
+            className={cn(
+              'text-accent underline max-w-fit py-1 visited:text-purple-400',
+            )}
           >
             Learn about OpenAI
           </a>
@@ -164,30 +171,75 @@ export default function Home() {
           />
         </div>
       </section>
+      <section className="max-w-[920px] flex flex-col gap-8">
+        <h2 className="text-4xl font-bold">About</h2>
+        <p className="text-xl text-card-foreground">
+          emeibechAI is not an actual product. The intended purpose of this web
+          application is so I could apply everything I have learned in web
+          development so far and for it to serve as a portfolio project that is
+          fully-functional, production-ready, and one that incorporates the
+          OpenAI API.
+        </p>
 
-      <figure
-        className={cn(
-          'grid place-items-center max-w-[640px]',
-          '2xl:max-w-[920px]',
-          'min-[678px]:min-w-[640px]',
-        )}
-      >
-        <img
-          src={llm}
-          alt="Large Language Model Basics Infographic"
-          className="min-w-[280px]"
-        />
-        <figcaption className="text-xs text-muted-foreground font-light">
-          Infographic from{' '}
-          <a
-            className="text-accent"
-            target="_blank"
-            href={import.meta.env.VITE_KEYPOINT_INTELLIGENCE_URL}
+        <p className="text-xl text-card-foreground">
+          Furthermore, I figured it's cheaper to use the OpenAI API instead of
+          paying for ChatGPT Plus subscription. I get the important benefits of
+          a ChatGPT Plus account and more for a fraction of the price.
+        </p>
+      </section>
+
+      <section className="max-w-[920px] flex flex-col gap-8">
+        <h2 className="text-4xl font-bold">Credits Section</h2>
+        <p className="text-xl text-card-foreground">
+          The cute artificial intelligence chatbot image I used was created by
+          <Button
+            variant={'link'}
+            className="text-xl px-1 hover:underline active:underline text-accent"
           >
-            Keypoint Intelligence
-          </a>
-        </figcaption>
-      </figure>
+            <a
+              href={chatbotLink}
+              target="_blank"
+              className="visited:text-purple-400"
+            >
+              macrovector
+            </a>
+          </Button>
+          and is under Free License from
+          <Button
+            variant={'link'}
+            className="text-xl px-1 hover:underline active:underline text-accent"
+          >
+            <a
+              href="https://www.freepik.com"
+              target="_blank"
+              className="visited:text-purple-400"
+            >
+              freepik.com
+            </a>
+          </Button>
+          .
+        </p>
+
+        <p className="text-xl text-card-foreground">
+          The paper bag with a face representing the user in chats is Mumei's
+          Friend and is created by
+          <Button
+            variant={'link'}
+            className="text-xl px-1 hover:underline active:underline text-accent"
+          >
+            <a
+              href="https://lateasusual.com/"
+              target="_blank"
+              className="visited:text-purple-400"
+            >
+              Lateasusual_
+            </a>
+          </Button>
+          . There is no defined license for this, so on the off chance that you
+          happen to see this and would like for me to take it down, you can
+          contact me at at my tertiary email at meeseeks42@gmail.com.
+        </p>
+      </section>
     </main>
   );
 }
