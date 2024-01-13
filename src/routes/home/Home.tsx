@@ -80,14 +80,13 @@ export default function Home() {
           </p>
           <Popover>
             <PopoverTrigger className="flex max-w-fit">
-              <Button
-                variant={'link'}
+              <p
                 className={cn(
                   'text-accent underline max-w-fit py-1 px-0 text-lg',
                 )}
               >
                 See cost
-              </Button>
+              </p>
             </PopoverTrigger>
             <PopoverContent side="top">
               Current cost is roughly around $0.001 per 1500 characters
@@ -171,74 +170,88 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="max-w-[920px] flex flex-col gap-8">
+      <section className="max-w-[920px]">
         <h2 className="text-4xl font-bold">About</h2>
-        <p className="text-xl text-card-foreground">
-          emeibechAI is not an actual product. The intended purpose of this web
-          application is so I could apply everything I have learned in web
-          development so far and for it to serve as a portfolio project that is
-          fully-functional, production-ready, and one that incorporates the
-          OpenAI API.
-        </p>
+        <article
+          className={cn(
+            'mt-4 flex flex-col gap-8',
+            '2xl:min-w-[920px] min-[678px]:max-w-[640px] min-w-full',
+          )}
+        >
+          <p className="text-xl text-card-foreground">
+            emeibechAI is not an actual product. The intended purpose of this
+            web application is so I could apply everything I have learned in web
+            development so far and for it to serve as a portfolio project that
+            is fully-functional, production-ready, and one that incorporates the
+            OpenAI API.
+          </p>
 
-        <p className="text-xl text-card-foreground">
-          Furthermore, I figured it's cheaper to use the OpenAI API instead of
-          paying for ChatGPT Plus subscription. I get the important benefits of
-          a ChatGPT Plus account and more for a fraction of the price.
-        </p>
+          <p className="text-xl text-card-foreground">
+            Furthermore, I figured it's cheaper to use the OpenAI API instead of
+            paying for ChatGPT Plus subscription. I get the important benefits
+            of a ChatGPT Plus account and more for a fraction of the price.
+          </p>
+        </article>
       </section>
 
-      <section className="max-w-[920px] flex flex-col gap-8">
+      <section className="max-w-[920px] mb-16">
         <h2 className="text-4xl font-bold">Credits Section</h2>
-        <p className="text-xl text-card-foreground">
-          The cute artificial intelligence chatbot image I used was created by
-          <Button
-            variant={'link'}
-            className="text-xl px-1 hover:underline active:underline text-accent"
-          >
-            <a
-              href={chatbotLink}
-              target="_blank"
-              className="visited:text-purple-400"
+        <article
+          className={cn(
+            'mt-4 flex flex-col gap-8',
+            '2xl:min-w-[920px] min-[678px]:max-w-[640px] min-w-full',
+          )}
+        >
+          <p className="text-xl text-card-foreground">
+            The cute artificial intelligence chatbot image I used was created by
+            <Button
+              variant={'link'}
+              className="text-xl px-1 hover:underline active:underline text-accent"
             >
-              macrovector
-            </a>
-          </Button>
-          and is under Free License from
-          <Button
-            variant={'link'}
-            className="text-xl px-1 hover:underline active:underline text-accent"
-          >
-            <a
-              href="https://www.freepik.com"
-              target="_blank"
-              className="visited:text-purple-400"
+              <a
+                href={chatbotLink}
+                target="_blank"
+                className="visited:text-purple-400"
+              >
+                macrovector
+              </a>
+            </Button>
+            and is under Free License from
+            <Button
+              variant={'link'}
+              className="text-xl px-1 hover:underline active:underline text-accent"
             >
-              freepik.com
-            </a>
-          </Button>
-          .
-        </p>
+              <a
+                href="https://www.freepik.com"
+                target="_blank"
+                className="visited:text-purple-400"
+              >
+                freepik.com
+              </a>
+            </Button>
+            .
+          </p>
 
-        <p className="text-xl text-card-foreground">
-          The paper bag with a face representing the user in chats is Mumei's
-          Friend and is created by
-          <Button
-            variant={'link'}
-            className="text-xl px-1 hover:underline active:underline text-accent"
-          >
-            <a
-              href="https://lateasusual.com/"
-              target="_blank"
-              className="visited:text-purple-400"
+          <p className="text-xl text-card-foreground">
+            The paper bag with a face representing the user in chats is Mumei's
+            Friend and is created by
+            <Button
+              variant={'link'}
+              className="text-xl px-1 hover:underline active:underline text-accent"
             >
-              Lateasusual_
-            </a>
-          </Button>
-          . There is no defined license for this, so on the off chance that you
-          happen to see this and would like for me to take it down, you can
-          contact me at at my tertiary email at meeseeks42@gmail.com.
-        </p>
+              <a
+                href="https://lateasusual.com/"
+                target="_blank"
+                className="visited:text-purple-400"
+              >
+                Lateasusual_
+              </a>
+            </Button>
+            . There is no defined license for this, so on the off chance that
+            you happen to see this and would like for me to take it down, you
+            can contact me at at my tertiary email at meeseeks42@gmail.com.
+          </p>
+        </article>
       </section>
     </main>
   );
