@@ -78,16 +78,16 @@ export default function Nav({ setIsOpen }: NavProps) {
   return (
     <nav className={cn('flex flex-col gap-8 px-0 lg:px-6')}>
       <div className="flex flex-col gap-1">
-        <h3 className="text-sm font-semibold text-muted-foreground px-4">
+        <h2 className="text-sm font-semibold text-muted-foreground px-4">
           Tools
-        </h3>
+        </h2>
         <ul className="flex flex-col gap-0.5">{tools}</ul>
       </div>
 
       <div className="flex flex-col gap-1">
-        <h3 className="text-sm font-semibold text-muted-foreground px-4">
+        <h2 className="text-sm font-semibold text-muted-foreground px-4">
           Chats
-        </h3>
+        </h2>
         <ul className="flex flex-col gap-0.5">{chats}</ul>
       </div>
     </nav>

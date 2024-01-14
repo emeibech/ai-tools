@@ -26,6 +26,7 @@ export default function NavigationSheet({
       </SheetTrigger>
       <SheetContent
         onCloseAutoFocus={(event) => event.preventDefault()}
+        onOpenAutoFocus={(event) => event.preventDefault()}
         onFocus={(event) => event.currentTarget.blur()}
         side={side}
         className={cn(

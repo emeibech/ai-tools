@@ -26,6 +26,7 @@ export default function ConversationsSheet({
         /* These two props prevent default behaviors that triggers when pressing
         enter when editing conversation title */
         onCloseAutoFocus={(event) => event.preventDefault()}
+        onOpenAutoFocus={(event) => event.preventDefault()}
         onFocus={(event) => event.currentTarget.blur()}
       >
         <SheetHeader>
