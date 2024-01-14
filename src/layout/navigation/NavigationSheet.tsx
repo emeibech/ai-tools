@@ -25,6 +25,8 @@ export default function NavigationSheet({
         <HamburgerBtn />
       </SheetTrigger>
       <SheetContent
+        onCloseAutoFocus={(event) => event.preventDefault()}
+        onFocus={(event) => event.currentTarget.blur()}
         side={side}
         className={cn(
           className,
