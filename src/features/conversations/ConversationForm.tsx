@@ -22,6 +22,7 @@ export default function ConversationForm({
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (inputRef.current && inputRef.current.value.length < 1) return;
     const newTitle = inputRef.current?.value || '';
 
     fetch(`${baseUrl}/ai/conversations/${id}`, {
