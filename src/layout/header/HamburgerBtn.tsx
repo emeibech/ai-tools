@@ -10,10 +10,7 @@ const HamburgerBtn = React.forwardRef(
         variant="ghost"
         type="button"
         className="p-2 active:bg-muted lg:hidden"
-        aria-role="switch"
-        aria-description="Opens up the menu sheet"
-        aria-label="Menu button"
-        aria-haspopup="menu"
+        aria-label="Opens up the menu sheet"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -188,7 +188,11 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
             side="right"
             className="sm:px-8 overflow-y-auto"
           >
-            <Button variant={'ghost'} className="min-h-full flex gap-2 px-1">
+            <Button
+              variant={'ghost'}
+              className="min-h-full flex gap-2 px-1"
+              aria-label="Opens up the conversation sheet"
+            >
               <span
                 className={cn(
                   'min-w-full flex justify-center gap-2',

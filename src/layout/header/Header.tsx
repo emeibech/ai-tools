@@ -40,9 +40,9 @@ export default function Header({ className }: ClassName) {
         <SiteTitle />
       </section>
       <Button
-        role="switch"
+        role="button"
         aria-description="Toggles between dark and light mode"
-        aria-label="Theme toggler"
+        aria-label="Toggle light/dark mode"
         onClick={() => handleClickTheme(darkmode)}
         variant="ghost"
         type="button"
