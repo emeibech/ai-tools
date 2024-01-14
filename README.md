@@ -1,2 +1,3 @@
 # ai-tools
-Collection of AI-powered web apps
+
+Collection of AI-powered tools
