@@ -13,6 +13,8 @@ import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/common/components/ui/use-toast';
 
+const baseUrl = import.meta.env.VITE_SERVER_URL;
+
 export default function useApi(apiArgs: ApiArgs) {
   const status = useAppSelector(getStatusState(apiArgs.name));
   const dispatch = useAppDispatch();
@@ -26,7 +28,6 @@ export default function useApi(apiArgs: ApiArgs) {
     const { route, name, prompt } = apiArgs;
     const { responseAppended } = getResponsesActions(route);
     const statusChanged = getStatusActions(name);
-    const baseUrl = import.meta.env.VITE_AI_URL;
     const url = `${baseUrl}/ai/${route}`;
     const body = {
       userContent: [{ role: 'user', content: prompt }],

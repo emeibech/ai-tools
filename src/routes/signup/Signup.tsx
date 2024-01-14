@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReqStatus } from '@/types/routes';
 import AccountCreated from './AccountCreated';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 const schema = {
   firstname: z.string().min(1, { message: 'First name is required' }),

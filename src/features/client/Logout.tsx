@@ -7,7 +7,7 @@ import { LogOutIcon } from 'lucide-react';
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function Logout() {
   const { userStatus } = useAppSelector(clientStatus);

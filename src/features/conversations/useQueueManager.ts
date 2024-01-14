@@ -14,7 +14,7 @@ import { clientStatus } from '../client/clientSlice';
 import { useToast } from '@/common/components/ui/use-toast';
 import { getCatchError } from '@/common/lib/utils';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function useQueueManager(name: Name) {
   const messages = useAppSelector(getMessagesState(name));

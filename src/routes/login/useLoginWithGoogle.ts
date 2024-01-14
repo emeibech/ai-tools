@@ -5,7 +5,7 @@ import { ReqStatus } from '@/types/routes';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function useLoginWithGoogle() {
   const [reqStatus, setReqStatus] = useState<ReqStatus>('idle');

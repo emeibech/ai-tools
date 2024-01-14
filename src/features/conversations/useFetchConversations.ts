@@ -8,7 +8,7 @@ import { clientStatus } from '../client/clientSlice';
 import { getChatInterface } from './utils';
 import { getLoadMoreState } from './loadMoreSliceUtils';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function useFetchConversations(name: Name) {
   const { toast } = useToast();

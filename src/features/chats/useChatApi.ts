@@ -20,7 +20,7 @@ import type {
   TrimMessages,
 } from '@/types/features';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const status = useAppSelector(getStatusState(chatApiArgs.chatInterface));

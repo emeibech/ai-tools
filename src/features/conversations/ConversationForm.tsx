@@ -7,7 +7,7 @@ import { Button } from '@/common/components/ui/button';
 import { CheckIcon } from 'lucide-react';
 import { clientStatus } from '../client/clientSlice';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function ConversationForm({
   title,

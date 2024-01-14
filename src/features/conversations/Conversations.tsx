@@ -17,7 +17,7 @@ import { getChatInterface } from './utils';
 import { ReqStatus } from '@/types/routes';
 import { getLoadMoreActions, getLoadMoreState } from './loadMoreSliceUtils';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   const dispatch = useAppDispatch();

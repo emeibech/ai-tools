@@ -13,7 +13,8 @@ import type { ReqStatus } from '@/types/routes';
 import { useToast } from '@/common/components/ui/use-toast';
 import { Link } from 'react-router-dom';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
+
 const schema = {
   email: z
     .string()

@@ -16,7 +16,7 @@ import RequestIndicator from '../requestStatus/RequestIndicator';
 import { getStatusState } from '../requestStatus/requestStatusSlicesUtils';
 import { clientStatus } from '../client/clientSlice';
 
-const baseUrl = import.meta.env.VITE_AI_URL;
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
   (
