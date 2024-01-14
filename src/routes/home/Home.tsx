@@ -12,11 +12,14 @@ import {
   PopoverTrigger,
 } from '@/common/components/ui/popover';
 import { Button } from '@/common/components/ui/button';
+import { darkModeStatus } from '@/features/darkmode/darkmodeSlice';
 
 const chatbotLink = import.meta.env.VITE_CHATBOT_LINK;
 
 export default function Home() {
   const { userStatus } = useAppSelector(clientStatus);
+  const darkmode = useAppSelector(darkModeStatus);
+
   useSetScrollPosition('home');
   return (
     <main
@@ -106,7 +109,8 @@ export default function Home() {
             href={'https://github.com/emeibech/ai-tools'}
             target="_blank"
             className={cn(
-              'text-accent underline max-w-fit py-1 visited:text-purple-400',
+              darkmode ? 'visited:text-purple-400' : 'visited:text-purple-700',
+              'text-accent underline max-w-fit py-1',
             )}
           >
             GitHub
@@ -125,7 +129,8 @@ export default function Home() {
             href={'https://tailwindcss.com/'}
             target="_blank"
             className={cn(
-              'text-accent underline max-w-fit py-1 visited:text-purple-400',
+              darkmode ? 'visited:text-purple-400' : 'visited:text-purple-700',
+              'text-accent underline max-w-fit py-1',
             )}
           >
             Learn about tailwindcss
@@ -143,7 +148,8 @@ export default function Home() {
             href={'https://openai.com/'}
             target="_blank"
             className={cn(
-              'text-accent underline max-w-fit py-1 visited:text-purple-400',
+              darkmode ? 'visited:text-purple-400' : 'visited:text-purple-700',
+              'text-accent underline max-w-fit py-1',
             )}
           >
             Learn about OpenAI
@@ -211,7 +217,11 @@ export default function Home() {
               <a
                 href={chatbotLink}
                 target="_blank"
-                className="visited:text-purple-400"
+                className={cn(
+                  darkmode
+                    ? 'visited:text-purple-400'
+                    : 'visited:text-purple-700',
+                )}
               >
                 macrovector
               </a>
@@ -224,7 +234,11 @@ export default function Home() {
               <a
                 href="https://www.freepik.com"
                 target="_blank"
-                className="visited:text-purple-400"
+                className={cn(
+                  darkmode
+                    ? 'visited:text-purple-400'
+                    : 'visited:text-purple-700',
+                )}
               >
                 freepik.com
               </a>
@@ -242,7 +256,11 @@ export default function Home() {
               <a
                 href="https://lateasusual.com/"
                 target="_blank"
-                className="visited:text-purple-400"
+                className={cn(
+                  darkmode
+                    ? 'visited:text-purple-400'
+                    : 'visited:text-purple-700',
+                )}
               >
                 Lateasusual_
               </a>
