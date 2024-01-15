@@ -38,6 +38,7 @@ export default function useApi(apiArgs: ApiArgs) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: act ?? '',
       },
       body: JSON.stringify(body),
     };
