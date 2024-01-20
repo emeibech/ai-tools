@@ -7,8 +7,10 @@ const HamburgerBtn = React.forwardRef(
       <Button
         {...props}
         ref={forwardedRef}
-        variant="ghost"
+        variant="custom"
         type="button"
+        hoverStyle="bg-accent text-accent-foreground"
+        pressedStyle="bg-accent text-accent-foreground"
         className="p-2 active:bg-muted lg:hidden"
         aria-label="Opens up the menu sheet"
       >

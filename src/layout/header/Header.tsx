@@ -44,7 +44,9 @@ export default function Header({ className }: ClassName) {
         aria-description="Toggles between dark and light mode"
         aria-label="Toggle light/dark mode"
         onClick={() => handleClickTheme(darkmode)}
-        variant="ghost"
+        hoverStyle="bg-accent text-accent-foreground"
+        pressedStyle="bg-accent text-accent-foreground"
+        variant="custom"
         type="button"
         className={cn(
           'px-2 justify-self-end',

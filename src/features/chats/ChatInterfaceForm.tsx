@@ -113,8 +113,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       onSubmit={handleSubmit}
       className={cn(
         'grid grid-cols-2 mt-8 bg-background',
-        'px-4 2xl:px-0',
-        'sticky bottom-0 mx-auto',
+        'px-4 md:px-20 sticky bottom-0',
       )}
     >
       <div
@@ -153,7 +152,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         )}
       >
         <Button
-          type="submit"
+          typeof="submit"
           disabled={value.length === 0}
           variant={'custom'}
           size={'custom'}
@@ -167,7 +166,9 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         <div className="grid grid-cols-2 gap-1 col-span-2">
           <Button
             type="button"
-            variant={'ghost'}
+            variant={'custom'}
+            hoverStyle="bg-accent text-accent-foreground"
+            pressedStyle="bg-accent text-accent-foreground"
             className="min-h-full flex gap-2 px-1"
             onClick={() => {
               dispatch(messagesReset());
@@ -192,7 +193,9 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
           >
             <Button
               type="button"
-              variant={'ghost'}
+              variant={'custom'}
+              hoverStyle="bg-accent text-accent-foreground"
+              pressedStyle="bg-accent text-accent-foreground"
               className="min-h-full flex gap-2 px-1"
               aria-label="Opens up the conversation sheet"
             >
