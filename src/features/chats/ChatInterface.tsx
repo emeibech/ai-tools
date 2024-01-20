@@ -38,12 +38,12 @@ export default function ChatInterface({
   );
 
   return (
-    <section className={cn('relative max-w-[1280px]')}>
-      <div>
-        <div className={cn('min-h-[85vh] max-w-[824px] mx-auto')}>
+    <section className={cn('max-w-[1280px]')}>
+      <div className={cn('max-w-[824px] mx-auto relative')}>
+        <article className="svh">
           {children}
           {listMessages}
-        </div>
+        </article>
 
         <ChatInterfaceForm name={name} />
       </div>

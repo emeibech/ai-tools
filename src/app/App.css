@@ -8,3 +8,13 @@
   src: url('../common/fonts/outfit.ttf');
   font-display: swap;
 }
+
+.dvh {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.svh {
+  min-height: 100vh;
+  min-height: 100svh;
+}

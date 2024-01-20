@@ -113,8 +113,8 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       onSubmit={handleSubmit}
       className={cn(
         'grid grid-cols-2 mt-8 bg-background',
-        'px-4 md:px-20',
-        'sticky bottom-0 inset-x-40',
+        'px-4 2xl:px-0',
+        'sticky bottom-0 mx-auto',
       )}
     >
       <div
@@ -153,6 +153,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
         )}
       >
         <Button
+          type="submit"
           disabled={value.length === 0}
           variant={'custom'}
           size={'custom'}
@@ -165,6 +166,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       <div className={cn('grid grid-cols-2', 'py-2 col-span-2 gap-2 mt-1')}>
         <div className="grid grid-cols-2 gap-1 col-span-2">
           <Button
+            type="button"
             variant={'ghost'}
             className="min-h-full flex gap-2 px-1"
             onClick={() => {
@@ -189,6 +191,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
             className="sm:px-8 overflow-y-auto"
           >
             <Button
+              type="button"
               variant={'ghost'}
               className="min-h-full flex gap-2 px-1"
               aria-label="Opens up the conversation sheet"
