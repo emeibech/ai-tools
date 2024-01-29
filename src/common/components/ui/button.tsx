@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/common/lib/utils';
-import { useHover, usePress, useFocusVisible } from '@react-aria/interactions';
+import { useHover, usePress } from '@react-aria/interactions';
+import { useFocusRing } from '@react-aria/focus';
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors disabled:pointer-events-none disabled:opacity-50',
@@ -62,7 +63,8 @@ const Button = React.forwardRef<HTMLButtonElement, AriaButtonProps>(
     const Comp = asChild ? Slot : 'button';
     const { isHovered, hoverProps } = useHover({});
     const { isPressed, pressProps } = usePress({});
-    const { isFocusVisible } = useFocusVisible();
+    const { isFocusVisible, focusProps } = useFocusRing();
+
     return (
       <Comp
         className={cn(
@@ -72,6 +74,7 @@ const Button = React.forwardRef<HTMLButtonElement, AriaButtonProps>(
           !isFocusVisible ? 'outline-none' : '',
         )}
         ref={ref}
+        {...focusProps}
         {...hoverProps}
         {...pressProps}
         {...props}
