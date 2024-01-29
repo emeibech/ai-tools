@@ -11,7 +11,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/common/components/ui/popover';
-import { Button } from '@/common/components/ui/button';
 import { darkModeStatus } from '@/features/darkmode/darkmodeSlice';
 
 const chatbotLink = import.meta.env.VITE_CHATBOT_LINK;
@@ -210,10 +209,7 @@ export default function Home() {
         >
           <p className="text-xl text-card-foreground">
             The cute artificial intelligence chatbot image I used was created by
-            <Button
-              variant={'link'}
-              className="text-xl px-1 hover:underline active:underline text-accent"
-            >
+            <span className="text-xl px-1">
               <a
                 href={chatbotLink}
                 target="_blank"
@@ -221,16 +217,14 @@ export default function Home() {
                   darkmode
                     ? 'visited:text-purple-400'
                     : 'visited:text-purple-700',
+                  'hover:underline active:underline text-accent',
                 )}
               >
                 macrovector
               </a>
-            </Button>
+            </span>
             and is under Free License from
-            <Button
-              variant={'link'}
-              className="text-xl px-1 hover:underline active:underline text-accent"
-            >
+            <span className="text-xl px-1">
               <a
                 href="https://www.freepik.com"
                 target="_blank"
@@ -238,21 +232,19 @@ export default function Home() {
                   darkmode
                     ? 'visited:text-purple-400'
                     : 'visited:text-purple-700',
+                  'hover:underline active:underline text-accent',
                 )}
               >
                 freepik.com
               </a>
-            </Button>
+            </span>
             .
           </p>
 
           <p className="text-xl text-card-foreground">
             The paper bag with a face representing the user in chats is Mumei's
             Friend and is created by
-            <Button
-              variant={'link'}
-              className="text-xl px-1 hover:underline active:underline text-accent"
-            >
+            <span className="text-xl px-1">
               <a
                 href="https://lateasusual.com/"
                 target="_blank"
@@ -260,11 +252,12 @@ export default function Home() {
                   darkmode
                     ? 'visited:text-purple-400'
                     : 'visited:text-purple-700',
+                  'hover:underline active:underline text-accent',
                 )}
               >
                 Lateasusual_
               </a>
-            </Button>
+            </span>
             . There is no defined license for this, so on the off chance that
             you happen to see this and would like for me to take it down, you
             can contact me at at my tertiary email at meeseeks42@gmail.com.
