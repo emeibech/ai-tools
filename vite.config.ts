@@ -43,6 +43,9 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    reportCompressedSize: false,
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
