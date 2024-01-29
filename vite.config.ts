@@ -7,10 +7,6 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      workbox: {
-        globPatterns: ['**/*'],
-      },
-      includeAssets: ['**/*'],
       manifest: {
         theme_color: '#08333b',
         background_color: '#08333b',
