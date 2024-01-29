@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { cn } from '@/common/lib/utils';
-import Footer from '../footer/Footer';
 import HamburgerBtn from '../header/HamburgerBtn';
 import SiteTitle from '../header/SiteTitle';
 import Nav from './Nav';
@@ -31,7 +30,7 @@ export default function NavigationSheet({
         side={side}
         className={cn(
           className,
-          'grid grid-flow-row grid-rows-[1fr_6fr_1fr] py-4',
+          'grid grid-flow-row grid-rows-[30px_1fr] py-4',
         )}
       >
         <SheetHeader>
@@ -39,7 +38,6 @@ export default function NavigationSheet({
         </SheetHeader>
         <Nav setIsOpen={setIsOpen} />
         <Logout />
-        <Footer />
       </SheetContent>
     </Sheet>
   );

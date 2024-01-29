@@ -4,7 +4,6 @@ import { cn } from '../common/lib/utils';
 import Header from '../layout/header/Header';
 import Nav from '../layout/navigation/Nav';
 import SiteTitle from '../layout/header/SiteTitle';
-import Footer from '../layout/footer/Footer';
 import './App.css';
 import useDarkmodeToggler from '@/common/hooks/useDarkmodeToggler';
 import useSetLocalStorageData from '@/common/hooks/useSetLocalStorageData';
@@ -41,13 +40,12 @@ export default function App({ children }: { children?: ReactNode }) {
         <div
           className={cn(
             'lg:fixed lg:min-w-[260px] min-h-screen',
-            'grid grid-flow-row grid-rows-[1fr_6fr_1fr_32px] py-4',
+            'grid grid-flow-row grid-rows-[30px_1fr] py-4',
           )}
         >
           <SiteTitle />
           <Nav />
           <Logout />
-          <Footer />
         </div>
       </section>
 

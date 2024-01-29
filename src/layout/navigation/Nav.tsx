@@ -76,7 +76,7 @@ export default function Nav({ setIsOpen }: NavProps) {
   }
 
   return (
-    <nav className={cn('flex flex-col gap-8 px-0 lg:px-6')}>
+    <nav className={cn('flex flex-col gap-8 px-0 lg:px-6 mt-8 lg:mt-16')}>
       <div className="flex flex-col gap-1">
         <h2 className="text-sm font-semibold text-muted-foreground px-4">
           Tools
