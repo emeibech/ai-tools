@@ -31,7 +31,7 @@ A collection of tools and chatbots powered by OpenAI API. The purpose of this ap
 
 ## Screenshots
 
-<img alt="Story Generator screenchot" src="/screenshots/story-gen.png" width="238" height="436"> <img alt="Coding Assistant screenshot" src="/screenshots/code-assistant.png" width="238" height="436"> <img alt="Desktop screenshot" src="/screenshots/desktop-home.png" width="720" height="405">
+<img alt="Home mobile screenshot" src="/screenshots/story-gen.png" width="238" height="436"> <img alt="Story Generator screenshot" src="/screenshots/mobile-home.jpeg" width="238" height="436"> <img alt="Coding Assistant screenshot" src="/screenshots/code-assistant.png" width="238" height="436"> <img alt="Desktop screenshot" src="/screenshots/desktop-home.png" width="720" height="405">
 
 ## Install
 
