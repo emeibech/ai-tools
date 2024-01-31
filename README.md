@@ -1,6 +1,6 @@
 # ai-tools
 
-ChatGPT with extra steps [Live](https://ai.emeibech.com).
+ChatGPT with extra steps. [See it live](https://ai.emeibech.com).
 
 ## Table of contents
 
@@ -17,10 +17,7 @@ A collection of tools and chatbots powered by OpenAI API. The purpose of this ap
 
 ## Technologies
 
-<img width="80" src="https://www.svgrepo.com/show/452092/react.svg" alt="React logo">
-<img width="80" src="https://www.svgrepo.com/show/374146/typescript-official.svg" alt="Typescript logo">
-<img width="80" src="https://www.svgrepo.com/show/452093/redux.svg" alt="Redux logo">
-<img width="80" src="https://vitejs.dev/logo.svg" alt="Vite logo">
+<img width="80" src="https://www.svgrepo.com/show/452092/react.svg" alt="React logo"> <img width="80" src="https://www.svgrepo.com/show/374146/typescript-official.svg" alt="Typescript logo"> <img width="80" src="https://www.svgrepo.com/show/452093/redux.svg" alt="Redux logo"> <img width="80" src="https://vitejs.dev/logo.svg" alt="Vite logo">
 
 ## Features
 
@@ -34,11 +31,7 @@ A collection of tools and chatbots powered by OpenAI API. The purpose of this ap
 
 ## Screenshots
 
-<span align="center">
-  <img alt="Story Generator screenchot" src="/screenshots/story-gen.png" width="720" height="405">
-  <img alt="Coding Assistant screenshot" src="/screenshots/code-assistant.png" width="720" height="405">
-</span>
-<img alt="Desktop screenshot" src="/screenshots/desktop-home.png" width="720" height="405">
+<img alt="Story Generator screenchot" src="/screenshots/story-gen.png" width="238" height="436"> <img alt="Coding Assistant screenshot" src="/screenshots/code-assistant.png" width="238" height="436"> <img alt="Desktop screenshot" src="/screenshots/desktop-home.png" width="720" height="405">
 
 ## Install
 
@@ -64,4 +57,4 @@ npm run dev
 
 ## Usage
 
-Although the app will run, it is only the frontend and will require a couple of things for it to actually be useful. First, you need to create a .env.local file and fill it with the values outlined in the .env.local.example. Now the hard part, you're going to need a server and a postgres db. You can clone my server [here](https://github.com/emeibech/express-server) and follow the instructions there.
+Although the app will run, it is only the frontend and will require a couple of things for it to actually be useful. First, you need to create a .env.local file and fill it with the values outlined in the .env.local.example. Now the hard part, you're going to need a server and a postgres db. You can clone my server [here](https://github.com/emeibech/express-server) and follow the instructions.
