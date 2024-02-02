@@ -1,6 +1,7 @@
 # ai-tools
 
 ChatGPT with extra steps. [See it live](https://ai.emeibech.com).
+[Server repo](https://github.com/emeibech/express-server)
 
 ## Table of contents
 
@@ -8,8 +9,6 @@ ChatGPT with extra steps. [See it live](https://ai.emeibech.com).
 - [Technologies](#technologies)
 - [Features](#features)
 - [Screenshots](#screenshots)
-- [Install](#install)
-- [Usage](#usage)
 
 ## Summary
 
@@ -32,29 +31,3 @@ A collection of tools and chatbots powered by OpenAI API. The purpose of this ap
 ## Screenshots
 
 <img alt="Home mobile screenshot" src="/screenshots/story-gen.png" width="238" height="436"> <img alt="Story Generator screenshot" src="/screenshots/mobile-home.jpeg" width="238" height="436"> <img alt="Coding Assistant screenshot" src="/screenshots/code-assistant.png" width="238" height="436"> <img alt="Desktop screenshot" src="/screenshots/desktop-home.png" width="720" height="405">
-
-## Install
-
-**You need Git and NPM installed.**
-
-Clone the repo
-
-```bash
-git clone https://github.com/emeibech/ai-tools.git
-```
-
-Install dependencies
-
-```bash
-npm install
-```
-
-Run dev server
-
-```bash
-npm run dev
-```
-
-## Usage
-
-Although the app will run, it is only the frontend and will require a couple of things for it to actually be useful. First, you need to create a .env.local file and fill it with the values outlined in the .env.local.example. Now the hard part, you're going to need a server and a postgres db. You can clone my server [here](https://github.com/emeibech/express-server) and follow the instructions.
