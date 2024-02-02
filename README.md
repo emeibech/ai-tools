@@ -1,6 +1,7 @@
 # ai-tools
 
-ChatGPT with extra steps. [See it live](https://ai.emeibech.com).
+ChatGPT with extra steps. <br>
+[See it live](https://ai.emeibech.com) <br>
 [Server repo](https://github.com/emeibech/express-server)
 
 ## Table of contents
