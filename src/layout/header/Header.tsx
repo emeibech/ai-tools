@@ -54,7 +54,7 @@ export default function Header({ className }: ClassName) {
           'focus-visible:ring-offset-0',
         )}
       >
-        {darkmode ? <SunIcon height="24px" /> : <MoonIcon height="24px" />}
+        {darkmode ? <MoonIcon height="24px" /> : <SunIcon height="24px" />}
       </Button>
 
       <Separator className={cn('col-span-2', 'lg:hidden')} />
