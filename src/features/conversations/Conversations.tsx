@@ -62,7 +62,7 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
           return {
             role: item.role,
             content: item.content,
-            dbit: item.id,
+            dbid: item.id,
             id:
               item.role === 'user'
                 ? `user-${nanoid()}`
