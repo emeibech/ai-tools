@@ -11,6 +11,8 @@ import useSaveToLocalStorage from '@/common/hooks/useSaveToLocalStorage';
 import Logout from '@/features/client/Logout';
 import { Toaster } from '@/common/components/ui/toaster';
 
+fetch('https://server.emeibech.com');
+
 export default function App({ children }: { children?: ReactNode }) {
   useSaveToLocalStorage();
   useSetLocalStorageData();
