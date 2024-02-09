@@ -23,6 +23,10 @@ export default function Router() {
     () => import('./generalassistant/GeneralAssistant'),
   );
 
+  const ImageTranslator = lazy(
+    () => import('./imagetranslator/ImageTranslator'),
+  );
+
   const { userStatus } = useAppSelector(clientStatus);
 
   const router = createBrowserRouter([
@@ -80,6 +84,14 @@ export default function Router() {
           element: (
             <Suspense fallback={<Fallback />}>
               <GeneralAssistant />
+            </Suspense>
+          ),
+        },
+        {
+          path: 'imagetranslator',
+          element: (
+            <Suspense fallback={<Fallback />}>
+              <ImageTranslator />
             </Suspense>
           ),
         },

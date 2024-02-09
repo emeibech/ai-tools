@@ -14,7 +14,12 @@ import type {
   NavProps,
 } from '@/types/layout';
 
-const toolsNav = ['Code Analyzer', 'Story Generator', 'Tone Changer'];
+const toolsNav = [
+  'Code Analyzer',
+  'Story Generator',
+  'Tone Changer',
+  'Image Translator',
+];
 const toolsKeys = generateKeys(toolsNav);
 const chatsNav = ['Coding Assistant', 'General Assistant', 'Eli5'];
 const chatsKeys = generateKeys(chatsNav);

@@ -34,6 +34,12 @@ export const storyGeneratorResponseSlice = createSlice({
   reducers,
 });
 
+export const imgTranslatorResponseSlice = createSlice({
+  name: 'imgTranslatorResponse',
+  initialState,
+  reducers,
+});
+
 export const {
   responseReset: codeAnalyzerResponseReset,
   responseAppended: codeAnalyzerResponseAppended,
@@ -49,6 +55,11 @@ export const {
   responseAppended: storyGeneratorResponseAppended,
 } = storyGeneratorResponseSlice.actions;
 
+export const {
+  responseReset: imgTranslatorResponseReset,
+  responseAppended: imgTranslatorResponseAppended,
+} = imgTranslatorResponseSlice.actions;
+
 export const codeAnalyzerResponse = (state: RootState) => {
   return state.codeAnalyzerResponseSlice.response;
 };
@@ -61,8 +72,13 @@ export const storyGeneratorResponse = (state: RootState) => {
   return state.storyGeneratorResponseSlice.response;
 };
 
+export const imgTranslatorResponse = (state: RootState) => {
+  return state.imgTranslatorResponseSlice.response;
+};
+
 export default {
   codeAnalyzerResponseSlice: codeAnalyzerResponseSlice.reducer,
   toneChangerResponseSlice: toneChangerResponseSlice.reducer,
   storyGeneratorResponseSlice: storyGeneratorResponseSlice.reducer,
+  imgTranslatorResponseSlice: imgTranslatorResponseSlice.reducer,
 };

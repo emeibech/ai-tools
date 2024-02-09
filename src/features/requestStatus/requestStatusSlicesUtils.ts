@@ -11,6 +11,8 @@ import {
   generalAssistantStatusChanged,
   eli5Status,
   eli5StatusChanged,
+  imgTranslatorStatus,
+  imgTranslatorStatusChanged,
 } from './requestStatusSlices';
 import type { Name } from '@/types/features';
 
@@ -38,6 +40,10 @@ const statusMap = {
   "Explain Like I'm 5": {
     status: eli5Status,
     statusChanged: eli5StatusChanged,
+  },
+  'Image Translator': {
+    status: imgTranslatorStatus,
+    statusChanged: imgTranslatorStatusChanged,
   },
 };
 

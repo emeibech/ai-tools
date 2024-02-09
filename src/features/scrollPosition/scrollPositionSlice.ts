@@ -10,6 +10,7 @@ const initialState: ScrollPositions = {
   storygenerator: 0,
   tonechanger: 0,
   generalassistant: 0,
+  imagetranslator: 0,
 };
 
 export const scrollPositionsSlice = createSlice({

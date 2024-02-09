@@ -82,6 +82,7 @@ export interface Message {
 
 export interface ChatInterfaceProps {
   name: Name;
+  route: Route;
   children: ReactNode;
   renderCodeBlocks?: boolean;
 }
@@ -101,7 +102,8 @@ export type Name =
   | 'General Assistant'
   | 'Code Analyzer'
   | 'Tone Changer'
-  | 'Story Generator';
+  | 'Story Generator'
+  | 'Image Translator';
 
 // ChatInterfaceForm
 export type Model = 'gpt-4' | '';
@@ -144,6 +146,7 @@ export interface ScrollPositions {
   storygenerator: number;
   tonechanger: number;
   generalassistant: number;
+  imagetranslator: number;
 }
 
 export type Route =
@@ -153,10 +156,15 @@ export type Route =
   | 'eli5'
   | 'storygenerator'
   | 'tonechanger'
-  | 'generalassistant';
+  | 'generalassistant'
+  | 'imagetranslator';
 
 // toolsSlicesUtils
-export type Tool = 'codeanalyzer' | 'tonechanger' | 'storygenerator';
+export type Tool =
+  | 'codeanalyzer'
+  | 'tonechanger'
+  | 'storygenerator'
+  | 'imagetranslator';
 
 // useApi
 export interface ApiArgs {

@@ -49,6 +49,12 @@ const eli5StatusSlice = createSlice({
   reducers,
 });
 
+const imgTranslatorStatusSlice = createSlice({
+  name: 'imgTranslatorStatus',
+  initialState,
+  reducers,
+});
+
 export const { statusChanged: codeAnalyzerStatusChanged } =
   codeAnalyzerStatusSlice.actions;
 
@@ -65,6 +71,9 @@ export const { statusChanged: generalAssistantStatusChanged } =
   generalAssistantStatusSlice.actions;
 
 export const { statusChanged: eli5StatusChanged } = eli5StatusSlice.actions;
+
+export const { statusChanged: imgTranslatorStatusChanged } =
+  imgTranslatorStatusSlice.actions;
 
 export const codeAnalyzerStatus = (state: RootState) =>
   state.codeAnalyzerStatusSlice.status;
@@ -83,6 +92,9 @@ export const eli5Status = (state: RootState) => state.eli5StatusSlice.status;
 export const generalAssistantStatus = (state: RootState) =>
   state.generalAssistantStatusSlice.status;
 
+export const imgTranslatorStatus = (state: RootState) =>
+  state.imgTranslatorStatusSlice.status;
+
 export default {
   codeAnalyzerStatusSlice: codeAnalyzerStatusSlice.reducer,
   toneChangerStatusSlice: toneChangerStatusSlice.reducer,
@@ -90,4 +102,5 @@ export default {
   codingAssistantStatusSlice: codingAssistantStatusSlice.reducer,
   eli5StatusSlice: eli5StatusSlice.reducer,
   generalAssistantStatusSlice: generalAssistantStatusSlice.reducer,
+  imgTranslatorStatusSlice: imgTranslatorStatusSlice.reducer,
 };

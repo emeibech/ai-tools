@@ -31,6 +31,12 @@ export const storyGeneratorPromptSlice = createSlice({
   reducers,
 });
 
+export const imgTranslatorPromptSlice = createSlice({
+  name: 'imgTranslatorPrompt',
+  initialState,
+  reducers,
+});
+
 export const {
   promptReset: codeAnalyzerPromptReset,
   promptAppended: codeAnalyzerPromptAppended,
@@ -46,6 +52,11 @@ export const {
   promptAppended: storyGeneratorPromptAppended,
 } = storyGeneratorPromptSlice.actions;
 
+export const {
+  promptReset: imgTranslatorPromptReset,
+  promptAppended: imgTranslatorPromptAppended,
+} = imgTranslatorPromptSlice.actions;
+
 export const codeAnalyzerPrompt = (state: RootState) => {
   return state.codeAnalyzerPromptSlice.prompt;
 };
@@ -58,8 +69,13 @@ export const storyGeneratorPrompt = (state: RootState) => {
   return state.storyGeneratorPromptSlice.prompt;
 };
 
+export const imgTranslatorPrompt = (state: RootState) => {
+  return state.imgTranslatorPromptSlice.prompt;
+};
+
 export default {
   codeAnalyzerPromptSlice: codeAnalyzerPromptSlice.reducer,
   toneChangerPromptSlice: toneChangerPromptSlice.reducer,
   storyGeneratorPromptSlice: storyGeneratorPromptSlice.reducer,
+  imgTranslatorPromptSlice: imgTranslatorPromptSlice.reducer,
 };

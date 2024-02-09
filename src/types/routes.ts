@@ -58,3 +58,17 @@ export type SelectedMonth =
 // LoginForm
 
 export type ReqStatus = 'idle' | 'requesting' | 'error' | 'success';
+
+export interface PreviewState {
+  url: string;
+  name: string;
+}
+
+export interface ImageTranslatorProps extends ToolProp {
+  setImg: React.Dispatch<
+    React.SetStateAction<{
+      src: string;
+      alt: string;
+    }>
+  >;
+}
