@@ -21,7 +21,7 @@ export default function CodingAssistant() {
       )}
     >
       {userStatus === 'user' && (
-        <ChatInterface name="General Assistant">
+        <ChatInterface name="General Assistant" route="generalassistant">
           <article className="pt-4">
             <ChatMessage
               id={`assistant-${id}`}

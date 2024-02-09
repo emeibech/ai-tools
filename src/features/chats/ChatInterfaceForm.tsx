@@ -113,7 +113,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
       onSubmit={handleSubmit}
       className={cn(
         'grid grid-cols-2 mt-8 bg-background',
-        'px-4 md:px-20 sticky bottom-0',
+        'px-4 md:px-0 sticky bottom-0',
       )}
     >
       <div
@@ -132,7 +132,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
             'min-h-[2rem] py-1 pl-4 rounded-xl resize-none',
             'sm: pr-14',
           )}
-          cols={70}
+          cols={75}
           rows={1}
           value={value}
           ref={textareaRef}

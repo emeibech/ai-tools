@@ -1,7 +1,11 @@
 import { getStatusActions, getStatusState } from './requestStatusSlicesUtils';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { Button } from '@/common/components/ui/button';
-import type { RequestIndicatorProps, RequestStatus } from '@/types/features';
+import type {
+  Name,
+  RequestIndicatorProps,
+  RequestStatus,
+} from '@/types/features';
 import { MouseEvent, MouseEventHandler } from 'react';
 
 export default function RequestIndicator({
@@ -17,10 +21,13 @@ export default function RequestIndicator({
     dispatch(statusChanged('requesting'));
   }
 
-  return <>{renderStatus(requestStatus, hideStreamIndicator, handleClick)}</>;
+  return (
+    <>{renderStatus(name, requestStatus, hideStreamIndicator, handleClick)}</>
+  );
 }
 
 function renderStatus(
+  name: Name,
   status: RequestStatus,
   hideStreamIndicator: boolean,
   onClick: MouseEventHandler<HTMLButtonElement>,
@@ -44,9 +51,9 @@ function renderStatus(
     );
   }
 
-  if (status === 'error') {
+  if (status === 'error' && name !== 'Image Translator') {
     return (
-      <div className="min-w-full flex pr-6">
+      <div className="min-w-full flex">
         <Button variant={'outline'} className="m-auto" onClick={onClick}>
           Retry request
         </Button>

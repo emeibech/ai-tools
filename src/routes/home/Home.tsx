@@ -5,7 +5,7 @@ import FAQs from './components/FAQs';
 import useSetScrollPosition from '@/common/hooks/useSetScrollPosition';
 import { useAppSelector } from '@/app/hooks';
 import { clientStatus } from '@/features/client/clientSlice';
-import GuestButtons from '@/common/components/GuestButtons';
+import GuestButtons from '@/common/components/custom/GuestButtons';
 import {
   Popover,
   PopoverContent,

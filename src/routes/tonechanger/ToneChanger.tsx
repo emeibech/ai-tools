@@ -48,7 +48,7 @@ export default function ToneChanger() {
 
           <ToneChangerForm route="tonechanger" name="Tone Changer" />
 
-          <section className="max-w-[920px] mx-auto min-w-full">
+          <section className="max-w-[824px] mx-auto min-w-full text-lg">
             <article>
               {prompt !== '' && (
                 <>
@@ -60,7 +60,7 @@ export default function ToneChanger() {
               )}
             </article>
 
-            <article className="mt-8">
+            <article className="mt-8 overflow-x-auto">
               <div className="whitespace-pre-wrap">
                 {response}
                 <RequestIndicator name="Tone Changer" />

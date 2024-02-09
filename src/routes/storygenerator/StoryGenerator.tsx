@@ -48,7 +48,7 @@ export default function StoryGenerator() {
 
           <StoryGeneratorForm route="storygenerator" name="Story Generator" />
 
-          <section className="max-w-[920px] mx-auto min-w-full">
+          <section className="max-w-[824px] mx-auto min-w-full text-lg">
             <article>
               {prompt !== '' && (
                 <>
@@ -60,7 +60,7 @@ export default function StoryGenerator() {
               )}
             </article>
 
-            <article className="mt-8">
+            <article className="mt-8 overflow-x-auto">
               <div className="whitespace-pre-wrap">
                 {response}
                 <RequestIndicator name="Story Generator" />

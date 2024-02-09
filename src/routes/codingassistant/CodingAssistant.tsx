@@ -21,7 +21,11 @@ export default function CodingAssistant() {
       )}
     >
       {userStatus === 'user' && (
-        <ChatInterface name="Coding Assistant" renderCodeBlocks>
+        <ChatInterface
+          name="Coding Assistant"
+          route="codingassistant"
+          renderCodeBlocks
+        >
           <article className="pt-4">
             <ChatMessage
               id={`assistant-${id}`}

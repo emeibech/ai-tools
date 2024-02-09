@@ -7,14 +7,17 @@ import { getMessagesState } from './messagesSliceutils';
 import type { ChatInterfaceProps } from '@/types/features';
 import useFetchConversations from '../conversations/useFetchConversations';
 import useQueueManager from '../conversations/useQueueManager';
+import { currentRoute } from '../currentRoute/currentRouteSlice';
 
 export default function ChatInterface({
   name,
+  route,
   children,
   renderCodeBlocks = false,
 }: ChatInterfaceProps) {
   const msgs = getMessagesState(name);
   const messages = useAppSelector(msgs);
+  const selectedRoute = useAppSelector(currentRoute);
 
   useFetchConversations(name);
   useQueueManager(name);
@@ -28,18 +31,20 @@ export default function ChatInterface({
             key={message.id}
             id={message.id}
             renderCodeBlocks={renderCodeBlocks}
-            requestIndicator={index === messages.length - 1}
+            requestIndicator={
+              selectedRoute === route && index === messages.length - 1
+            }
           >
             {message.content}
           </ChatMessage>
         );
       }),
-    [messages, name, renderCodeBlocks],
+    [messages, name, route, selectedRoute, renderCodeBlocks],
   );
 
   return (
-    <section className={cn('max-w-[1280px]')}>
-      <div className={cn('max-w-[824px] mx-auto relative')}>
+    <section className={cn('max-w-[1440px]')}>
+      <div className={cn('max-w-[876px] mx-auto relative')}>
         <article className="svh">
           {children}
           {listMessages}
