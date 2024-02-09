@@ -19,7 +19,7 @@ export default function useApi(apiArgs: ApiArgs) {
   const status = useAppSelector(getStatusState(apiArgs.name));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
-  const { userStatus, act } = useAppSelector(clientStatus);
+  const { act } = useAppSelector(clientStatus);
   const setChunkSentCount = useAutoScroll({ status, scrollDir });
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -101,7 +101,7 @@ export default function useApi(apiArgs: ApiArgs) {
     }
 
     if (status === 'requesting') {
-      setScrollDir('down');
+      requestAnimationFrame(() => setScrollDir('down'));
       streamData();
     }
   }, [
@@ -111,7 +111,6 @@ export default function useApi(apiArgs: ApiArgs) {
     navigate,
     toast,
     apiArgs,
-    userStatus,
     act,
     status,
   ]);

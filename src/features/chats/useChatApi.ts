@@ -26,7 +26,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const status = useAppSelector(getStatusState(chatApiArgs.chatInterface));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
-  const { userStatus, act } = useAppSelector(clientStatus);
+  const { act } = useAppSelector(clientStatus);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -148,7 +148,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
 
     // This condition is so it doesn't run on first mount
     if (status === 'requesting') {
-      setScrollDir('down');
+      requestAnimationFrame(() => setScrollDir('down'));
       streamData();
     }
   }, [
@@ -158,7 +158,6 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     navigate,
     toast,
     chatApiArgs,
-    userStatus,
     act,
     status,
   ]);
