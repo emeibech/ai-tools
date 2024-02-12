@@ -39,7 +39,11 @@ export default function ConversationForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="relative">
+    <form
+      onSubmit={handleSubmit}
+      onBlur={() => setCurrentlyEditing(null)}
+      className="relative"
+    >
       <Input
         type="text"
         ref={inputRef}
