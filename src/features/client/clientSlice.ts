@@ -8,7 +8,7 @@ const initialState: Client = {
 };
 
 export const clientSlice = createSlice({
-  name: 'darkmodeToggler',
+  name: 'clientStatus',
   initialState,
   reducers: {
     clientStatusReset: () => initialState,

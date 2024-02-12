@@ -20,8 +20,8 @@ export default function Logout() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: act ?? '',
     },
-    body: JSON.stringify({ act }),
   };
 
   const url = `${baseUrl}/auth/logout`;
