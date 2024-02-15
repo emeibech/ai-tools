@@ -6,7 +6,7 @@
 @font-face {
   font-family: outfit;
   src: url('../common/fonts/outfit.ttf');
-  font-display: swap;
+  font-display: auto;
 }
 
 .dvh {
