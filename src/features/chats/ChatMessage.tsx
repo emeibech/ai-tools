@@ -1,5 +1,5 @@
 import { Button } from '@/common/components/ui/button';
-import { cn } from '@/common/lib/utils';
+import { cn, getCatchError } from '@/common/lib/utils';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { MinusCircle } from 'lucide-react';
 import { forwardRef } from 'react';
@@ -14,7 +14,9 @@ import type { MouseEvent } from 'react';
 import type { ChatMessageProps } from '@/types/features';
 import RequestIndicator from '../requestStatus/RequestIndicator';
 import { getStatusState } from '../requestStatus/requestStatusSlicesUtils';
-import { clientStatus } from '../client/clientSlice';
+import { clientStatusReset } from '../client/clientSlice';
+import { useToast } from '@/common/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -34,18 +36,48 @@ const ChatMessage = forwardRef<HTMLElement, ChatMessageProps>(
     const dispatch = useAppDispatch();
     const { messageRemoved } = getMessagesActions(name);
     const requestStatus = useAppSelector(getStatusState(name));
-    const { act } = useAppSelector(clientStatus);
+    const { toast } = useToast();
+    const navigate = useNavigate();
 
-    function handleClick(event: MouseEvent<HTMLButtonElement>) {
+    async function handleClick(event: MouseEvent<HTMLButtonElement>) {
       const id = event.currentTarget.id;
       const dbid = event.currentTarget.getAttribute('data-dbid');
       dispatch(messageRemoved({ id }));
 
       if (dbid) {
-        fetch(`${baseUrl}/ai/conversations/messages/${dbid}`, {
-          method: 'DELETE',
-          headers: { Authorization: act || '' },
-        });
+        try {
+          const response = await fetch(
+            `${baseUrl}/ai/conversations/messages/${dbid}`,
+            {
+              method: 'DELETE',
+              credentials: 'include',
+            },
+          );
+
+          if (response.status === 401 || response.status === 403) {
+            dispatch(clientStatusReset());
+            navigate('/login');
+            toast({
+              title: 'Error',
+              description:
+                'Session has expired. Please log in again to continue.',
+            });
+
+            return;
+          }
+
+          if (!response.ok) {
+            toast({
+              title: 'Error',
+              description: `${response.status}: ${response.statusText}. `,
+            });
+          }
+        } catch (error) {
+          toast({
+            title: 'Error',
+            description: getCatchError(error),
+          });
+        }
       }
     }
 

@@ -17,10 +17,9 @@ export default function useLoginWithGoogle() {
     async function login() {
       const response = await fetch(`${baseUrl}/auth/googlelogin`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user?.email }),
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -33,8 +32,7 @@ export default function useLoginWithGoogle() {
         return;
       }
 
-      const data = await response.json();
-      dispatch(clientStatusSet({ userStatus: 'user', act: data.act }));
+      dispatch(clientStatusSet('user'));
       setReqStatus('success');
     }
 

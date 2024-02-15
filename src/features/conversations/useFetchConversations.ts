@@ -19,13 +19,6 @@ export default function useFetchConversations(name: Name) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        Authorization: client.act ?? '',
-      },
-    };
-
     async function fetchConversations() {
       const { conversationsSet } = getConversationsActions(name);
       try {
@@ -33,16 +26,19 @@ export default function useFetchConversations(name: Name) {
           `${baseUrl}/ai/conversations?chatinterface=${getChatInterface(
             name,
           )}&page=1&length=15`,
-          requestOptions,
+          { method: 'GET', credentials: 'include' },
         );
 
-        if (response.status === 401) {
+        if (response.status === 401 || response.status === 403) {
           dispatch(clientStatusReset());
           navigate('/login');
           toast({
             title: 'Error',
-            description: 'Session has expired. Please log in again.',
+            description:
+              'Session has expired. Please log in again to continue.',
           });
+
+          return;
         }
 
         if (!response.ok) {

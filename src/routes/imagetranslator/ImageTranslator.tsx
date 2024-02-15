@@ -25,7 +25,7 @@ export default function ImageTranslator() {
   const [img, setImg] = useState({ src: '', alt: '' });
 
   useSetScrollPosition('imagetranslator');
-
+  console.log(28, userStatus);
   return (
     <main
       className={cn(

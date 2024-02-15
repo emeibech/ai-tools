@@ -9,7 +9,7 @@ import {
   getStatusActions,
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
-import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
+import { clientStatusReset } from '@/features/client/clientSlice';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/common/components/ui/use-toast';
 
@@ -19,7 +19,6 @@ export default function useApi(apiArgs: ApiArgs) {
   const status = useAppSelector(getStatusState(apiArgs.name));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
-  const { act } = useAppSelector(clientStatus);
   const setChunkSentCount = useAutoScroll({ status, scrollDir });
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -29,30 +28,29 @@ export default function useApi(apiArgs: ApiArgs) {
     const { responseAppended } = getResponsesActions(route);
     const statusChanged = getStatusActions(name);
     const url = `${baseUrl}/ai/${route}`;
-    const body = {
-      userContent: [{ role: 'user', content: prompt }],
-      act,
-    };
-
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: act ?? '',
-      },
-      body: JSON.stringify(body),
-    };
+    const body = { userContent: [{ role: 'user', content: prompt }] };
 
     async function streamData() {
       try {
-        const response = await fetch(url, requestOptions);
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+          credentials: 'include',
+        });
         const decoder = new TextDecoder();
         dispatch(statusChanged('streaming'));
 
-        if (response.status === 401) {
+        if (response.status === 401 || response.status === 403) {
           dispatch(statusChanged('idle'));
           dispatch(clientStatusReset());
           navigate('/login');
+          toast({
+            title: 'Error',
+            description:
+              'Session has expired. Please log in again to continue.',
+          });
+
           return;
         }
 
@@ -111,7 +109,6 @@ export default function useApi(apiArgs: ApiArgs) {
     navigate,
     toast,
     apiArgs,
-    act,
     status,
   ]);
 }

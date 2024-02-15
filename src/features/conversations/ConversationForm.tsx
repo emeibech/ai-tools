@@ -1,11 +1,14 @@
 import { Input } from '@/common/components/ui/input';
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useCallback, useRef } from 'react';
 import { getConversationsActions } from './conversationsSliceUtils';
 import type { ConversationForm } from '@/types/features';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useAppDispatch } from '@/app/hooks';
 import { Button } from '@/common/components/ui/button';
 import { CheckIcon } from 'lucide-react';
-import { clientStatus } from '../client/clientSlice';
+import { toast } from '@/common/components/ui/use-toast';
+import { getCatchError } from '@/common/lib/utils';
+import { clientStatusReset } from '../client/clientSlice';
+import { useNavigate } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -17,33 +20,52 @@ export default function ConversationForm({
 }: ConversationForm) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { titleChanged } = getConversationsActions(name);
-  const { act } = useAppSelector(clientStatus);
+
+  const changeTitle = useCallback(
+    async (title: string) => {
+      try {
+        const response = await fetch(`${baseUrl}/ai/conversations/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title }),
+          credentials: 'include',
+        });
+
+        if (response.status === 401 || response.status === 403) {
+          dispatch(clientStatusReset());
+          navigate('/login');
+          toast({
+            title: 'Error',
+            description:
+              'Your has session expired. Please log in again to continue.',
+          });
+
+          return;
+        }
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: getCatchError(error),
+        });
+      }
+    },
+    [navigate, dispatch, id],
+  );
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     if (inputRef.current && inputRef.current.value.length < 1) return;
     const newTitle = inputRef.current?.value || '';
-
-    fetch(`${baseUrl}/ai/conversations/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: act ?? '',
-      },
-      body: JSON.stringify({ title: newTitle }),
-    });
-
+    changeTitle(newTitle);
     dispatch(titleChanged({ id, newTitle }));
     setCurrentlyEditing(null);
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onBlur={() => setCurrentlyEditing(null)}
-      className="relative"
-    >
+    <form onSubmit={handleSubmit} className="relative">
       <Input
         type="text"
         ref={inputRef}

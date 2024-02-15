@@ -10,7 +10,7 @@ import useFormLogic from '@/common/hooks/useFormLogic';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import type { ImageTranslatorProps, PreviewState } from '@/types/routes';
 import Dropzone from 'react-dropzone';
-import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
+import { clientStatusReset } from '@/features/client/clientSlice';
 import { useToast } from '@/common/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import useGetScrollDir from '@/common/hooks/useGetScrollDir';
@@ -48,7 +48,6 @@ export default function ImageTranslatorForm({
   const { promptAppended, promptReset } = getPromptsActions(route);
   const statusChanged = getStatusActions(name);
   const requestStatus = useAppSelector(getStatusState(name));
-  const { act } = useAppSelector(clientStatus);
   const { toast } = useToast();
   const navigate = useNavigate();
   const { scrollDir, setScrollDir } = useGetScrollDir();
@@ -65,19 +64,21 @@ export default function ImageTranslatorForm({
       const statusChanged = getStatusActions(name);
       const response = await fetch(`${baseUrl}/ai/imagetranslator`, {
         method: 'POST',
-        headers: {
-          Authorization: act ?? '',
-        },
         body: formData,
+        credentials: 'include',
       });
 
       const decoder = new TextDecoder();
       dispatch(statusChanged('streaming'));
 
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 403) {
         dispatch(statusChanged('idle'));
         dispatch(clientStatusReset());
         navigate('/login');
+        toast({
+          title: 'Error',
+          description: 'Session has expired. Please log in again to continue.',
+        });
 
         return;
       }
@@ -133,7 +134,6 @@ export default function ImageTranslatorForm({
     toast,
     navigate,
     setChunkSentCount,
-    act,
     formData,
     name,
     route,

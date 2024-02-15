@@ -1,5 +1,5 @@
 import type { Dispatch, ReactNode } from 'react';
-import type { UserStatus, FieldState } from './hooks';
+import type { FieldState, UserStatus } from './hooks';
 
 // RateLimiter
 export interface RateLimiter {
@@ -173,12 +173,6 @@ export interface ApiArgs {
   route: Tool;
 }
 
-// userSlice
-export interface Client {
-  userStatus: UserStatus;
-  act: string | null;
-}
-
 // retryRequestSlice
 export interface RetryRequest {
   value: number;
@@ -225,4 +219,9 @@ export interface ConversationForm {
 export interface LoadMoreSlice {
   nextPage: number;
   lastConversation: boolean;
+}
+
+// ClientSlice
+export interface Client {
+  userStatus: UserStatus;
 }

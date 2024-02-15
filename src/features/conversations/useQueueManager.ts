@@ -10,9 +10,10 @@ import {
   getMessagesState,
 } from '../chats/messagesSliceutils';
 import { getChatInterface } from './utils';
-import { clientStatus } from '../client/clientSlice';
+import { clientStatus, clientStatusReset } from '../client/clientSlice';
 import { useToast } from '@/common/components/ui/use-toast';
 import { getCatchError } from '@/common/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -21,6 +22,7 @@ export default function useQueueManager(name: Name) {
   const dispatch = useAppDispatch();
   const client = useAppSelector(clientStatus);
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { addMsgQ, activeConversation } = useAppSelector(
     getConversationsState(name),
   );
@@ -48,15 +50,26 @@ export default function useQueueManager(name: Name) {
 
         if (activeConversation === null) {
           try {
-            const titleResponse = await fetch(`${baseUrl}/ai/titlecreator`, {
+            const titleRes = await fetch(`${baseUrl}/ai/titlecreator`, {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ userContent: msgsToBePushed }),
+              credentials: 'include',
             });
 
-            const data = await titleResponse.json();
+            if (titleRes.status === 401 || titleRes.status === 403) {
+              dispatch(clientStatusReset());
+              navigate('/login');
+              toast({
+                title: 'Error',
+                description:
+                  'Session has expired. Please log in again to continue.',
+              });
+
+              return;
+            }
+
+            const data = await titleRes.json();
 
             const body = {
               chatInterface: getChatInterface(name),
@@ -65,28 +78,33 @@ export default function useQueueManager(name: Name) {
                 `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
             };
 
-            const requestOptions = {
+            const msgsRes = await fetch(`${baseUrl}/ai/conversations`, {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: client.act ?? '',
-              },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(body),
-            };
+              credentials: 'include',
+            });
 
-            const response = await fetch(
-              `${baseUrl}/ai/conversations`,
-              requestOptions,
-            );
-
-            if (!response.ok) {
+            if (msgsRes.status === 401 || msgsRes.status === 403) {
+              dispatch(clientStatusReset());
+              navigate('/login');
               toast({
                 title: 'Error',
-                description: `${response.status}: ${response.statusText}`,
+                description:
+                  'Session has expired. Please log in again to continue.',
+              });
+
+              return;
+            }
+
+            if (!msgsRes.ok) {
+              toast({
+                title: 'Error',
+                description: `${msgsRes.status}: ${msgsRes.statusText}`,
               });
             }
 
-            const { conversation } = await response.json();
+            const { conversation } = await msgsRes.json();
             conversationId = conversation.id;
             dispatch(conversationAdded([conversation]));
             dispatch(activeConversationSet(conversation.id));
@@ -101,22 +119,32 @@ export default function useQueueManager(name: Name) {
         dispatch(conversationMovedToTop(Number(conversationId)));
 
         const body = { messages: msgsToBePushed };
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: client.act ?? '',
-          },
-          body: JSON.stringify(body),
-        };
 
         const response = await fetch(
           `${baseUrl}/ai/conversations/messages?conversationid=${conversationId}`,
-          requestOptions,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+            credentials: 'include',
+          },
         );
 
-        if (!response.ok)
+        if (response.status === 401 || response.status === 403) {
+          dispatch(clientStatusReset());
+          navigate('/login');
+          toast({
+            title: 'Error',
+            description:
+              'Session has expired. Please log in again to continue.',
+          });
+
+          return;
+        }
+
+        if (!response.ok) {
           toast({ title: 'Error', description: response.statusText });
+        }
 
         const { ids } = await response.json();
 
@@ -124,14 +152,31 @@ export default function useQueueManager(name: Name) {
           dispatch(dbidAdded({ id: addMsgQ[index], dbid }));
         });
 
-        fetch(`${baseUrl}/ai/conversations/${conversationId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: client.act ?? '',
+        const patchRes = await fetch(
+          `${baseUrl}/ai/conversations/${conversationId}`,
+          {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lastUpdated: Date.now() }),
+            credentials: 'include',
           },
-          body: JSON.stringify({ lastUpdated: Date.now() }),
-        });
+        );
+
+        if (patchRes.status === 401 || patchRes.status === 403) {
+          dispatch(clientStatusReset());
+          navigate('/login');
+          toast({
+            title: 'Error',
+            description:
+              'Session has expired. Please log in again to continue.',
+          });
+
+          return;
+        }
+
+        if (!patchRes.ok) {
+          toast({ title: 'Error', description: patchRes.statusText });
+        }
       } catch (error) {
         toast({
           title: 'Error',
@@ -154,6 +199,7 @@ export default function useQueueManager(name: Name) {
   }, [
     dispatch,
     toast,
+    navigate,
     name,
     addMsgQ,
     msgsToBePushed,

@@ -8,7 +8,7 @@ import {
   getStatusActions,
   getStatusState,
 } from '../requestStatus/requestStatusSlicesUtils';
-import { clientStatus, clientStatusReset } from '@/features/client/clientSlice';
+import { clientStatusReset } from '@/features/client/clientSlice';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/common/components/ui/use-toast';
 import { getConversationsActions } from '../conversations/conversationsSliceUtils';
@@ -26,7 +26,6 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
   const status = useAppSelector(getStatusState(chatApiArgs.chatInterface));
   const dispatch = useAppDispatch();
   const { scrollDir, setScrollDir } = useGetScrollDir();
-  const { act } = useAppSelector(clientStatus);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -69,25 +68,27 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     const url = `${baseUrl}${getUrlParams(chatInterface)}${modelParam}`;
     const body = { userContent: trimmedMessages };
 
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: act ?? '',
-      },
-      body: JSON.stringify(body),
-    };
-
     async function streamData() {
       try {
-        const response = await fetch(url, requestOptions);
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+          credentials: 'include',
+        });
         const decoder = new TextDecoder();
         dispatch(statusChanged('streaming'));
 
-        if (response.status === 401) {
+        if (response.status === 401 || response.status === 403) {
           dispatch(statusChanged('idle'));
           dispatch(clientStatusReset());
           navigate('/login');
+          toast({
+            title: 'Error',
+            description:
+              'Session has expired. Please log in again to continue.',
+          });
+
           return;
         }
 
@@ -158,7 +159,6 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
     navigate,
     toast,
     chatApiArgs,
-    act,
     status,
   ]);
 }

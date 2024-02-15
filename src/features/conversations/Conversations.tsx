@@ -9,13 +9,14 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { Edit3Icon, X } from 'lucide-react';
 import ConversationForm from './ConversationForm';
 import { useToast } from '@/common/components/ui/use-toast';
-import { clientStatus } from '../client/clientSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { getMessagesActions } from '../chats/messagesSliceutils';
 import type { ConversationsProps, Message } from '@/types/features';
 import { getChatInterface } from './utils';
 import { ReqStatus } from '@/types/routes';
 import { getLoadMoreActions, getLoadMoreState } from './loadMoreSliceUtils';
+import { clientStatusReset } from '../client/clientSlice';
+import { useNavigate } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -24,10 +25,10 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   const { toast } = useToast();
   const { conversations } = useAppSelector(getConversationsState(name));
   const [currentlyEditing, setCurrentlyEditing] = useState<number | null>(null);
-  const { act } = useAppSelector(clientStatus);
   const { activeConversation } = useAppSelector(getConversationsState(name));
   const [reqStatus, setReqStatus] = useState<ReqStatus>('idle');
   const { nextPage, lastConversation } = useAppSelector(getLoadMoreState(name));
+  const navigate = useNavigate();
 
   const list = useMemo(() => {
     const { activeConversationSet, conversationRemoved } =
@@ -38,17 +39,25 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
       setIsOpen(false);
 
       try {
-        const requestOptions = {
-          method: 'GET',
-          headers: {
-            Authorization: act ?? '',
-          },
-        };
-
         const response = await fetch(
           `${baseUrl}/ai/conversations/messages?conversationid=${id}`,
-          requestOptions,
+          {
+            method: 'GET',
+            credentials: 'include',
+          },
         );
+
+        if (response.status === 401 || response.status === 403) {
+          dispatch(clientStatusReset());
+          navigate('/login');
+          toast({
+            title: 'Error',
+            description:
+              'Your has session expired. Please log in again to continue.',
+          });
+
+          return;
+        }
 
         if (!response.ok) {
           toast({
@@ -80,19 +89,37 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
       }
     }
 
-    function handleClickDelete(id: number) {
+    async function handleClickDelete(id: number) {
       const { messagesReset } = getMessagesActions(name);
-      dispatch(conversationRemoved(id));
-      fetch(`${baseUrl}/ai/conversations/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: act ?? '',
-        },
-      });
+      try {
+        const response = await fetch(`${baseUrl}/ai/conversations/${id}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
 
-      if (activeConversation === id) {
-        dispatch(activeConversationSet(null));
-        dispatch(messagesReset());
+        if (response.status === 401 || response.status === 403) {
+          dispatch(clientStatusReset());
+          navigate('/login');
+          toast({
+            title: 'Error',
+            description:
+              'Your has session expired. Please log in again to continue.',
+          });
+
+          return;
+        }
+
+        dispatch(conversationRemoved(id));
+
+        if (activeConversation === id) {
+          dispatch(activeConversationSet(null));
+          dispatch(messagesReset());
+        }
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: getCatchError(error),
+        });
       }
     }
 
@@ -164,11 +191,11 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   }, [
     dispatch,
     toast,
+    navigate,
     setIsOpen,
     conversations,
     currentlyEditing,
     name,
-    act,
     activeConversation,
   ]);
 
@@ -184,8 +211,21 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
         `${baseUrl}/ai/conversations?chatinterface=${getChatInterface(
           name,
         )}&page=${nextPage}&length=15`,
-        { headers: { Authorization: act || '' } },
+        { method: 'GET', credentials: 'include' },
       );
+
+      if (response.status === 401 || response.status === 403) {
+        setReqStatus('idle');
+        dispatch(clientStatusReset());
+        navigate('/login');
+        toast({
+          title: 'Error',
+          description:
+            'Your has session expired. Please log in again to continue.',
+        });
+
+        return;
+      }
 
       if (!response.ok) {
         setReqStatus('error');

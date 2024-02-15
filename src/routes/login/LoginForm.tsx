@@ -70,15 +70,15 @@ export default function LoginForm({ className }: { className?: string }) {
       const { email, password } = values;
       const body = { email, password };
 
-      const requestOptions = {
+      setReqStatus('requesting');
+
+      const response = await fetch(`${baseUrl}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-      };
+        credentials: 'include',
+      });
 
-      setReqStatus('requesting');
-
-      const response = await fetch(`${baseUrl}/auth/login`, requestOptions);
       const data = await response.json();
       if (!response.ok) {
         setErrorMsg(data.message);
@@ -89,7 +89,7 @@ export default function LoginForm({ className }: { className?: string }) {
         return;
       }
       setReqStatus('success');
-      dispatch(clientStatusSet({ userStatus: 'user', act: data.act }));
+      dispatch(clientStatusSet('user'));
     } catch (error) {
       toast({ title: 'Error', description: getCatchError(error) });
       setReqStatus('idle');
