@@ -10,8 +10,8 @@ to help catch potential bugs. StrictMode gets removed in the production build
 when you do "npm run build." This means the initMount variable used to check 
 for first mount has to change value depending on whether NODE_ENV in the 
 .env.local file is set to production or development. */
-const applicationMode = import.meta.env.VITE_NODE_ENV;
-const initMount = applicationMode === 'production' ? 1 : 2;
+const nodeEnv = import.meta.env.VITE_NODE_ENV;
+const initMount = nodeEnv === 'production' ? 1 : 2;
 ls.config.encrypt = true;
 
 export default function useSaveToLocalStorage() {
@@ -27,7 +27,7 @@ export default function useSaveToLocalStorage() {
   useEffect(() => {
     if (mountCounter.current >= initMount) {
       ls.set('darkmode', darkmode);
-      ls.set('clientStatus', client);
+      ls.set('client', client);
     }
 
     mountCounter.current += 1;

@@ -14,22 +14,19 @@ export default function useSetLocalStorageData() {
   useEffect(() => {
     function instanceOfClient(object: unknown): object is Client {
       return (
-        typeof object === 'object' &&
-        object !== null &&
-        'userStatus' in object &&
-        'act' in object
+        typeof object === 'object' && object !== null && 'userStatus' in object
       );
     }
 
     const darkmode = ls.get('darkmode');
-    const clientStatus = ls.get('clientStatus');
+    const clientStatus = ls.get('client');
 
     if (darkmode !== null && typeof darkmode === 'boolean') {
       dispatch(darkmode ? turnOnDarkmode() : turnOffDarkmode());
     }
 
     if (instanceOfClient(clientStatus)) {
-      dispatch(clientStatusSet(clientStatus));
+      dispatch(clientStatusSet(clientStatus.userStatus));
     }
   }, [dispatch]);
 }
