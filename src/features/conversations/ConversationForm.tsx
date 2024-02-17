@@ -57,11 +57,21 @@ export default function ConversationForm({
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (inputRef.current && inputRef.current.value.length < 1) return;
-    const newTitle = inputRef.current?.value || '';
-    changeTitle(newTitle);
-    dispatch(titleChanged({ id, newTitle }));
-    setCurrentlyEditing(null);
+    if (inputRef.current) {
+      const newTitle = inputRef.current.value;
+      if (newTitle === title) {
+        setCurrentlyEditing(null);
+        return;
+      }
+
+      if (inputRef.current.value.length < 1) {
+        setCurrentlyEditing(null);
+        return;
+      }
+
+      changeTitle(newTitle);
+      dispatch(titleChanged({ id, newTitle }));
+    }
   }
 
   return (
@@ -75,7 +85,7 @@ export default function ConversationForm({
       />
       <Button
         variant={'secondary'}
-        className="border absolute top-0 right-0 px-1"
+        className="border absolute top-0 right-0 px-1 rounded-l-none"
       >
         <CheckIcon height="18px" />
       </Button>
