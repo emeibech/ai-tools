@@ -37,7 +37,7 @@ export default function ChatInterfaceForm({ name }: ChatInterfaceFormProps) {
   const { messageAdded, messagesReset } = getMessagesActions(name);
   const [value, setValue] = useState<string>('');
   const msgs = getMessagesState(name);
-  const messages = useAppSelector(msgs);
+  const { messages } = useAppSelector(msgs);
   const statusChanged = getStatusActions(name);
   const requestStatus = useAppSelector(getStatusState(name));
   const { activeConversationSet } = getConversationsActions(name);

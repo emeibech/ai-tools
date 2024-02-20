@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export default function useQueueManager(name: Name) {
-  const messages = useAppSelector(getMessagesState(name));
+  const { messages } = useAppSelector(getMessagesState(name));
   const dispatch = useAppDispatch();
   const client = useAppSelector(clientStatus);
   const { toast } = useToast();
