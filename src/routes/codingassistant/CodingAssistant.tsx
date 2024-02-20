@@ -33,8 +33,10 @@ export default function CodingAssistant() {
               initialMessage={true}
             >
               <p>
-                Oh, hi! I'm a chatbot designed to answer programming questions,
-                generate code, and provide suggestions or recommendations.
+                Oh, hi! I'm your{' '}
+                <strong className="text-accent">Coding Assistant</strong>, a
+                chatbot designed to answer programming questions, generate code,
+                and provide suggestions or recommendations.
               </p>
 
               <p className="mt-4">How can I assist you today?</p>

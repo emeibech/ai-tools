@@ -28,11 +28,11 @@ export default function CodingAssistant() {
               name="Explain Like I'm 5"
               initialMessage={true}
             >
-              <p>Oh, hi!</p>
-
-              <p className="mt-4">
-                I'm your ELI5 assistant, a chatbot designed to explain stuff in
-                layperson's terms using simple analogies.
+              <p>
+                Oh, hi. I'm your{' '}
+                <strong className="text-accent">ELI5 Assistant</strong>, a
+                chatbot designed to explain difficult concepts in layperson's
+                terms using simple analogies.
               </p>
 
               <p className="mt-4">What do you want to know?</p>

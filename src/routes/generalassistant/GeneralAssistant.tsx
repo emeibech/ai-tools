@@ -29,8 +29,10 @@ export default function CodingAssistant() {
               initialMessage={true}
             >
               <p>
-                Oh hi! I'm a general assistant. Think of me as ChatGPT because
-                that's exactly what I am.
+                Oh, hi. I'm your{' '}
+                <strong className="text-accent">General Assistant</strong>, a
+                vanilla chatbot that serves as a fallback if none of the tools
+                fit your needs.
               </p>
 
               <p className="mt-4">How can I assist you today?</p>
