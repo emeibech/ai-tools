@@ -33,7 +33,7 @@ export default function CodingAssistant() {
               initialMessage={true}
             >
               <p>
-                Oh, hi! I'm your{' '}
+                Oh, hi. I'm your{' '}
                 <strong className="text-accent">Coding Assistant</strong>, a
                 chatbot designed to answer programming questions, generate code,
                 and provide suggestions or recommendations.
