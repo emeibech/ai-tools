@@ -31,6 +31,7 @@ export interface DarkmodeSlice {
 // messagesSlice
 export interface MessagesSlice {
   messages: Message[];
+  loading: boolean;
 }
 
 // requestStatusSlices

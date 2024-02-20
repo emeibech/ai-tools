@@ -1,4 +1,4 @@
-import { cn } from '@/common/lib/utils';
+import Loading from '@/common/components/custom/Loading';
 
 export default function AccountCreated() {
   return (
@@ -7,23 +7,7 @@ export default function AccountCreated() {
       <h2 className="text-lg sm:text-3xl text-center">
         You will soon be redirected to the login page.
       </h2>
-      <span className="flex gap-1 justify-center mt-4">
-        <div
-          className={cn('h-2 w-2 rounded-full bg-foreground', 'animate-bounce')}
-        ></div>
-        <div
-          className={cn(
-            'h-2 w-2 rounded-full bg-foreground',
-            'animate-bounce delay-150',
-          )}
-        ></div>
-        <div
-          className={cn(
-            'h-2 w-2 rounded-full bg-foreground',
-            'animate-bounce delay-300',
-          )}
-        ></div>
-      </span>
+      <Loading />
     </section>
   );
 }

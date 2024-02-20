@@ -8,6 +8,7 @@ import type { ChatInterfaceProps } from '@/types/features';
 import useFetchConversations from '../conversations/useFetchConversations';
 import useQueueManager from '../conversations/useQueueManager';
 import { currentRoute } from '../currentRoute/currentRouteSlice';
+import Loading from '@/common/components/custom/Loading';
 
 export default function ChatInterface({
   name,
@@ -16,11 +17,12 @@ export default function ChatInterface({
   renderCodeBlocks = false,
 }: ChatInterfaceProps) {
   const msgs = getMessagesState(name);
-  const messages = useAppSelector(msgs);
+  const { messages, loading } = useAppSelector(msgs);
   const selectedRoute = useAppSelector(currentRoute);
 
   useFetchConversations(name);
   useQueueManager(name);
+
   const listMessages: JSX.Element[] = useMemo(
     () =>
       messages.map((message, index) => {
@@ -48,6 +50,7 @@ export default function ChatInterface({
         <article className="svh">
           {children}
           {listMessages}
+          {loading && <Loading className="mt-16 scale-125" />}
         </article>
 
         <ChatInterfaceForm name={name} />

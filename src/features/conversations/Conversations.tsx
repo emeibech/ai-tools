@@ -17,6 +17,7 @@ import { ReqStatus } from '@/types/routes';
 import { getLoadMoreActions, getLoadMoreState } from './loadMoreSliceUtils';
 import { clientStatusReset } from '../client/clientSlice';
 import { useNavigate } from 'react-router-dom';
+import Loading from '@/common/components/custom/Loading';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -33,10 +34,12 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   const list = useMemo(() => {
     const { activeConversationSet, conversationRemoved } =
       getConversationsActions(name);
-    const { messagesSet } = getMessagesActions(name);
+    const { messagesSet, messagesReset, loadingSet } = getMessagesActions(name);
 
     async function handleClickTitle(id: number) {
       setIsOpen(false);
+      dispatch(messagesReset());
+      dispatch(loadingSet(true));
 
       try {
         const response = await fetch(
@@ -86,6 +89,8 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
           title: 'Error',
           description: getCatchError(error),
         });
+      } finally {
+        dispatch(loadingSet(false));
       }
     }
 
@@ -280,28 +285,7 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
           </Button>
         )}
 
-        {reqStatus === 'requesting' && (
-          <span className="flex gap-1 justify-center">
-            <div
-              className={cn(
-                'h-2 w-2 rounded-full bg-foreground',
-                'animate-bounce',
-              )}
-            ></div>
-            <div
-              className={cn(
-                'h-2 w-2 rounded-full bg-foreground',
-                'animate-bounce delay-150',
-              )}
-            ></div>
-            <div
-              className={cn(
-                'h-2 w-2 rounded-full bg-foreground',
-                'animate-bounce delay-300',
-              )}
-            ></div>
-          </span>
-        )}
+        {reqStatus === 'requesting' && <Loading />}
       </div>
     </section>
   );

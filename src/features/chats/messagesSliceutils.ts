@@ -20,6 +20,9 @@ import {
   generalDbidAdded,
   generalMessagesSet,
   generalMessagesReset,
+  codingMsgsLoadingSet,
+  eli5MsgsLoadingSet,
+  generalMsgsLoadingSet,
 } from './messagesSlice';
 import type { Name } from '@/types/features';
 
@@ -38,6 +41,7 @@ export function getMessagesActions(name: Name) {
       dbidAdded: codingDbidAdded,
       messagesSet: codingMessagesSet,
       messagesReset: codingMessagesReset,
+      loadingSet: codingMsgsLoadingSet,
     };
 
   if (name === "Explain Like I'm 5")
@@ -48,6 +52,7 @@ export function getMessagesActions(name: Name) {
       dbidAdded: eli5DbidAdded,
       messagesSet: eli5MessagesSet,
       messagesReset: eli5MessagesReset,
+      loadingSet: eli5MsgsLoadingSet,
     };
 
   return {
@@ -57,6 +62,7 @@ export function getMessagesActions(name: Name) {
     dbidAdded: generalDbidAdded,
     messagesSet: generalMessagesSet,
     messagesReset: generalMessagesReset,
+    loadingSet: generalMsgsLoadingSet,
   };
 }
 

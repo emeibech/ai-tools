@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
 import type { Message, MessagesSlice } from '@/types/features';
 
-const initialState: MessagesSlice = { messages: [] };
+const initialState: MessagesSlice = { messages: [], loading: false };
 
 const reducers = {
   messagesReset: () => initialState,
@@ -43,6 +43,9 @@ const reducers = {
     const messageIndex = state.messages.findIndex((item) => item.id === id);
     state.messages[messageIndex].dbid = dbid;
   },
+  msgsLoadingSet: (state: MessagesSlice, action: PayloadAction<boolean>) => {
+    state.loading = action.payload;
+  },
 };
 
 export const codingMessagesSlice = createSlice({
@@ -70,6 +73,7 @@ export const {
   dbidAdded: codingDbidAdded,
   messagesSet: codingMessagesSet,
   messagesReset: codingMessagesReset,
+  msgsLoadingSet: codingMsgsLoadingSet,
 } = codingMessagesSlice.actions;
 
 export const {
@@ -79,6 +83,7 @@ export const {
   dbidAdded: eli5DbidAdded,
   messagesSet: eli5MessagesSet,
   messagesReset: eli5MessagesReset,
+  msgsLoadingSet: eli5MsgsLoadingSet,
 } = eli5MessagesSlice.actions;
 
 export const {
@@ -88,14 +93,12 @@ export const {
   dbidAdded: generalDbidAdded,
   messagesSet: generalMessagesSet,
   messagesReset: generalMessagesReset,
+  msgsLoadingSet: generalMsgsLoadingSet,
 } = generalMessagesSlice.actions;
 
-export const codingMessages = (state: RootState) =>
-  state.codingMessagesSlice.messages;
-export const eli5Messages = (state: RootState) =>
-  state.eli5MessagesSlice.messages;
-export const generalMessages = (state: RootState) =>
-  state.generalMessagesSlice.messages;
+export const codingMessages = (state: RootState) => state.codingMessagesSlice;
+export const eli5Messages = (state: RootState) => state.eli5MessagesSlice;
+export const generalMessages = (state: RootState) => state.generalMessagesSlice;
 
 export default {
   codingMessagesSlice: codingMessagesSlice.reducer,
