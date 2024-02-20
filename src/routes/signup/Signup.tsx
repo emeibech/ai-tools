@@ -12,6 +12,8 @@ import { useToast } from '@/common/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { ReqStatus } from '@/types/routes';
 import AccountCreated from './AccountCreated';
+import { useAppDispatch } from '@/app/hooks';
+import { clientStatusSet } from '@/features/client/clientSlice';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -50,6 +52,7 @@ export default function Signup() {
   const confirmPassRef = useRef(null);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [reqStatus, setReqStatus] = useState<ReqStatus>('idle');
 
   const { form, FormSchema, getFieldState, getValidationStyles } = useFormLogic(
@@ -117,10 +120,12 @@ export default function Signup() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
+        credentials: 'include',
       });
 
+      const { message } = await response.json();
+
       if (response.status === 400) {
-        const { message } = await response.json();
         setReqStatus('idle');
         toast({
           title: 'Error',
@@ -131,7 +136,6 @@ export default function Signup() {
       }
 
       if (response.status === 409) {
-        const { message } = await response.json();
         setReqStatus('idle');
         toast({
           title: 'Error',
@@ -152,6 +156,7 @@ export default function Signup() {
       }
 
       setReqStatus('success');
+      dispatch(clientStatusSet('user'));
 
       setTimeout(() => {
         navigate('/login');
