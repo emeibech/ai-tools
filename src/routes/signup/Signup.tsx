@@ -119,12 +119,36 @@ export default function Signup() {
         body: JSON.stringify(body),
       });
 
+      if (response.status === 400) {
+        const { message } = await response.json();
+        setReqStatus('idle');
+        toast({
+          title: 'Error',
+          description: message,
+        });
+
+        return;
+      }
+
+      if (response.status === 409) {
+        const { message } = await response.json();
+        setReqStatus('idle');
+        toast({
+          title: 'Error',
+          description: message,
+        });
+
+        return;
+      }
+
       if (!response.ok) {
         setReqStatus('idle');
         toast({
           title: 'Error',
           description: 'An error occured while creating new user',
         });
+
+        return;
       }
 
       setReqStatus('success');
