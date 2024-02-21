@@ -78,14 +78,19 @@ export default function useQueueManager(name: Name) {
                 `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
             };
 
-            const msgsRes = await fetch(`${baseUrl}/ai/conversations`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(body),
-              credentials: 'include',
-            });
+            const conversationsRes = await fetch(
+              `${baseUrl}/ai/conversations`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+                credentials: 'include',
+              },
+            );
 
-            if (msgsRes.status === 401 || msgsRes.status === 403) {
+            const { status, statusText } = conversationsRes;
+
+            if (status === 401 || status === 403) {
               dispatch(clientStatusReset());
               navigate('/login');
               toast({
@@ -97,14 +102,14 @@ export default function useQueueManager(name: Name) {
               return;
             }
 
-            if (!msgsRes.ok) {
+            if (!conversationsRes.ok) {
               toast({
                 title: 'Error',
-                description: `${msgsRes.status}: ${msgsRes.statusText}`,
+                description: `${status}: ${statusText}`,
               });
             }
 
-            const { conversation } = await msgsRes.json();
+            const { conversation } = await conversationsRes.json();
             conversationId = conversation.id;
             dispatch(conversationAdded([conversation]));
             dispatch(activeConversationSet(conversation.id));
