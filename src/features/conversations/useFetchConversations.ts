@@ -6,7 +6,7 @@ import { getConversationsActions } from './conversationsSliceUtils';
 import { getCatchError } from '@/common/lib/utils';
 import { clientStatus, clientStatusReset } from '../client/clientSlice';
 import { getChatInterface } from './utils';
-import { getLoadMoreState } from './loadMoreSliceUtils';
+import { getLoadMoreActions, getLoadMoreState } from './loadMoreSliceUtils';
 import { useNavigate } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
@@ -21,6 +21,7 @@ export default function useFetchConversations(name: Name) {
   useEffect(() => {
     async function fetchConversations() {
       const { conversationsSet } = getConversationsActions(name);
+      const { lastConversationSet } = getLoadMoreActions(name);
       try {
         const response = await fetch(
           `${baseUrl}/ai/conversations?chatinterface=${getChatInterface(
@@ -50,7 +51,8 @@ export default function useFetchConversations(name: Name) {
           return;
         }
 
-        const { conversationData } = await response.json();
+        const { conversationData, end } = await response.json();
+        if (end) dispatch(lastConversationSet(true));
         dispatch(conversationsSet(conversationData));
       } catch (error) {
         toast({

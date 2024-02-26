@@ -11,7 +11,7 @@ const reducers = {
   nextPageIncremented: (state: LoadMoreSlice) => {
     state.nextPage++;
   },
-  lastConveresationSet: (
+  lastConversationSet: (
     state: LoadMoreSlice,
     action: PayloadAction<boolean>,
   ) => {
@@ -26,30 +26,30 @@ const caLoadMoreSlice = createSlice({
 });
 
 const gaLoadMoreSlice = createSlice({
-  name: 'caLoadMoreSlice',
+  name: 'gaLoadMoreSlice',
   initialState,
   reducers,
 });
 
 const eli5LoadMoreSlice = createSlice({
-  name: 'caLoadMoreSlice',
+  name: 'eli5LoadMoreSlice',
   initialState,
   reducers,
 });
 
 export const {
   nextPageIncremented: caNextPageIncremented,
-  lastConveresationSet: caLastConveresationSet,
+  lastConversationSet: caLastConversationSet,
 } = caLoadMoreSlice.actions;
 
 export const {
   nextPageIncremented: gaNextPageIncremented,
-  lastConveresationSet: gaLastConveresationSet,
+  lastConversationSet: gaLastConversationSet,
 } = gaLoadMoreSlice.actions;
 
 export const {
   nextPageIncremented: eli5NextPageIncremented,
-  lastConveresationSet: eli5LastConveresationSet,
+  lastConversationSet: eli5LastConversationSet,
 } = eli5LoadMoreSlice.actions;
 
 export const caLoadMore = (state: RootState) => state.caLoadMoreSlice;

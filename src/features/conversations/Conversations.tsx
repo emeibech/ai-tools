@@ -97,6 +97,8 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
     async function handleClickDelete(id: number) {
       const { messagesReset } = getMessagesActions(name);
       try {
+        dispatch(conversationRemoved(id));
+
         const response = await fetch(`${baseUrl}/ai/conversations/${id}`, {
           method: 'DELETE',
           credentials: 'include',
@@ -113,8 +115,6 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
 
           return;
         }
-
-        dispatch(conversationRemoved(id));
 
         if (activeConversation === id) {
           dispatch(activeConversationSet(null));
@@ -207,7 +207,7 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   async function handleClickLoadMore() {
     try {
       const { conversationAdded } = getConversationsActions(name);
-      const { nextPageIncremented, lastConveresationSet } =
+      const { nextPageIncremented, lastConversationSet } =
         getLoadMoreActions(name);
 
       setReqStatus('requesting');
@@ -242,7 +242,7 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
 
       const { conversationData, end } = await response.json();
 
-      if (end) dispatch(lastConveresationSet(true));
+      if (end) dispatch(lastConversationSet(true));
 
       dispatch(conversationAdded(conversationData));
       dispatch(nextPageIncremented());
@@ -257,11 +257,7 @@ export default function Conversations({ name, setIsOpen }: ConversationsProps) {
   }
 
   function renderLoadMore() {
-    return (
-      reqStatus !== 'requesting' &&
-      !lastConversation &&
-      conversations.length >= 15
-    );
+    return reqStatus !== 'requesting' && !lastConversation;
   }
 
   return (

@@ -1,36 +1,36 @@
 import {
-  caLastConveresationSet,
+  caLastConversationSet,
   caLoadMore,
   caNextPageIncremented,
-  gaLastConveresationSet,
+  gaLastConversationSet,
   gaLoadMore,
   gaNextPageIncremented,
-  eli5LastConveresationSet,
+  eli5LastConversationSet,
   eli5LoadMore,
   eli5NextPageIncremented,
 } from './loadMoreSlice';
 import type { Name } from '@/types/features';
 
 export function getLoadMoreState(name: Name) {
-  if (name === 'Code Analyzer') return caLoadMore;
+  if (name === 'Coding Assistant') return caLoadMore;
   if (name === 'General Assistant') return gaLoadMore;
   return eli5LoadMore;
 }
 
 export function getLoadMoreActions(name: Name) {
-  if (name === 'Code Analyzer')
+  if (name === 'Coding Assistant')
     return {
-      lastConveresationSet: caLastConveresationSet,
+      lastConversationSet: caLastConversationSet,
       nextPageIncremented: caNextPageIncremented,
     };
 
   if (name === 'General Assistant')
     return {
       nextPageIncremented: gaNextPageIncremented,
-      lastConveresationSet: gaLastConveresationSet,
+      lastConversationSet: gaLastConversationSet,
     };
   return {
     nextPageIncremented: eli5NextPageIncremented,
-    lastConveresationSet: eli5LastConveresationSet,
+    lastConversationSet: eli5LastConversationSet,
   };
 }
