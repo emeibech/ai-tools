@@ -3,7 +3,7 @@ import type { RootState } from '@/app/store';
 import type { DarkmodeSlice } from '@/types/features';
 
 const initialState: DarkmodeSlice = {
-  value: true,
+  value: false,
 };
 
 export const darkmodeSlice = createSlice({
