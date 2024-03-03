@@ -9,9 +9,10 @@ import { Navigate } from 'react-router-dom';
 
 const id = nanoid();
 
-export default function CodingAssistant() {
+export default function GeneralAssistant() {
   const { userStatus } = useAppSelector(clientStatus);
   useSetScrollPosition('generalassistant');
+
   return (
     <main
       className={cn(

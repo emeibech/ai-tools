@@ -66,7 +66,7 @@ export function getMessagesActions(name: Name) {
   };
 }
 
-export default {
+export {
   codingMessages,
   codingAdded,
   codingAppended,

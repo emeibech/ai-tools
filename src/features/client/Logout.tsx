@@ -7,7 +7,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { LogOutIcon } from 'lucide-react';
 import { MouseEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import msgsSlice from '../chats/messagesSliceutils';
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -17,8 +16,6 @@ export default function Logout() {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
   const { isAuthenticated, logout } = useAuth0();
-  const { codingMessagesReset, eli5MessagesReset, generalMessagesReset } =
-    msgsSlice;
 
   const logoutReq = useCallback(async () => {
     const url = `${baseUrl}/auth/logout`;
@@ -50,9 +47,6 @@ export default function Logout() {
   function handleClick(event: MouseEvent) {
     event.preventDefault();
     logoutReq();
-    dispatch(codingMessagesReset());
-    dispatch(eli5MessagesReset());
-    dispatch(generalMessagesReset());
 
     if (isAuthenticated) {
       logout();

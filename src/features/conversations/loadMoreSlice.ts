@@ -8,6 +8,7 @@ const initialState: LoadMoreSlice = {
 };
 
 const reducers = {
+  loadMoreReset: () => initialState,
   nextPageIncremented: (state: LoadMoreSlice) => {
     state.nextPage++;
   },
@@ -38,16 +39,19 @@ const eli5LoadMoreSlice = createSlice({
 });
 
 export const {
+  loadMoreReset: caLoadMoreReset,
   nextPageIncremented: caNextPageIncremented,
   lastConversationSet: caLastConversationSet,
 } = caLoadMoreSlice.actions;
 
 export const {
+  loadMoreReset: gaLoadMoreReset,
   nextPageIncremented: gaNextPageIncremented,
   lastConversationSet: gaLastConversationSet,
 } = gaLoadMoreSlice.actions;
 
 export const {
+  loadMoreReset: eli5LoadMoreReset,
   nextPageIncremented: eli5NextPageIncremented,
   lastConversationSet: eli5LastConversationSet,
 } = eli5LoadMoreSlice.actions;

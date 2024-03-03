@@ -4,7 +4,7 @@ import type { Name } from '@/types/features';
 import { useEffect } from 'react';
 import { getConversationsActions } from './conversationsSliceUtils';
 import { getCatchError } from '@/common/lib/utils';
-import { clientStatus, clientStatusReset } from '../client/clientSlice';
+import { clientStatusReset } from '../client/clientSlice';
 import { getChatInterface } from './utils';
 import { getLoadMoreActions, getLoadMoreState } from './loadMoreSliceUtils';
 import { useNavigate } from 'react-router-dom';
@@ -14,9 +14,8 @@ const baseUrl = import.meta.env.VITE_SERVER_URL;
 export default function useFetchConversations(name: Name) {
   const { toast } = useToast();
   const dispatch = useAppDispatch();
-  const client = useAppSelector(clientStatus);
-  const { lastConversation } = useAppSelector(getLoadMoreState(name));
   const navigate = useNavigate();
+  const { lastConversation } = useAppSelector(getLoadMoreState(name));
 
   useEffect(() => {
     async function fetchConversations() {
@@ -53,6 +52,7 @@ export default function useFetchConversations(name: Name) {
 
         const { conversationData, end } = await response.json();
         if (end) dispatch(lastConversationSet(true));
+
         dispatch(conversationsSet(conversationData));
       } catch (error) {
         toast({
@@ -62,8 +62,6 @@ export default function useFetchConversations(name: Name) {
       }
     }
 
-    if (!lastConversation) {
-      fetchConversations();
-    }
-  }, [dispatch, toast, navigate, name, client, lastConversation]);
+    if (!lastConversation) fetchConversations();
+  }, [dispatch, toast, navigate, name, lastConversation]);
 }

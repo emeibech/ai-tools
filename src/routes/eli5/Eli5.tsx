@@ -9,9 +9,10 @@ import { Navigate } from 'react-router-dom';
 
 const id = nanoid();
 
-export default function CodingAssistant() {
+export default function Eli5Assistant() {
   const { userStatus } = useAppSelector(clientStatus);
   useSetScrollPosition('eli5');
+
   return (
     <main
       className={cn(
