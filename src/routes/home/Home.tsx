@@ -45,10 +45,10 @@ export default function Home() {
             Make Your Life Easier with emeibech AI.
           </h2>
           <h3 className="max-w-[640px] text-xl">
-            A collection of AI-powered tools to help you finish tasks faster the
-            Flash on cocaine so you can get back to doing things that really
-            matter, like scrolling mindlessly on your phone. Offload most of the
-            thinking to AI and go get yourself more of that sweet, sweet
+            A collection of AI-powered tools to help you finish tasks faster
+            than the Flash on cocaine so you can get back to doing things that
+            really matter, like scrolling mindlessly on your phone. Offload most
+            of the thinking to AI and go get yourself more of that sweet, sweet
             dopamine now.
           </h3>
 
@@ -76,9 +76,9 @@ export default function Home() {
           <h2 className={cn('font-medium')}>It's Free!</h2>
           <p className={cn('text-card-foreground')}>
             The best thing about this app is that it's free. That is right.
-            Free. But you can only use it fifty times in twenty-four hours to
-            prevent abuse since OpenAI API costs money and this is not an actual
-            product.
+            Free. But I removed the sign up page because of reasons, so this is
+            now for my own personal use only. You can still try it, but it is
+            limited to fifty calls a day.
           </p>
           <Popover>
             <PopoverTrigger className="flex max-w-fit">

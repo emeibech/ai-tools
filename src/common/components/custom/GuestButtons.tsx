@@ -63,16 +63,24 @@ export default function GuestButtons() {
         </Link>
       </Button>
 
-      <Button className="h-8 p-0 xl:h-10 text-base">
+      <Button
+        onClick={handleClick}
+        disabled={reqStatus === 'requesting'}
+        className={cn('px-8 h-8 xl:h-10 text-base')}
+      >
+        Try it!
+      </Button>
+
+      {/* <Button className="h-8 p-0 xl:h-10 text-base">
         <Link
           to={'/signup'}
           className="min-w-full min-h-full grid place-content-center"
         >
           <p>Sign up</p>
         </Link>
-      </Button>
+      </Button> */}
 
-      <Button
+      {/* <Button
         onClick={handleClick}
         disabled={reqStatus === 'requesting'}
         className={cn(
@@ -81,7 +89,7 @@ export default function GuestButtons() {
         )}
       >
         Try it!
-      </Button>
+      </Button> */}
     </div>
   );
 }

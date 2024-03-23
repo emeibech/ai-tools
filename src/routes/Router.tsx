@@ -13,7 +13,7 @@ export default function Router() {
   const ToneChanger = lazy(() => import('./tonechanger/ToneChanger'));
   const StoryGenerator = lazy(() => import('./storygenerator/StoryGenerator'));
   const Eli5 = lazy(() => import('./eli5/Eli5'));
-  const Signup = lazy(() => import('./signup/Signup'));
+  // const Signup = lazy(() => import('./signup/Signup'));
   const Login = lazy(() => import('./login/Login'));
   const CodingAssistant = lazy(
     () => import('./codingassistant/CodingAssistant'),
@@ -104,14 +104,14 @@ export default function Router() {
           ),
         },
 
-        {
-          path: 'signup',
-          element: (
-            <Suspense fallback={<Fallback />}>
-              {userStatus === 'guest' ? <Signup /> : <LoginSuccessful />}
-            </Suspense>
-          ),
-        },
+        // {
+        //   path: 'signup',
+        //   element: (
+        //     <Suspense fallback={<Fallback />}>
+        //       {userStatus === 'guest' ? <Signup /> : <LoginSuccessful />}
+        //     </Suspense>
+        //   ),
+        // },
       ],
     },
   ]);

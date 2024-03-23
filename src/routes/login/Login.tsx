@@ -1,19 +1,25 @@
 import LoginForm from './LoginForm';
-import { Button } from '@/common/components/ui/button';
-import { useAuth0 } from '@auth0/auth0-react';
-import useLoginWithGoogle from './useLoginWithGoogle';
-import { Separator } from '@/common/components/ui/separator';
-import Fallback from '../Fallback';
+// import { Button } from '@/common/components/ui/button';
+// import { useAuth0 } from '@auth0/auth0-react';
+// import useLoginWithGoogle from './useLoginWithGoogle';
+// import { Separator } from '@/common/components/ui/separator';
+// import Fallback from '../Fallback';
 
 export default function Login() {
-  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+  // const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
-  const { reqStatus } = useLoginWithGoogle();
+  // const { reqStatus } = useLoginWithGoogle();
 
   return (
     <main className="grid place-items-center mt-32 2xl:mt-60">
       <section className="min-w-[300px] max-w-[600px] p-4 sm:min-w-[420px]">
-        {(!isAuthenticated || reqStatus === 'error') && !isLoading && (
+        <p className="text-muted-foreground mb-4 text-lg">
+          Enter your email and password.
+        </p>
+
+        <LoginForm />
+
+        {/* {(!isAuthenticated || reqStatus === 'error') && !isLoading && (
           <>
             <p className="text-muted-foreground mb-4 text-lg">
               Enter your email and password.
@@ -35,11 +41,11 @@ export default function Login() {
               </Button>
             </section>
           </>
-        )}
+        )} */}
 
-        {isAuthenticated && reqStatus === 'idle' && <Fallback />}
+        {/* {isAuthenticated && reqStatus === 'idle' && <Fallback />}
         {isAuthenticated && reqStatus === 'requesting' && <Fallback />}
-        {isLoading && <Fallback />}
+        {isLoading && <Fallback />} */}
       </section>
     </main>
   );
