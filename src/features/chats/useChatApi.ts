@@ -14,7 +14,6 @@ import { useToast } from '@/common/components/ui/use-toast';
 import { getConversationsActions } from '../conversations/conversationsSliceUtils';
 import type {
   ChatApiArgs,
-  GetModelParams,
   MessagesParam,
   Name,
   TrimMessages,
@@ -58,14 +57,7 @@ export default function useChatApi(chatApiArgs: ChatApiArgs) {
       tokenLimit,
     });
 
-    const modelParam =
-      model ||
-      getModel({
-        chatInterface,
-        tokenEstimate: getTokenEstimate(trimmedMessages),
-      });
-
-    const url = `${baseUrl}${getUrlParams(chatInterface)}${modelParam}`;
+    const url = `${baseUrl}${getUrlParams(chatInterface)}${model}`;
     const body = { userContent: trimmedMessages };
 
     async function streamData() {
@@ -193,10 +185,10 @@ function trimMessages({ messages, tokenLimit }: TrimMessages): MessagesParam[] {
   return trimMessages({ messages: trimmedMessages, tokenLimit });
 }
 
-function getModel({ chatInterface, tokenEstimate }: GetModelParams) {
-  if (chatInterface === 'Coding Assistant') {
-    return tokenEstimate > 3000 ? 'gpt-3.5-turbo-16k' : 'gpt-3.5-turbo';
-  }
+// function getModel({ chatInterface, tokenEstimate }: GetModelParams) {
+//   if (chatInterface === 'Coding Assistant') {
+//     return tokenEstimate > 3000 ? 'gpt-3.5-turbo-16k' : 'gpt-3.5-turbo';
+//   }
 
-  return '';
-}
+//   return '';
+// }
